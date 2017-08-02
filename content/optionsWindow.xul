@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://yt2p/skin/optionsWindow.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://yt2p/locale/optionsWindow.dtd">
+<prefwindow
+    id="yt2p-prefwindow"
+    title="&title.label;"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
+    buttons="cancel,accept,extra1"
+    onload="init()"
+    ondialogaccept="accept()"
+    buttonlabelextra1="&settings.label;">
+  <script type="application/x-javascript" src="chrome://yt2p/content/optionsWindow.js"/>
+  <keyset>
+    <key modifiers="control" key="a" oncommand="playerView.selection.selectAll()"/>
+    <key modifiers="control" key="e" oncommand="playerView.editItem()"/>
+    <key modifiers="control" key="x" oncommand="playerView.cutItems()"/>
+    <key modifiers="control" key="c" oncommand="playerView.copyItems()"/>
+    <key modifiers="control" key="v" oncommand="playerView.pasteItems()"/>
+    <key modifiers="shift" keycode="VK_DELETE" oncommand="playerView.deleteItems(true)"/>
+    <key modifiers="shift" keycode="VK_BACK" oncommand="playerView.deleteItems(true)"/>
+    <key keycode="VK_DELETE" oncommand="playerView.deleteItems()"/>
+    <key keycode="VK_BACK" oncommand="playerView.deleteItems()"/>
+    <key keycode="VK_SPACE" oncommand="playerView.editItem()"/>
+    <key keycode="VK_ENTER" oncommand="playerView.editItem()"/>
+  </keyset>
+  <popupset>
+    <menupopup id="playersMenuPopup" onpopupshowing="return playerView.contextMenuOpened(event)">
+      <menuitem id="editPlayer" class="require-editable" label="&edit.label;" oncommand="playerView.editItem()"/>
+      <menuseparator class="require-editable"/>
+      <menuitem id="addPlayer" class="require-container" label="&addPlayer.label;" oncommand="addPlayer()"/>
+      <menuitem id="addSeparator" class="require-container" label="&addSeparator.label;" oncommand="addSeparator()"/>
+      <menuseparator class="require-container"/>
+      <menuitem id="cutPlayers" class="require-selection" label="&cut.label;" oncommand="playerView.cutItems()"/>
+      <menuitem id="copyPlayers" class="require-selection" label="&copy.label;" oncommand="playerView.copyItems()"/>
+      <menuitem id="pastePlayers" class="require-selection" label="&paste.label;" oncommand="playerView.pasteItems()"/>
+      <menuseparator class="require-selection"/>
+      <menuitem id="deletePlayers" class="require-selection" label="&delete.label;" oncommand="playerView.deleteItems()"/>
+    </menupopup>
+    <menupopup id="optionsMenuPopup">
+      <menuitem id="importPrefs" label="&import.label;" oncommand="importPrefs()"/>
+      <menuitem id="exportPrefs" label="&export.label;" oncommand="exportPrefs()"/>
+      <menuitem id="resetPrefs" label="&defaults.label;" oncommand="resetPrefs()"/>
+    </menupopup>
+  </popupset>
+  <prefpane
+      id="playersPane"
+      flex="1"
+      label="&playersPane.label;"
+      image="chrome://yt2p/skin/32/pane-players.png">
+    <tree
+        id="playerTree"
+        flex="1"
+        seltype="multiple"
+        editable="true"
+        hidehscroll="true"
+        hidevscroll="true"
+        hidecolumnpicker="true"
+        keepcurrentinview="true"
+        disablekeynavigation="true"
+        onselect="return playerView.selectionChanged(event)"
+        _allPlayers="&playerTree._allPlayers;"
+        _confirmDelete="&playerTree._confirmDelete;">
+      <treecols orient="horizontal">
+        <treecol id="name" flex="1" primary="true" editable="false" label="&name.label;"/>
+        <treecol id="isIconRow" type="checkbox" editable="true" label="&iconRow.label;"/>
+        <treecol id="isClickSender" type="checkbox" editable="true" label="&clickSender.label;"/>
+      </treecols>
+      <treechildren
+          flex="1"
+          context="playersMenuPopup"
+          tooltiptext="&playerTree.tooltiptext;"
+          ondblclick="return playerView.doubleClicked(event)"
+          ondragstart="return playerView.startDrag(event)"
+          ondragend="return playerView.endDrag(event)"/>
+    </tree>
+  </prefpane>
+  <prefpane id="menusPane" label="&menusPane.label;" image="chrome://yt2p/skin/32/pane-menus.png">
+    <preferences>
+      <preference id="pref_toolsMenuItemsEnabled" name="extensions.yt2p.toolsMenuItemsEnabled" type="bool"/>
+      <preference id="pref_contextMenuItemsEnabled" name="extensions.yt2p.contextMenuItemsEnabled" type="bool"/>
+      <preference id="pref_contextMenuIconRowMarginChangeEnabled" name="extensions.yt2p.contextMenuIconRowMarginChangeEnabled" type="bool"/>
+      <preference id="pref_contextMenuIconRowVerticalMargin" name="extensions.yt2p.contextMenuIconRowVerticalMargin" type="int"/>
+      <preference id="pref_contextMenuIconRowHorizontalMargin" name="extensions.yt2p.contextMenuIconRowHorizontalMargin" type="int"/>
+    </preferences>
+    <checkbox label="&toolsMenuItemsEnabled.label;" preference="pref_toolsMenuItemsEnabled"/>
+    <checkbox label="&contextMenuItemsEnabled.label;" onclick="onSubPrefsHeadClick(event)" preference="pref_contextMenuItemsEnabled"/>
+    <vbox class="subprefs">
+      <checkbox label="&contextMenuIconRowMarginChangeEnabled.label;" onclick="onSubPrefsHeadClick(event)" preference="pref_contextMenuIconRowMarginChangeEnabled"/>
+      <vbox class="subprefs">
+        <hbox align="center">
+          <textbox type="number" min="0" max="9" style="max-width: 3em;" preference="pref_contextMenuIconRowHorizontalMargin"/>
+          <label value="&contextMenuIconRowHorizontalMargin.label;" style="margin-inline-start: 0;"/>
+        </hbox>
+        <hbox align="center">
+          <textbox type="number" min="0" max="9" style="max-width: 3em;" preference="pref_contextMenuIconRowVerticalMargin"/>
+          <label value="&contextMenuIconRowVerticalMargin.label;" style="margin-inline-start: 0;"/>
+        </hbox>
+      </vbox>
+    </vbox>
+    <!-- <radiogroup class="subprefs" onselect="onSubPrefsHeadSelect(event)" preference="pref_contextMenuItemsType">
+      <radio label="&contextMenuItemsType.inPopups.label;" value="0"/>
+      <radio label="&contextMenuItemsType.inMainMenu.label;" value="1"/>
+      <radio label="&contextMenuItemsType.inIconRows.label;, &contextMenuIconRowVerticalMargin.before.label;" value="2"/>
+      <hbox align="center" class="subprefs">
+        <textbox type="number" min="0" max="9" style="max-width: 3em;" preference="pref_contextMenuIconRowVerticalMargin"/>
+        <label value="&contextMenuIconRowVerticalMargin.after.label;" style="margin-inline-start: 0;"/>
+      </hbox>
+    </radiogroup> -->
+  </prefpane>
+  <prefpane id="embeddedVideosPane" label="&embeddedVideosPane.label;" image="chrome://yt2p/skin/32/pane-embeddedVideos.png">
+    <preferences>
+      <preference id="pref_embeddedVideoChangeEnabled" name="extensions.yt2p.embeddedVideoChangeEnabled" type="bool"/>
+      <preference id="pref_embeddedVideoChangeType" name="extensions.yt2p.embeddedVideoChangeType" type="int"/>
+    </preferences>
+    <checkbox label="&embeddedVideoChangeEnabled.label;" onclick="onSubPrefsHeadClick(event)" preference="pref_embeddedVideoChangeEnabled"/>
+    <radiogroup class="subprefs" preference="pref_embeddedVideoChangeType">
+      <radio label="&embeddedVideoChangeType.intoTextLinks.label;" value="0"/>
+      <radio label="&embeddedVideoChangeType.intoObjects.label;" value="1"/>
+      <radio label="&embeddedVideoChangeType.intoFil.label;" value="2"/>
+    </radiogroup>
+  </prefpane>
+  <prefpane id="videoLinksPane" label="&videoLinksPane.label;" image="chrome://yt2p/skin/32/pane-videoLinks.png">
+    <preferences>
+      <preference id="pref_videoLinkChangeEnabled" name="extensions.yt2p.videoLinkChangeEnabled" type="bool"/>
+      <preference id="pref_videoLinkChangeType" name="extensions.yt2p.videoLinkChangeType" type="int"/>
+      <preference id="pref_videoLinkClickChangeEnabled" name="extensions.yt2p.videoLinkClickChangeEnabled" type="bool"/>
+      <preference id="pref_videoLinkClickChangeType" name="extensions.yt2p.videoLinkClickChangeType" type="int"/>
+    </preferences>
+    <checkbox label="&videoLinkChangeEnabled.label;" onclick="onSubPrefsHeadClick(event)" preference="pref_videoLinkChangeEnabled"/>
+    <radiogroup class="subprefs" preference="pref_videoLinkChangeType">
+      <radio label="&videoLinkChangeType.stylizeWithRedGlow.label;" value="0"/>
+      <radio label="&videoLinkChangeType.intoEmbedded.label;" value="1"/>
+      <radio label="&videoLinkChangeType.intoFil.label;" value="2"/>
+    </radiogroup>
+    <checkbox label="&videoLinkClickChangeEnabled.label;" onclick="onSubPrefsHeadClick(event)" preference="pref_videoLinkClickChangeEnabled"/>
+    <radiogroup class="subprefs" preference="pref_videoLinkClickChangeType">
+      <radio label="&videoLinkClickChangeType.sendToClickSender.label;" value="0"/>
+      <radio label="&videoLinkClickChangeType.intoEmbedded.label;" value="1"/>
+      <radio label="&videoLinkClickChangeType.intoFil.label;" value="2"/>
+    </radiogroup>
+  </prefpane>
+  <prefpane id="fancyImageLinksPane" label="&fancyImageLinksPane.label;" image="chrome://yt2p/skin/32/pane-fancyImageLinks.png">
+    <preferences>
+      <preference id="pref_filClickChangeEnabled" name="extensions.yt2p.filClickChangeEnabled" type="bool"/>
+      <preference id="pref_filClickChangeType" name="extensions.yt2p.filClickChangeType" type="int"/>
+    </preferences>
+    <checkbox label="&filClickChangeEnabled.label;" onclick="onSubPrefsHeadClick(event)" preference="pref_filClickChangeEnabled"/>
+    <radiogroup class="subprefs" preference="pref_filClickChangeType">
+      <radio label="&filClickChangeType.sendToClickSender.label;" value="0"/>
+      <radio label="&filClickChangeType.intoEmbedded.label;" value="1"/>
+      <radio label="&filClickChangeType.intoTextLink.label;" value="2"/>
+    </radiogroup>
+  </prefpane>
+</prefwindow>

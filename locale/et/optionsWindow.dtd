@@ -1,0 +1,50 @@
+<!ENTITY title.label "YT2Mängijasse Sätted">
+<!ENTITY settings.label "Sätted">
+<!ENTITY import.label "Impordi...">
+<!ENTITY export.label "Ekspordi...">
+<!ENTITY defaults.label "Lähtesta">
+<!ENTITY name.label "Nimi">
+
+<!ENTITY playerTree._allPlayers "Kõik mängijad">
+<!ENTITY playerTree._confirmDelete "Kindlasti kustuta?">
+<!ENTITY playerTree.tooltiptext "">
+<!ENTITY iconRow.label "Ikoonirida?">
+<!ENTITY clickSender.label "Klikilsaatja?">
+<!ENTITY addPlayer.label "Lisa Mängija...">
+<!ENTITY addSeparator.label "Lisa Eraldaja">
+<!ENTITY edit.label "Muuda...">
+<!ENTITY cut.label "Lõika">
+<!ENTITY copy.label "Kopeeri">
+<!ENTITY paste.label "Aseta">
+<!ENTITY delete.label "Kustuta">
+
+<!ENTITY playersPane.label "Mängijad">
+<!ENTITY menusPane.label "Menüüd">
+<!ENTITY embeddedVideosPane.label "Embed Klipid">
+<!ENTITY videoLinksPane.label "Klipilingid">
+<!ENTITY fancyImageLinksPane.label "Ilupiltlingid">
+
+<!ENTITY toolsMenuItemsEnabled.label "Näita Tööriistad menüü nuppe">
+<!ENTITY contextMenuItemsEnabled.label "Näita kontekstmenüü nuppe">
+<!ENTITY contextMenuIconRowMarginChangeEnabled.label "lisades ikoonirea ikoonidele">
+<!ENTITY contextMenuIconRowHorizontalMargin.label "pikslit vasakule ja paremale">
+<!ENTITY contextMenuIconRowVerticalMargin.label "pikslit üles ja alla">
+
+<!ENTITY embeddedVideoChangeEnabled.label "Muuda embed klipid">
+<!ENTITY embeddedVideoChangeType.intoTextLinks.label "tavalisteks linkideks">
+<!ENTITY embeddedVideoChangeType.intoObjects.label "'object' elementideks (Thunderbirdi jaoks)">
+<!ENTITY embeddedVideoChangeType.intoFil.label "Piltlinkideks">
+
+<!ENTITY videoLinkChangeEnabled.label "Muuda klippide lingid">
+<!ENTITY videoLinkChangeType.stylizeWithRedGlow.label "punase helgiga">
+<!ENTITY videoLinkChangeType.intoEmbedded.label "embed videoteks">
+<!ENTITY videoLinkChangeType.intoFil.label "Piltlinkideks">
+<!ENTITY videoLinkClickChangeEnabled.label "Video lingi vajutamine">
+<!ENTITY videoLinkClickChangeType.sendToClickSender.label "saadab klipi lingi klikil saatjale">
+<!ENTITY videoLinkClickChangeType.intoEmbedded.label "muudab selle embed klipiks">
+<!ENTITY videoLinkClickChangeType.intoFil.label "muudab selle Piltlingiks">
+
+<!ENTITY filClickChangeEnabled.label "Piltlingi vajutamine">
+<!ENTITY filClickChangeType.sendToClickSender.label "saadab klipi lingi klikil saatjale">
+<!ENTITY filClickChangeType.intoEmbedded.label "muudab selle embed klipiks">
+<!ENTITY filClickChangeType.intoTextLink.label "muudab selle tavaliseks klipi lingiks">

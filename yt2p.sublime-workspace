@@ -1,0 +1,1964 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"getE",
+				"getElementById"
+			],
+			[
+				"m",
+				"mth"
+			],
+			[
+				"mat",
+				"matches"
+			],
+			[
+				"ma",
+				"matches"
+			],
+			[
+				"paren",
+				"parentElement"
+			],
+			[
+				"vid",
+				"videoId"
+			],
+			[
+				"defalu",
+				"defaultView"
+			],
+			[
+				"loadinto",
+				"loadIntoThunderbirdWindow"
+			],
+			[
+				"data",
+				"data-yt2p-uri"
+			],
+			[
+				"INS",
+				"INSERT_BEFORE_PLACES_MENUITEM"
+			],
+			[
+				"clear",
+				"_clearItemClickSenders"
+			],
+			[
+				"parent",
+				"parentRowIndex"
+			],
+			[
+				"drag",
+				"_draggedRows"
+			],
+			[
+				"_D",
+				"_draggedRows"
+			],
+			[
+				"_dra",
+				"_draggedItems"
+			],
+			[
+				"dragge",
+				"draggedItems"
+			],
+			[
+				"dri",
+				"draggedRowIndex"
+			],
+			[
+				"dr",
+				"draggedRows"
+			],
+			[
+				"getsel",
+				"getSelectedRows"
+			],
+			[
+				"iind",
+				"insertIndex"
+			],
+			[
+				"new",
+				"_newRowsFromItems"
+			],
+			[
+				"selectedR",
+				"selectedRow"
+			],
+			[
+				"for",
+				"for\tfor (…) {…}"
+			],
+			[
+				"curren",
+				"currentIndex"
+			],
+			[
+				"currein",
+				"currentItem"
+			],
+			[
+				"dele",
+				"deleteCount"
+			],
+			[
+				"getP",
+				"getParentIndex"
+			],
+			[
+				"_row",
+				"_addRowsFromItems"
+			],
+			[
+				"f",
+				"f\tAnonymous Function"
+			],
+			[
+				"fun",
+				"fun\tFunction"
+			],
+			[
+				"getS",
+				"getSelectedRows"
+			],
+			[
+				"_get",
+				"_getInfoForRow"
+			],
+			[
+				"iscontain",
+				"isContainerEmpty"
+			],
+			[
+				"forE",
+				"forEachData"
+			],
+			[
+				"_",
+				"_getRowCount"
+			],
+			[
+				"string",
+				"stringBundle"
+			],
+			[
+				"getinfo",
+				"getSelectedInfo"
+			],
+			[
+				"edit",
+				"editSelected"
+			],
+			[
+				"getData",
+				"getDataForRow"
+			],
+			[
+				"pare",
+				"parentIndex"
+			],
+			[
+				"chil",
+				"children"
+			],
+			[
+				"L",
+				"LOGO_16"
+			],
+			[
+				"lastS",
+				"lastSelIndex"
+			],
+			[
+				"ins",
+				"insertIndex"
+			],
+			[
+				"getD",
+				"getDataForRow"
+			],
+			[
+				"index",
+				"indexOf"
+			],
+			[
+				"inde",
+				"indexOf"
+			],
+			[
+				"getSel",
+				"getSelectedInfo"
+			],
+			[
+				"plaey",
+				"playerView"
+			],
+			[
+				"playerGro",
+				"playerGroupsTree"
+			],
+			[
+				"toolsm",
+				"toolsMenuItemsEnabled"
+			],
+			[
+				"ind",
+				"indexOf"
+			],
+			[
+				"last",
+				"lastItemIndex"
+			],
+			[
+				"setCli",
+				"setClickSenderItem"
+			],
+			[
+				"groupTr",
+				"groupTreeView"
+			],
+			[
+				"selec",
+				"selectedItems"
+			],
+			[
+				"iss",
+				"isSeparator"
+			],
+			[
+				"match",
+				"matches"
+			],
+			[
+				"IS",
+				"IScriptableInputStream"
+			],
+			[
+				"IF",
+				"IFileOutputStream"
+			],
+			[
+				"res",
+				"resetSettings"
+			],
+			[
+				"extr",
+				"extraButton"
+			],
+			[
+				"getIn",
+				"getIndexOfItem"
+			],
+			[
+				"sel",
+				"selectedItem"
+			],
+			[
+				"gr",
+				"group"
+			],
+			[
+				"sele",
+				"selectedItems"
+			],
+			[
+				"curre",
+				"currentIndex"
+			],
+			[
+				"list",
+				"listbox"
+			],
+			[
+				"c",
+				"contextMenuItemsEnabled"
+			],
+			[
+				"add",
+				"addListItemAfterCurrent"
+			],
+			[
+				"Klikil",
+				"klikilsaatjast"
+			],
+			[
+				"listi",
+				"listitem-iconic"
+			],
+			[
+				"yt",
+				"yt2p-click-sender"
+			],
+			[
+				"font",
+				"font-weight"
+			],
+			[
+				"tool",
+				"tooltiptext"
+			],
+			[
+				"current",
+				"currentItem"
+			],
+			[
+				"upda",
+				"updateGroupItemValues"
+			],
+			[
+				"bro",
+				"browseCommand"
+			],
+			[
+				"get",
+				"getAttribute"
+			],
+			[
+				"prev",
+				"previousElementSibling"
+			],
+			[
+				"lb",
+				"listbox"
+			],
+			[
+				"docum",
+				"document"
+			],
+			[
+				"emb",
+				"embeddedVideoChangeEnabled"
+			],
+			[
+				"pref",
+				"preferences"
+			],
+			[
+				"conte",
+				"contextMenuItemsEnabled"
+			],
+			[
+				"yt2p-op",
+				"yt2p-options-window"
+			],
+			[
+				"play",
+				"players"
+			],
+			[
+				"S",
+				"SEPARATOR_TEXT"
+			],
+			[
+				"upd",
+				"updatePlayersSelect"
+			],
+			[
+				"pro",
+				"prototype"
+			],
+			[
+				"remo",
+				"remove"
+			],
+			[
+				"paret",
+				"parentElement"
+			],
+			[
+				"check",
+				"checkbox"
+			],
+			[
+				"cmi",
+				"contextMenuItemsType"
+			],
+			[
+				"cM",
+				"contextMenuItemsEnabled"
+			],
+			[
+				"checke",
+				"checked"
+			],
+			[
+				"resp",
+				"response"
+			],
+			[
+				"create",
+				"createObjectURL"
+			],
+			[
+				"moz",
+				"mozFullPath"
+			],
+			[
+				"rel",
+				"relativeToIFile"
+			],
+			[
+				"class",
+				"classList"
+			],
+			[
+				"getStringFrom",
+				"GetStringFromName"
+			],
+			[
+				"def",
+				"defaultGroup"
+			],
+			[
+				"pl",
+				"players"
+			],
+			[
+				"newE",
+				"newEmbeddedVideoObject"
+			],
+			[
+				"obje",
+				"newEmbeddedVideoObject"
+			],
+			[
+				"padd",
+				"padding-top"
+			],
+			[
+				"text",
+				"textContent"
+			],
+			[
+				"getSt",
+				"getStandardisedVideoUrl"
+			],
+			[
+				"hidd",
+				"hiddenSubscriberCount"
+			],
+			[
+				"con",
+				"contains"
+			],
+			[
+				"yt2p-vide",
+				"yt2p-video-link"
+			],
+			[
+				"ne",
+				"nextElementSibling"
+			],
+			[
+				"rep",
+				"replacement"
+			],
+			[
+				"replace",
+				"replacement"
+			],
+			[
+				"nextE",
+				"nextElementSibling"
+			],
+			[
+				"yt2p-repl",
+				"yt2p-replaced"
+			],
+			[
+				"titl",
+				"titleSpan"
+			],
+			[
+				"repl",
+				"replaceChild"
+			],
+			[
+				"For",
+				"forEach"
+			],
+			[
+				"D",
+				"DATE_NOW"
+			],
+			[
+				"isV",
+				"isVideoUrl"
+			],
+			[
+				"make",
+				"makeAnchorClickSend"
+			],
+			[
+				"embe",
+				"embeddedVideoType"
+			],
+			[
+				"PL",
+				"PLAYER_16"
+			],
+			[
+				"func",
+				"function"
+			],
+			[
+				"Kliki",
+				"klikilsaatjast"
+			],
+			[
+				"Pilt",
+				"Piltlinkideks"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 372.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"todo",
+				"TodoReview: Project Files"
+			],
+			[
+				"json",
+				"Pretty JSON: Minify (compress) JSON"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"openfile",
+				"TodoReview: Open Files"
+			],
+			[
+				"todor",
+				"TodoReview: Open Files"
+			],
+			[
+				"pref",
+				"Preferences: Settings"
+			],
+			[
+				"dired",
+				"dired"
+			],
+			[
+				"dire",
+				"dired"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"disa",
+				"Package Control: Disable Package"
+			],
+			[
+				"enable",
+				"Package Control: Enable Package"
+			],
+			[
+				"ps",
+				"Preferences: Settings"
+			],
+			[
+				"sp",
+				"Snippet: Prototype"
+			],
+			[
+				"prefsett",
+				"Preferences: Settings"
+			],
+			[
+				"mark",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"pref settin",
+				"Preferences: Settings"
+			],
+			[
+				"key",
+				"Preferences: Key Bindings"
+			],
+			[
+				"",
+				"Boxy Theme: Activation"
+			],
+			[
+				"dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"prev",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"auto",
+				"Auto Spacing: Spacing this file"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"package control",
+				"Package Control: Discover Packages"
+			],
+			[
+				"upda",
+				"Package Control: Upgrade/Overwrite All Packages"
+			],
+			[
+				"md",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"pretty",
+				"Pretty JSON: Format and Sort JSON"
+			],
+			[
+				"toggle",
+				"SublimeLinter: Toggle Linter"
+			],
+			[
+				"markd",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"enable lin",
+				"SublimeLinter: Enable Linter"
+			],
+			[
+				"lint",
+				"SublimeLinter: Next Error"
+			],
+			[
+				"open files",
+				"SublimeLinter: Report (Open Files)"
+			],
+			[
+				"tof",
+				"View: Toggle Open Files in Side Bar"
+			],
+			[
+				"open",
+				"View: Toggle Open Files in Side Bar"
+			],
+			[
+				"increm",
+				"Increment Selection"
+			],
+			[
+				"kb",
+				"Preferences: Key Bindings"
+			],
+			[
+				"minim",
+				"View: Toggle Minimap"
+			],
+			[
+				"boxy",
+				"Boxy Theme: Activation"
+			],
+			[
+				"conf",
+				"Boxy Theme: Configuration"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Disable Package"
+			],
+			[
+				"theme",
+				"Boxy Theme: Configuration"
+			],
+			[
+				"sidebar",
+				"Side Bar: Refresh"
+			],
+			[
+				"comm",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add All"
+			],
+			[
+				"git comm",
+				"Git: Commit"
+			],
+			[
+				"git ad",
+				"Git: Add..."
+			],
+			[
+				"git show",
+				"Git: Show Current File"
+			],
+			[
+				"git bla",
+				"Git: Blame"
+			],
+			[
+				"git log",
+				"Git: Log Current File"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"git s",
+				"Git: Status"
+			],
+			[
+				"git",
+				"Git: Diff Current File"
+			],
+			[
+				"standard",
+				"Standard Format: Format current file"
+			],
+			[
+				"linter",
+				"SublimeLinter: Next Error"
+			],
+			[
+				"ena",
+				"Package Control: Enable Package"
+			],
+			[
+				"disabl",
+				"Package Control: Disable Package"
+			],
+			[
+				"up",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"status",
+				"Git: Status"
+			],
+			[
+				"git a",
+				"Git: Add All"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"git to",
+				"Git: Toggle Annotations"
+			],
+			[
+				"stat",
+				"Git: Status"
+			],
+			[
+				"gui",
+				"Git: Gui"
+			],
+			[
+				"gk",
+				"Git: Gitk"
+			],
+			[
+				"git anno",
+				"Git: Toggle Annotations"
+			],
+			[
+				"com",
+				"Git: Commit"
+			],
+			[
+				"merg",
+				"Git: Merge Branch"
+			],
+			[
+				"package",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"gitg",
+				"GitGutter: Compare Against Commit"
+			],
+			[
+				"git list",
+				"Git: Stash List"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git :",
+				"Git: Show Current File"
+			],
+			[
+				"mdn",
+				"MDN Search..."
+			],
+			[
+				"disable pa",
+				"Package Control: Disable Package"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"devd",
+				"DevDocs: Search From Input"
+			],
+			[
+				"recent",
+				"RecentActiveFiles: recent_active_files"
+			],
+			[
+				"zeal",
+				"Zeal: Search"
+			],
+			[
+				"pc:",
+				"Package Control: Disable Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"bindings",
+				"Preferences: Key Bindings"
+			],
+			[
+				"open \t",
+				"View: Toggle Open Files in Side Bar"
+			],
+			[
+				"preferences",
+				"Preferences: Settings"
+			],
+			[
+				"add",
+				"Git: Add..."
+			],
+			[
+				"git:",
+				"Git: Open..."
+			],
+			[
+				"git:r",
+				"Git: Show Current File"
+			],
+			[
+				"res",
+				"Git: Reset (unstage) All"
+			],
+			[
+				"ad",
+				"Git: Add..."
+			],
+			[
+				"reset",
+				"Git: Reset (unstage) All"
+			],
+			[
+				"commit",
+				"Git: Commit"
+			],
+			[
+				"git:a",
+				"Git: Add..."
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"git:add",
+				"Git: Add..."
+			]
+		],
+		"width": 431.0
+	},
+	"console":
+	{
+		"height": 210.0,
+		"history":
+		[
+			"glue clear",
+			"cd ..",
+			"./Pagan",
+			"glue ./Pagan",
+			"glue ./pagan",
+			"exec Pagan",
+			"./Pagan",
+			"Pagan",
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/rasmus/projektid/yt2p"
+	],
+	"file_history":
+	[
+		"/home/rasmus/projektid/yt2p/yt2p.sublime-project",
+		"/home/rasmus/projektid/pluginad/pluginad.sublime-project",
+		"/home/rasmus/projektid/1v1/1v1.sublime-project",
+		"/home/rasmus/projektid/yt2p/pluginad.sublime-project",
+		"/home/rasmus/projektid/yt2p/.git/COMMIT_EDITMSG",
+		"/home/rasmus/projektid/yt2p/README.md",
+		"/home/rasmus/projektid/yt2p/LICENSE",
+		"/home/rasmus/projektid/pluginad/yt2p/install.rdf",
+		"/home/rasmus/projektid/pluginad/yt2p/README.md",
+		"/home/rasmus/projektid/pagan/Source/pagan.lua",
+		"/home/rasmus/projektid/1v1/main.lua",
+		"/home/rasmus/ajutine/Top Documentary Films - Watch Free Documentaries Online.URL",
+		"/home/rasmus/projektid/loveit/loveit.sublime-project",
+		"/home/rasmus/projektid/loveit/main.lua",
+		"/home/rasmus/projektid/pluginad/yt1p/css/playlists.css",
+		"/home/rasmus/projektid/pluginad/yt1p/js/background.js",
+		"/home/rasmus/projektid/pagan/Source/win32/File.c",
+		"/home/rasmus/.bash_history",
+		"/etc/hosts",
+		"/home/rasmus/bin/tor-browser_en-US/Browser/TorBrowser/Data/Browser/profile.default/userChrome.css",
+		"/home/rasmus/.leechblock-play",
+		"/home/rasmus/.leechblock-work",
+		"/home/rasmus/aaa",
+		"/home/rasmus/.whitelist-play",
+		"/etc/dnsmasq.conf",
+		"/home/rasmus/.fr-c6wwZh/conf.lua",
+		"/home/rasmus/.fr-AaZAe7/LICENSE",
+		"/home/rasmus/.config/mpv/mpv.conf",
+		"/etc/host",
+		"/home/rasmus/projektid/pluginad/mth/install.rdf",
+		"/home/rasmus/tiritud/Code Geass/Read Me!.txt",
+		"/home/rasmus/klipid/Primitive Technology - Barrel Tiled Shed.vtt",
+		"/home/rasmus/ajutine/Primitive.txt",
+		"/home/rasmus/tiritud/REAL INCEST Father Daughter Pron/readme.nfo",
+		"/home/rasmus/.mozilla/native-messaging-hosts/sytvl.json",
+		"/home/rasmus/.mozilla/native-messaging-hosts/youtube-dl.json",
+		"/home/rasmus/projektid/pluginad/mth/bootstrap.js",
+		"/home/rasmus/.mozilla/firefox/profiles.ini",
+		"/home/rasmus/.mozilla/firefox/nb9nfkpm.dev-edition-default/browser-extension-data/YT1Playlists@Rasmus.Riiner/storage.js",
+		"/home/rasmus/.mozilla/firefox/nb9nfkpm.dev-edition-default/browser-extension-data/YT2Player@Rasmus.Riiner/storage.js",
+		"/home/rasmus/.mozilla/firefox/nb9nfkpm.dev-edition-default/blocklists/addons.json",
+		"/home/rasmus/projektid/pluginad/mth/chrome.manifest",
+		"/run/user/1000/gvfs/smb-share:server=sinilind,share=ajutine/smb.conf",
+		"/etc/fstab",
+		"/home/rasmus/valgelind/VaKino/VaKino.ini",
+		"/etc/samba/smb.conf",
+		"/home/rasmus/tere",
+		"/home/rasmus/ajutine/Elizabeth II 90/1497164727843.ts",
+		"/home/rasmus/ajutine/Elizabeth II 90/1497164777805.ts",
+		"/home/rasmus/projektid/pluginad/yt2vt/content/background.jsm",
+		"/tmp/.fr-06dHc4/README.md",
+		"/home/rasmus/projektid/pluginad/mth/README.md",
+		"/tmp/.fr-gUEmFQ/install.rdf",
+		"/tmp/.fr-06brUW/README.md",
+		"/home/rasmus/projektid/pluginad/mth/skin/mth.css",
+		"/home/rasmus/projektid/pluginad/yt2p/content/yt2pFrameScript.js",
+		"/home/rasmus/projektid/pluginad/yt2vt/install.rdf",
+		"/home/rasmus/projektid/pluginad/yt2p/content/optionsWindow.js",
+		"/home/rasmus/projektid/plugina-näited/AdBlockPlus/chrome/content/ui/filters-filterview.js",
+		"/home/rasmus/projektid/pluginad/yt2p/content/editPlayer.js",
+		"/home/rasmus/projektid/plugina-näited/AdBlockPlus/chrome/content/ui/filters-filteractions.js",
+		"/home/rasmus/projektid/pluginad/yt2p/content/editPlayer.xul",
+		"/home/rasmus/projektid/plugina-näited/AdBlockPlus/chrome/content/ui/filters.xul",
+		"/home/rasmus/projektid/pluginad/yt2p/locale/en-US/optionsWindow.dtd",
+		"/home/rasmus/projektid/pluginad/yt2p/locale/et/optionsWindow.dtd",
+		"/home/rasmus/projektid/pluginad/yt2vt/chrome.manifest",
+		"/home/rasmus/bin/tor-browser_en-US/start-tor-browser.desktop",
+		"/home/rasmus/.fr-odspj6/install.rdf",
+		"/home/rasmus/projektid/pluginad/yt2p/skin/yt2p.css",
+		"/home/rasmus/projektid/pluginad/yt2p/locale/en-US/yt2p.properties",
+		"/home/rasmus/projektid/pluginad/yt2p/locale/et/yt2p.properties",
+		"/home/rasmus/.fr-GTKO41/.tor-browser/Browser/TorBrowser/Data/Browser/profile.default/extensions/{a95d8332-e4b4-6e7f-98ac-20b733364387}/README.md",
+		"/home/rasmus/.fr-U115dE/content/moretools-overlay.xul",
+		"/home/rasmus/projektid/pluginad/yt2p/content/yt2p-global-style.css",
+		"/home/rasmus/YT2P-2017-06-06-210328.ini",
+		"/home/rasmus/ajutine/YT2P-2017-05-19-215249 (f).ini",
+		"/home/rasmus/projektid/pluginad/yt2p/content/optionsWindow.js.old.js",
+		"/home/rasmus/projektid/pluginad/yt2p/content/yt2p-frame-script.js",
+		"/home/rasmus/YT2P-2017-05-31-115540",
+		"/home/rasmus/.local/share/applications/Spotify (AdKiller).desktop",
+		"/usr/share/applications/mpv.desktop",
+		"/home/rasmus/.local/share/applications/vakino.desktop",
+		"/home/rasmus/.local/share/applications/ETV+.desktop",
+		"/home/rasmus/.local/share/applications/ETV2.desktop",
+		"/home/rasmus/.local/share/applications/ETV.desktop",
+		"/home/rasmus/YT2P-2017-05-30-214207",
+		"/home/rasmus/projektid/pluginad/yt2p/content/optionsWindow.css",
+		"/home/rasmus/.fr-cbnfXr/install.rdf",
+		"/home/rasmus/.fr-BY5Evy/install.rdf",
+		"/home/rasmus/ajutine/New Text Document.txt",
+		"/home/rasmus/töölaud/ETV.desktop",
+		"/home/rasmus/töölaud/New Text Document.txt",
+		"/home/rasmus/töölaud/Nimetu dokument",
+		"/home/rasmus/töölaud/Viit > Nimetu dokument",
+		"/home/rasmus/tiritud/chunklist_w1748031319_b1544100_slest.m3u8",
+		"/home/rasmus/töölaud/wowzalive.err.ee-live-_definst_-smil:etv-.txt",
+		"/home/rasmus/projektid/pluginad/yt2p/bootstrap.js",
+		"/home/rasmus/.fr-TuJQ8D/yt2p/bootstrap.js",
+		"/home/rasmus/.youtube-archive",
+		"/home/rasmus/.youtube-subscriptions",
+		"/home/rasmus/.fr-tJp03T/INSTALL.txt",
+		"/home/rasmus/.q3a/baseq3/crashlog.txt",
+		"/home/rasmus/.q3a/baseq3/q3config.cfg",
+		"/home/rasmus/projektid/pluginad/yt2p/chrome.manifest",
+		"/home/rasmus/projektid/pluginad/yt2p/skin/32/pane-menuItems.png",
+		"/home/rasmus/projektid/pluginad/yt2p/locale/et/editPlayer.dtd",
+		"/home/rasmus/projektid/pluginad/yt2p/locale/en-US/editPlayer.dtd",
+		"/home/rasmus/projektid/pluginad/yt2p/content/optionsWindow.js.old",
+		"/home/rasmus/projektid/pluginad/yt2p/content/playerGroupsEdit.js",
+		"/home/rasmus/projektid/pluginad/yt2p/content/optionsWindow-old.js",
+		"/home/rasmus/projektid/plugina-näited/FoxWebSecurity/chrome/content/settings.js",
+		"/home/rasmus/projektid/plugina-näited/AdBlockPlus/chrome/content/ui/filters.js",
+		"/home/rasmus/projektid/plugina-näited/Flagfox/chrome/flagfox/content/options.xul",
+		"/home/rasmus/YT2P-2017-05-12-223343",
+		"/home/rasmus/YT2P-2017-05-12-221806",
+		"/home/rasmus/YT2P-2017-05-12-221323",
+		"/home/rasmus/YT2P-2017-05-12-221132",
+		"/home/rasmus/FoxWebSecurity.2017.05.12.22.07.03",
+		"/home/rasmus/YT2P-2017-05-12-220528",
+		"/home/rasmus/YT2P-2017-05-12",
+		"/home/rasmus/projektid/plugina-näited/AdBlockPlus/chrome/content/ui/filters-backup.js",
+		"/home/rasmus/paberid/vanad-projektid/Windowsi desktopilt/Install/Vania/Config.xml",
+		"/home/rasmus/paberid/vanad-projektid/Windowsi desktopilt/Install/Vania/Save.xml",
+		"/home/rasmus/paberid/youtube-batch",
+		"/home/rasmus/projektid/pluginad/yt2p/content/options.js",
+		"/home/rasmus/projektid/pluginad/yt2p/content/optionsWindow.xul",
+		"/home/rasmus/projektid/pluginad/yt2p/content/options.html",
+		"/home/rasmus/projektid/pluginad/yt2p/skin/player-icon-16.png"
+	],
+	"find":
+	{
+		"height": 22.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"<open folders>",
+			"<open files>",
+			"<open folders>",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"build.xpi",
+			"build",
+			"/tmp/build.xpi",
+			"content",
+			"oldData",
+			"nussi",
+			"sudo service NetworkManager restart && sudo service dnsmasq restart",
+			"+",
+			"*",
+			"\n",
+			"+",
+			"oleme",
+			"avastamine",
+			"ainuke",
+			"document",
+			"windowTypes",
+			"mail3Pane",
+			"messenger",
+			"onContentFrameLoad",
+			"forEachWindow",
+			"onContentFrameLoad",
+			"onDomContentLoaded",
+			"global",
+			"window",
+			"var",
+			"service",
+			"var",
+			"match",
+			"function",
+			"YT2P_CSS_URI",
+			"yt2p",
+			"YT2P_CSS",
+			"XPCOMUtils",
+			"YT2Player",
+			"yt2p",
+			"clipboard",
+			"sendToPlayer",
+			"clipboard",
+			"clipboardPattern",
+			"clipboardhelper",
+			"onContextItemCommand",
+			"clipboard",
+			"OPTIONS_XUL",
+			"openOptions",
+			"OPTIONS_XUL",
+			"isMenu",
+			"menuseparator",
+			"isIcon",
+			"window",
+			"matches",
+			"\n      ",
+			"newClearAllBr",
+			"makeAnchorClickSend",
+			"getReplacementForVideo",
+			"base",
+			"updatePrefsFromVersion1",
+			"const",
+			"openOptionsEnabled",
+			"false",
+			"openOptionsEnabled",
+			"updatePrefsFromVersion1",
+			"filElement",
+			"base",
+			"videoUrl",
+			"videoId",
+			"matches",
+			"match",
+			"filElement",
+			"node",
+			"videoUrl",
+			"THUNDERBIRD",
+			"newFilElement",
+			"function",
+			"onEmbeddedVideo",
+			".getAttribute('href')",
+			"onContentFrameUnload",
+			"onContentFrameLoad",
+			"href",
+			"$",
+			"videoUrl",
+			"onEmbeddedVideo",
+			"THUNDERBIRD",
+			"win",
+			"uri",
+			"messageUri",
+			"uri",
+			"var",
+			"msgHdr",
+			"document.URL",
+			"messageUri",
+			"uri",
+			"messageUri",
+			"Components",
+			"messageUri",
+			"uri",
+			"messageUri",
+			"uri",
+			"document.URL",
+			"uri",
+			"messenger",
+			"uri",
+			"uriString",
+			"var",
+			"messageURI",
+			"uri",
+			"msgHdr",
+			"var",
+			"msgHdr",
+			"var",
+			"msgHdr",
+			"header",
+			"msgHdr",
+			"doc",
+			"messageURI",
+			"msgHdr",
+			"true",
+			"function",
+			"pane",
+			"gCurrentMessageUri",
+			"delayedOnLoadMessageWindow",
+			"window",
+			"mail3View",
+			"console.log",
+			"loadIntoWindow",
+			"yt2p-frame-script",
+			"yt2p-global-style",
+			"window",
+			"mail3View"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"",
+			"yt2pFrameScript",
+			"yt2p",
+			"yt2p-unloadFrameScript",
+			"editItem",
+			"cutItems",
+			"copyItems",
+			"pasteItems",
+			"deleteItems",
+			"resetPrefs",
+			"importPrefs",
+			"exportPrefs",
+			"insertPlayerFromData",
+			"appendSeparator",
+			"appendPlayerFromData",
+			"setCurrentPlayerData",
+			"deletePlayers",
+			"pastePlayers",
+			"copyPlayers",
+			"cutPlayers",
+			"editPlayer",
+			"selectAllPlayers",
+			"addPlayer",
+			"appendItemFromData",
+			"appendItem",
+			"sendToPlayer",
+			"menus",
+			"players",
+			"Players",
+			"playerTree",
+			"playersPane",
+			"editPlayer",
+			"setCurrentItemData",
+			"addItemAfterCurrent",
+			"onPlayerGroupsItemMenuPopupShowing",
+			"playerGroupsListboxMenuPopup",
+			"",
+			"chrome://yt2p/skin/16/player.png",
+			"chrome://yt2p/skin/32/pane-",
+			"chrome://yt2p/skin/16/player.png",
+			"chrome://yt2p/skin/16/yt2p.png",
+			"pane-",
+			"prefpane-",
+			"logo-16",
+			"player-16",
+			"optionsWindow",
+			"youtube \\1",
+			"playerGroupsEdit",
+			"toolsMenuItemsEnabled",
+			"chrome://yt2p/locale/yt2p.properties",
+			"chrome://yt2p/skin/player-icon-16.png",
+			"chrome://yt2p/skin/yt2p-logo-16.png",
+			"filClickChangeEnabled",
+			"filClickChangeType",
+			"videoLinkClickChangeEnabled",
+			"videoLinkClickChangeType",
+			"videoLinkChangeEnabled",
+			"videoLinkChangeType",
+			"embeddedVideoChangeEnabled",
+			"embeddedVideoChangeType",
+			"contextMenuItemsEnabled",
+			"contextMenuItemsType",
+			"contextMenuItemsEnabled",
+			"yt2p-stylize",
+			"yt2p-glow",
+			"yt2p-yt-error",
+			"yt2p-yt-logo",
+			"showContextMenuItems",
+			"contextMenuItemsType",
+			"filClickChangeType",
+			"videoLinkClickChangeType",
+			"videoLinkClickType",
+			"filClickType",
+			"changeFilClick",
+			"embeddedVideoChangeType",
+			"changeFilOnClick",
+			"videoLinksClickSends",
+			"changeEmbeddedVideos",
+			"yt2p-link-stylized",
+			"nameMatched",
+			"defaultGroup",
+			"const",
+			"https://github.com/sumzary/yt2p",
+			"sumzary/yt2p",
+			"for (let \\1 of",
+			"'mainStore'",
+			"'videoStore'",
+			"'playlistStore'",
+			"'pageStore'",
+			"pageStore",
+			"playlistStore",
+			"videoStore",
+			"playlistIdList",
+			"videoIdList",
+			"pageIdList",
+			"response",
+			"pageIdsUpdating.includes",
+			"event.target.result",
+			"YT1PDB",
+			"('YT1PDBT4', 1)",
+			"('YT1PDBT3', 2)",
+			"updatePage",
+			"updatePlaylist",
+			"YT1PDBT3",
+			"playlistMove",
+			"playlistSync",
+			"playlistRemove",
+			"playlistAdd",
+			"pageMove",
+			"pageAdd",
+			"sync",
+			"pageRemove",
+			"pageRename",
+			"pageSync",
+			"pages",
+			"0.0.0.0",
+			"playlist",
+			"feedPageList",
+			"function (",
+			"window",
+			"document",
+			");\n",
+			" === 0",
+			" === null",
+			"'",
+			"\"",
+			"Boolean"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 32.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 106.0
+	},
+	"pinned_build_system": "XPI",
+	"project": "yt2p.sublime-project",
+	"replace":
+	{
+		"height": 40.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"yt2p",
+				"yt2p/locale/et/yt2p.properties"
+			],
+			[
+				"owcss",
+				"yt2p/content/optionsWindow.css"
+			],
+			[
+				"enowdtd",
+				"yt2p/locale/en-US/optionsWindow.dtd"
+			],
+			[
+				"owdtd",
+				"yt2p/locale/en-US/optionsWindow.dtd"
+			],
+			[
+				"enprop",
+				"yt2p/locale/en-US/yt2p.properties"
+			],
+			[
+				"ytprop",
+				"yt2p/locale/et/yt2p.properties"
+			],
+			[
+				"yt",
+				"yt2p/locale/et/yt2p.properties"
+			],
+			[
+				"glo",
+				"yt2p/content/yt2p-global-style.css"
+			],
+			[
+				"glob",
+				"yt2p/content/yt2p-global-style.css"
+			],
+			[
+				"proep",
+				"yt2p/locale/en-US/yt2p.properties"
+			],
+			[
+				"prop",
+				"yt2p/locale/et/yt2p.properties"
+			],
+			[
+				"yt2p.prop",
+				"yt2p/locale/et/yt2p.properties"
+			],
+			[
+				"ytglob",
+				"yt2p/content/yt2p-global-style.css"
+			],
+			[
+				"css",
+				"yt2p/content/optionsWindow.css"
+			],
+			[
+				"globa",
+				"yt2p/content/yt2p-global-style.css"
+			],
+			[
+				"optionw",
+				"yt2p/content/optionsWindow.css"
+			],
+			[
+				"ytcss",
+				"yt2p/content/yt2p-global-style.css"
+			],
+			[
+				"boots",
+				"yt2p/bootstrap.js"
+			],
+			[
+				"fram",
+				"yt2p/content/yt2p-frame-script.js"
+			],
+			[
+				"opjs",
+				"yt2p/content/options.js"
+			],
+			[
+				"insta",
+				"yt2p/install.rdf"
+			],
+			[
+				"et",
+				"yt2p/locale/et/yt2p.properties"
+			],
+			[
+				"2ojs",
+				"yt2p/content/yt2p-options.js"
+			],
+			[
+				"2oc",
+				"yt2p/content/yt2p-options.css"
+			],
+			[
+				"opthtml",
+				"yt2p/content/yt2p-options.html"
+			],
+			[
+				"opht",
+				"yt2p/content/yt2p-options.html"
+			],
+			[
+				"opcss",
+				"sefi/css/options.css"
+			],
+			[
+				"ophtml",
+				"yt2p/content/yt2p-options.html"
+			],
+			[
+				"ytopjs",
+				"yt2p/content/yt2p-options.js"
+			],
+			[
+				"en",
+				"yt2p/locale/en-US/yt2p.properties"
+			],
+			[
+				"optcss",
+				"yt2p/content/yt2p-options.css"
+			],
+			[
+				"2pc",
+				"yt2p/content/yt2p-options.css"
+			],
+			[
+				"2oph",
+				"yt2p/content/yt2p-options.html"
+			],
+			[
+				"2opcs",
+				"yt2p/content/yt2p-options.css"
+			],
+			[
+				"opcs",
+				"sefi/css/options.css"
+			],
+			[
+				"2oht",
+				"yt2p/content/yt2p-options.html"
+			],
+			[
+				"2ocs",
+				"yt2p/content/yt2p-options.css"
+			],
+			[
+				"2opthtml",
+				"yt2p/content/yt2p-options.html"
+			],
+			[
+				"yfs",
+				"yt2p/content/yt2p-frame-script.js"
+			],
+			[
+				"2opt",
+				"yt2p/content/yt2p-options.html"
+			],
+			[
+				"ytopt",
+				"yt2p/content/yt2p-options.css"
+			],
+			[
+				"optjs",
+				"yt2p/content/options.js"
+			],
+			[
+				"f",
+				"yt2p/content/yt2p-frame-script.js"
+			],
+			[
+				"html",
+				"yt2p/content/options.html"
+			],
+			[
+				"opthml",
+				"yt2p/content/options.html"
+			],
+			[
+				"ins",
+				"yt2p/install.rdf"
+			],
+			[
+				"optht",
+				"yt2p/content/options.html"
+			],
+			[
+				"ens",
+				"yt2p/locale/en-US/strings.properties"
+			],
+			[
+				"mani",
+				"yt1p/manifest.json"
+			],
+			[
+				"backjsm",
+				"yt2vt/content/background.jsm"
+			],
+			[
+				"etstr",
+				"yt2p/locale/et/strings.properties"
+			],
+			[
+				"bootjs",
+				"yt2p/bootstrap.js"
+			],
+			[
+				"otphtml",
+				"yt2p/content/options.html"
+			],
+			[
+				"",
+				"yt2p/content/yt2p-global-style.css"
+			],
+			[
+				"optionshtml",
+				"yt2p/content/options.html"
+			],
+			[
+				"options",
+				"yt2vt/content/options.xul"
+			],
+			[
+				"etstrp",
+				"yt2p/locale/et/strings.properties"
+			],
+			[
+				"stren",
+				"yt2p/locale/en-US/strings.properties"
+			],
+			[
+				"backg",
+				"yt2vt/content/background.jsm"
+			],
+			[
+				"enstr",
+				"yt2p/locale/en-US/strings.properties"
+			],
+			[
+				"globs",
+				"yt2p/content/yt2p-global-style.css"
+			],
+			[
+				"ohtml",
+				"yt2p/content/options.html"
+			],
+			[
+				"local",
+				"yt2p/content/localize.js"
+			],
+			[
+				"enstrprop",
+				"yt2p/locale/en-US/strings.properties"
+			],
+			[
+				"strin",
+				"yt2p/locale/et/strings.properties"
+			],
+			[
+				"stret",
+				"yt2p/locale/et/strings.properties"
+			],
+			[
+				"etstrings",
+				"yt2p/locale/et/strings.properties"
+			],
+			[
+				"loc",
+				"yt2p/content/localize.js"
+			],
+			[
+				"frre",
+				"yt2p/content/yt2p-frame-script.js"
+			],
+			[
+				"oh",
+				"sefi/options.html"
+			],
+			[
+				"stringsprop",
+				"YT2Player/locale/et/strings.properties"
+			],
+			[
+				".sj",
+				"YouTube 1 Esitusloendid/js/popup.js"
+			],
+			[
+				"xul",
+				"YouTube 2 Mängija (vana)/content/options.xul"
+			],
+			[
+				"optio",
+				"YouTube 1 Esitusloendid/options.html"
+			],
+			[
+				"op",
+				"YouTube 2 Mängija (vana)/content/options.xul"
+			],
+			[
+				"oop",
+				"YouTube 2 Mängija (vana)/content/options.xul"
+			],
+			[
+				"option",
+				"YouTube 2 Mängija (vana)/content/options.js"
+			],
+			[
+				"jsm",
+				"YouTube 2 VaTirija (vana)/content/background.jsm"
+			],
+			[
+				"cjs",
+				"YouTube 2 Mängija (vana)/content/content.js"
+			],
+			[
+				"boot",
+				"YouTube 2 Mängija (vana)/bootstrap.js"
+			],
+			[
+				"pcs",
+				"YouTube 1 Esitusloendid/css/playlists.css"
+			],
+			[
+				"pjs",
+				"YouTube 1 Esitusloendid/js/playlists.js"
+			],
+			[
+				"ph",
+				"YouTube 1 Esitusloendid/playlists.html"
+			],
+			[
+				"pcss",
+				"YouTube 1 Esitusloendid/css/playlists.css"
+			],
+			[
+				"bgjsm",
+				"YouTube 2 Mängija (vana)/content/background.jsm"
+			],
+			[
+				"plc",
+				"YouTube 1 Esitusloendid/css/playlists.css"
+			],
+			[
+				"pc",
+				"YouTube 1 Esitusloendid/css/playlists.css"
+			],
+			[
+				"pljs",
+				"YouTube 1 Esitusloendid/js/playlists.js"
+			],
+			[
+				"popjs",
+				"YouTube 1 Esitusloendid/js/popup.js"
+			],
+			[
+				"bg",
+				"YouTube 1 Esitusloendid/js/background.js"
+			],
+			[
+				"popcs",
+				"YouTube 1 Esitusloendid/css/popup.css"
+			],
+			[
+				"popj",
+				"YouTube 1 Esitusloendid/js/popup.js"
+			],
+			[
+				"h",
+				"YouTube 1 Esitusloendid/playlists.html"
+			],
+			[
+				"p",
+				"YouTube 1 Esitusloendid/playlists.html"
+			],
+			[
+				"cs",
+				"YouTube 1 Esitusloendid/css/playlists.css"
+			],
+			[
+				"popupc",
+				"YouTube 1 Esitusloendid/css/popup.css"
+			],
+			[
+				"popupj",
+				"YouTube 1 Esitusloendid/js/popup.js"
+			],
+			[
+				"popc",
+				"YouTube 1 Esitusloendid/css/popup.css"
+			],
+			[
+				"poph",
+				"YouTube 1 Esitusloendid/popup.html"
+			],
+			[
+				"popup.c",
+				"YouTube 1 Esitusloendid/css/popup.css"
+			],
+			[
+				"poc",
+				"YouTube 1 Esitusloendid/css/popup.css"
+			],
+			[
+				"ht",
+				"YouTube 1 Esitusloendid/playlists.html"
+			],
+			[
+				"gc",
+				"YouTube 1 Esitusloendid/css/global.css"
+			],
+			[
+				"gjs",
+				"YouTube 1 Esitusloendid/js/global.js"
+			],
+			[
+				"global",
+				"YouTube 1 Esitusloendid/js/global.js"
+			],
+			[
+				"gl",
+				"YouTube 1 Esitusloendid/css/global.css"
+			],
+			[
+				"js",
+				"YouTube 1 Esitusloendid/manifest.json"
+			],
+			[
+				"pl",
+				"YouTube 1 Esitusloendid/js/playlists.js"
+			],
+			[
+				"popup",
+				"Pluginad/YouTube 1 Esitusloendid/js/popup.js"
+			],
+			[
+				"g",
+				"YouTube 1 Esitusloendid/css/global.css"
+			],
+			[
+				"pocss",
+				"YouTube 1 Esitusloendid/css/popup.css"
+			],
+			[
+				"plh",
+				"YouTube 1 Esitusloendid/playlists.html"
+			],
+			[
+				"htm",
+				"YouTube 1 Esitusloendid/playlists.html"
+			],
+			[
+				"jsh",
+				"Pluginad/.jshintrc"
+			],
+			[
+				"play",
+				"YouTube 1 Esitusloendid/playlists.html"
+			],
+			[
+				"globaljs",
+				"YouTube 1 Esitusloendid/js/global.js"
+			],
+			[
+				"man",
+				"YouTube 1 Esitusloendid/manifest.json"
+			],
+			[
+				"backgruonjs",
+				"Pluginad/YouTube 1 Esitusloendid/js/background.js"
+			],
+			[
+				"popup.js",
+				"Pluginad/YouTube 1 Esitusloendid/js/popup.js"
+			],
+			[
+				"ma",
+				"YouTube 1 Esitusloendid/manifest.json"
+			],
+			[
+				"./pagan",
+				"~/.config/sublime-text-3/Packages/User/Glue.sublime-settings"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/rassu/rassu.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 302.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"setpref",
+				"setPref"
+			],
+			[
+				"droph",
+				"ondropHandler"
+			],
+			[
+				"hidden",
+				".hidden"
+			],
+			[
+				"get_playlistPageStorage",
+				"get_playlistPageStorage"
+			],
+			[
+				"get_",
+				"get_playlistPageStorage"
+			]
+		],
+		"width": 372.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 195.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -1,0 +1,17 @@
+<!ENTITY title.label "Muuda mängija sätteid">
+<!ENTITY browse.label "Lehitse...">
+
+<!ENTITY name.label "Nimi:">
+<!ENTITY name.accesskey "n">
+<!ENTITY isClickSender.label "Klipi lingi klikil saatja">
+<!ENTITY isClickSender.accesskey "s">
+<!ENTITY command.label "Käsk:">
+<!ENTITY command.accesskey "k">
+<!ENTITY icon.label "Ikoon:">
+<!ENTITY icon.accesskey "i">
+<!ENTITY clipboard.label "Kopeerimine:">
+<!ENTITY clipboard.accesskey "c">
+
+<!ENTITY videourl.tooltiptext "Standardiseeritud klipi URL">
+<!ENTITY videoid.tooltiptext "Klipi id">
+<!ENTITY playlistid.tooltiptext "Esitusloendi id, kui see url-is esineb">

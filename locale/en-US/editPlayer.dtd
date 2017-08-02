@@ -1,0 +1,17 @@
+<!ENTITY title.label "Edit parameters">
+<!ENTITY browse.label "Browse...">
+
+<!ENTITY name.label "Name:">
+<!ENTITY name.accesskey "n">
+<!ENTITY isClickSender.label "Video link click sender">
+<!ENTITY isClickSender.accesskey "s">
+<!ENTITY command.label "Command:">
+<!ENTITY command.accesskey "c">
+<!ENTITY icon.label "Icon:">
+<!ENTITY icon.accesskey "i">
+<!ENTITY clipboard.label "Clipboard:">
+<!ENTITY clipboard.accesskey "b">
+
+<!ENTITY videourl.tooltiptext "Standardized video URL">
+<!ENTITY videoid.tooltiptext "Video ID">
+<!ENTITY playlistid.tooltiptext "Playlist ID, if available">

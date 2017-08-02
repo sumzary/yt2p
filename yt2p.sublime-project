@@ -1,0 +1,24 @@
+{
+	"build_systems":
+	[
+		{
+			"name": "XPI",
+			"shell_cmd": "rm -f yt2p.xpi && zip -r yt2p.xpi . -x *.xpi *.sublime-project *.sublime-workspace *.git* *.jshintrc",
+			"working_dir": "$folder",
+			"variants":
+			[
+				{
+					"name": "Run",
+					"shell_cmd": "rm -f yt2p.xpi && zip -r yt2p.xpi . -x *.xpi *.sublime-project *.sublime-workspace *.git* *.jshintrc && wget --post-file=yt2p.xpi http://127.0.0.1:8888/",
+					"working_dir": "$folder"
+				}
+			]
+		}
+	],
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	]
+}

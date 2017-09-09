@@ -153,32 +153,31 @@
     return videoUrl
   }
 
-  function isElementTextOnly (element) {
-    return Array.prototype.slice.call(element.children)
-      .every(child => /^(B|I|U|EM|H1|H2|H3|H4|H5|H6)$/.test(child.tagName))
-  }
-
   function isVideoUrl (url) {
     return /^(?:(?:(?:view-source:)?https?:)?\/\/)?(?:(?:www\.|m\.)?(?:youtube|youtube-nocookie)\.com\/(?:watch\?|embed\/|v\/|attribution_link\?a)|youtu\.be\/|\/watch\?)/.test(url)
   }
 
   function makeYouTubeVideoPageTitleClickable () {
     if (!getPref('videoLinkChangeEnabled')) return
-    const titleSpan = $('#eow-title')
-    if (!titleSpan) return
-    const a = document.createElement('a')
-    a.className = 'yt2p-send-override yt2p-stylize'
-    a.href = window.location.href
-    a.addEventListener('click', onVideoLinkClick)
-    a.appendChild(titleSpan.cloneNode(true))
-    titleSpan.parentElement.insertBefore(a, titleSpan)
-    titleSpan.classList.add('yt2p-replaced')
-  }
-
-  function newClearAllBr () {
-    const br = document.createElement('br')
-    br.className = 'yt2p-clearall'
-    return br
+    if (exec($('#eow-title'))) return
+    if (exec($('#container > h1.title'))) return
+    new window.MutationObserver((mutations, obs) => {
+      if (exec($('#container > h1.title'))) obs.disconnect()
+    }).observe(document.body, {
+      childList: true,
+      subtree: true
+    })
+    function exec (node) {
+      if (!node) return false
+      const a = document.createElement('a')
+      a.className = 'yt2p-send-override yt2p-stylize'
+      a.href = window.location.href
+      a.addEventListener('click', onVideoLinkClick)
+      a.appendChild(node.cloneNode(true))
+      node.parentElement.insertBefore(a, node)
+      node.classList.add('yt2p-replaced')
+      return true
+    }
   }
 
   function newEmbeddedVideoElement (videoUrl) {
@@ -251,7 +250,7 @@
 
   function onAddedNode (node) {
     if (!(node instanceof window.HTMLElement)) return
-    if (node.className.indexOf('yt2p') !== -1) return
+    if (node.className.startsWith('yt2p')) return
     if (getPref('embeddedVideoChangeEnabled')) {
       if (/IFRAME|OBJECT|EMBED/.test(node.tagName) &&
           (node.parentElement && node.parentElement.tagName !== 'OBJECT')) {
@@ -326,7 +325,7 @@
       element.classList.remove('yt2p-replaced')
       const replacement = element.previousElementSibling
       if (!replacement) return
-      if (replacement.className.indexOf('yt2p') === -1) return
+      if (!replacement.className.startsWith('yt2p')) return
       replacement.parentElement.removeChild(replacement)
     })
     document = null
@@ -477,15 +476,6 @@
       a.parentElement.replaceChild(newFilElement(a.href), a)
     }
     return false
-  }
-
-  function recreateElement (element, withChildren) {
-    const clone = element.cloneNode(withChildren)
-    if (!withChildren) {
-      while (element.hasChildNodes()) clone.appendChild(element.firstChild)
-    }
-    element.parentElement.replaceChild(clone, element)
-    return clone
   }
 
   function sendVideoUrlToPlayer (videoUrl) {

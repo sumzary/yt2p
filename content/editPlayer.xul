@@ -48,7 +48,7 @@
         <label value="&command.label;"/>
         <hbox align="center">
           <textbox flex="1" id="command" accesskey="&command.accesskey;" tooltip="patternTooltip" style="font-family: monospace;"/>
-          <button id="browseCommand" label="&browse.label;" oncommand="browseCommand()"/>
+          <button id="browseCommand" label="&browse.label;..." oncommand="browseCommand()"/>
         </hbox>
       </row>
       <row align="center">
@@ -58,7 +58,7 @@
         </hbox>
         <hbox align="center">
           <textbox flex="1" id="icon" accesskey="&icon.accesskey;" onchange="return onIconChange()"/>
-          <button id="browseIcon" label="&browse.label;" oncommand="browseIcon()"/>
+          <button id="browseIcon" label="&browse.label;..." oncommand="browseIcon()"/>
         </hbox>
       </row>
       <row align="center">

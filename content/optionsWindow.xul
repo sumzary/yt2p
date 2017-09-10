@@ -55,6 +55,7 @@
         editable="true"
         hidehscroll="true"
         hidevscroll="true"
+        height="256px"
         hidecolumnpicker="true"
         keepcurrentinview="true"
         disablekeynavigation="true"

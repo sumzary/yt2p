@@ -343,7 +343,7 @@
       popup.id !== CONTEXT_MENUPOPUP.substring(1)) popup = popup.parentNode
     const uri = popup.getAttribute('data-yt2p-uri')
     const videoUrl = uri || window.gContextMenu.linkURL
-    if (item.classList.includes('yt2p-menu')) popup.hidePopup()
+    if (item.classList.contains('yt2p-menu')) popup.hidePopup()
     const clipboardPattern = item.getAttribute('data-clipboard')
     if (clipboardPattern) {
       setClipboardString(getStringFromPattern(clipboardPattern, videoUrl))

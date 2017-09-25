@@ -16,7 +16,7 @@
   const SESSION_TIME = Date.now()
   const GOOGLE_KEY = 'AIzaSyDCV-JwiIQL4sBjMJlaP5bMZfGL-W_YMDA'
   const PREF_BRANCH = 'extensions.yt2p.'
-  const STRING_BUNDLE = `chrome://yt2p/locale/yt2p.properties?${SESSION_TIME}`
+  const STRING_BUNDLE = 'chrome://yt2p/locale/yt2p.properties?' + SESSION_TIME
 
   const prefBranch = Services.prefs.getBranch(PREF_BRANCH)
   const stringBundle = Services.strings.createBundle(STRING_BUNDLE)
@@ -35,46 +35,40 @@
     return [...element.querySelectorAll(selector)]
   }
 
-  function fetchChannelItem (channelId) {
-    return new Promise((resolve, reject) => {
-      const request = new window.XMLHttpRequest()
-      request.onerror = event => reject()
-      request.onload = event => {
-        if (request.status !== 200) reject()
-        resolve(JSON.parse(request.response).items[0])
-      }
-      request.open('GET', `https://www.googleapis.com/youtube/v3/channels?key=${GOOGLE_KEY}&id=${channelId}&part=snippet,statistics,contentDetails&fields=items(id,snippet(title,description,thumbnails(default)),statistics(videoCount,subscriberCount,hiddenSubscriberCount))`)
-      request.send()
-    })
+  function fetchChannelItem (channelId, resolve, reject) {
+    const request = new window.XMLHttpRequest()
+    request.onerror = event => reject()
+    request.onload = event => {
+      if (request.status !== 200) reject()
+      resolve(JSON.parse(request.response).items[0])
+    }
+    request.open('GET', 'https://www.googleapis.com/youtube/v3/channels?key=' + GOOGLE_KEY + '&id=' + channelId + '&part=snippet,statistics,contentDetails&fields=items(id,snippet(title,description,thumbnails(default)),statistics(videoCount,subscriberCount,hiddenSubscriberCount))')
+    request.send()
   }
 
-  function fetchVideoImage (videoId) {
-    return new Promise((resolve, reject) => {
-      const img = new window.Image()
-      img.className = 'yt2p-video-image'
-      img.width = 480
-      img.height = 360
-      img.onerror = event => reject()
-      img.onload = event => {
-        if (img.naturalWidth > 120) return resolve(img)
-        if (!/sddefault\.jpg$/.test(img.src)) return reject()
-        img.src = `https://i.ytimg.com/vi/${videoId}/0.jpg`
-      }
-      img.src = `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`
-    })
+  function fetchVideoImage (videoId, resolve, reject) {
+    const img = new window.Image()
+    img.className = 'yt2p-video-image'
+    img.width = 480
+    img.height = 360
+    img.onerror = event => reject()
+    img.onload = event => {
+      if (img.naturalWidth > 120) return resolve(img)
+      if (!/sddefault\.jpg$/.test(img.src)) return reject()
+      img.src = 'https://i.ytimg.com/vi/' + videoId + '/0.jpg'
+    }
+    img.src = 'https://i.ytimg.com/vi/' + 'videoId' + '/sddefault.jpg'
   }
 
-  function fetchVideoItem (videoId) {
-    return new Promise((resolve, reject) => {
-      const request = new window.XMLHttpRequest()
-      request.onerror = event => reject()
-      request.onload = event => {
-        if (request.status !== 200) reject()
-        resolve(JSON.parse(request.response).items[0])
-      }
-      request.open('GET', `https://www.googleapis.com/youtube/v3/videos?key=${GOOGLE_KEY}&id=${videoId}&part=snippet,statistics,contentDetails&fields=items(snippet(publishedAt,channelId,title,description),contentDetails(duration),statistics(viewCount,likeCount,dislikeCount))`)
-      request.send()
-    })
+  function fetchVideoItem (videoId, resolve, reject) {
+    const request = new window.XMLHttpRequest()
+    request.onerror = () => reject()
+    request.onload = event => {
+      if (request.status !== 200) return reject()
+      resolve(JSON.parse(request.response).items[0])
+    }
+    request.open('GET', 'https://www.googleapis.com/youtube/v3/videos?key=' + GOOGLE_KEY + '&id=' + videoId + '&part=snippet,statistics,contentDetails&fields=items(snippet(publishedAt,channelId,title,description),contentDetails(duration),statistics(viewCount,likeCount,dislikeCount))')
+    request.send()
   }
 
   function getHtmlTextWidth (text, font) {
@@ -93,7 +87,7 @@
   }
 
   function getPlaylistIdFromUrl (videoUrl) {
-    if (!videoUrl.includes('list=')) return ''
+    if (videoUrl.indexOf('list=') === -1) return ''
     const temp = videoUrl.replace('list=', '$PLAYLISTID$')
     return temp.substr(temp.indexOf('$PLAYLISTID$') + 11, 11)
   }
@@ -109,9 +103,9 @@
   }
 
   function getStandardisedVideoUrl (videoUrl) {
-    const result = `https://www.youtube.com/watch?v=${getVideoIdFromUrl(videoUrl)}`
+    const result = 'https://www.youtube.com/watch?v=' + getVideoIdFromUrl(videoUrl)
     const playlistId = getPlaylistIdFromUrl(videoUrl)
-    if (playlistId) return result + `&list=${playlistId}`
+    if (playlistId) return result + '&list=' + playlistId
     return result
   }
 
@@ -120,7 +114,7 @@
     try {
       return stringBundle.GetStringFromName(name)
     } catch (e) { Cu.reportError(e) }
-    return `__${name}__`
+    return '__' + name + '__'
   }
 
   function getTimestampFromISO8601 (iso8601Duration) {
@@ -128,11 +122,11 @@
     if (matches[8]) {
       if (matches[7]) {
         if (matches[6]) {
-          return `${pad(matches[6])}:${pad(matches[7])}:${pad(matches[8])}`
+          return pad(matches[6]) + ':' + pad(matches[7]) + ':' + pad(matches[8])
         }
-        return `${pad(matches[7])}:${pad(matches[8])}`
+        return pad(matches[7]) + ':' + pad(matches[8])
       }
-      return `${pad(matches[8])}s`
+      return pad(matches[8]) + 's'
     }
     return ''
 
@@ -148,13 +142,13 @@
 
   function getVideoUrlFromId (videoId, playlistId) {
     if (!videoId) return ''
-    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`
-    if (playlistId) return `${videoUrl}&list=${playlistId}`
+    const videoUrl = 'https://www.youtube.com/watch?v=' + videoId
+    if (playlistId) return videoUrl + '&list=' + playlistId
     return videoUrl
   }
 
   function isVideoUrl (url) {
-    return /^(?:(?:(?:view-source:)?https?:)?\/\/)?(?:(?:www\.|m\.)?(?:youtube|youtube-nocookie)\.com\/(?:watch\?|embed\/|v\/|attribution_link\?a)|youtu\.be\/|\/watch\?)/.test(url)
+    return /^(?:(?:(?:view-source:)?https?:)?\/\/)?(?:(?:www\.|m\.)?(?:youtube|youtube-nocookie)\.com\/(?:watch\?|embed\/|v\/|attribution_link\?a)|youtu\.be\/|\/watch\?|.+%2Fwatch%3Fv%3D)/.test(url)
   }
 
   function makeYouTubeVideoPageTitleClickable () {
@@ -172,7 +166,7 @@
       const a = document.createElement('a')
       a.className = 'yt2p-send-override yt2p-stylize'
       a.href = window.location.href
-      a.addEventListener('click', onVideoLinkClick)
+      a.onclick = onVideoLinkClick
       a.appendChild(node.cloneNode(true))
       node.parentElement.insertBefore(a, node)
       node.classList.add('yt2p-replaced')
@@ -185,7 +179,7 @@
     div.className = 'yt2p-video yt2p-embedded'
     const iframe = document.createElement('iframe')
     iframe.className = 'yt2p-iframe'
-    iframe.src = `https://www.youtube.com/embed/${getVideoIdFromUrl(videoUrl)}`
+    iframe.src = 'https://www.youtube.com/embed/' + getVideoIdFromUrl(videoUrl)
     iframe.setAttribute('width', 480)
     iframe.setAttribute('height', 270)
     iframe.setAttribute('frameborder', 0)
@@ -199,7 +193,7 @@
     div.className = 'yt2p-video yt2p-embedded'
     const object = document.createElement('object')
     const embed = document.createElement('embed')
-    const url = `http://www.youtube.com/v/${videoId}&amp;version=3`
+    const url = 'https://www.youtube.com/v/' + videoId + '&amp;version=3'
     object.setAttribute('width', 480)
     object.setAttribute('height', 270)
     embed.setAttribute('width', 480)
@@ -221,23 +215,30 @@
     const videoA = document.createElement('a')
     videoA.className = 'yt2p-video-link'
     videoA.href = getStandardisedVideoUrl(videoUrl)
-    videoA.addEventListener('click', onFilVideoLinkClick)
+    videoA.onclick = onFilVideoLinkClick
     filDiv.appendChild(videoA)
     const videoId = getVideoIdFromUrl(videoUrl)
-    const videoImagePromise = fetchVideoImage(videoId)
-    const videoItemPromise = fetchVideoItem(videoId)
-    videoImagePromise.then(videoImage => {
-      videoA.appendChild(videoImage)
-      videoItemPromise.then(videoItem => {
-        updateFilDivFromVideoItem(filDiv, videoItem)
-        fetchChannelItem(videoItem.snippet.channelId).then(channelItem => {
-          updateFilDivFromChannelItem(filDiv, channelItem)
-        })
-      })
-    }).catch(error => {
-      global.dump(error)
+    let done1 = false
+    let videoItem
+    function onError () {
       updateFilDivWithErrorMessage(filDiv)
-    })
+    }
+    function step2 () {
+      updateFilDivFromVideoItem(filDiv, videoItem)
+      fetchChannelItem(videoItem.snippet.channelId, item => {
+        updateFilDivFromChannelItem(filDiv, item)
+      }, onError)
+    }
+    fetchVideoImage(videoId, image => {
+      videoA.appendChild(image)
+      if (done1) step2()
+      done1 = true
+    }, onError)
+    fetchVideoItem(videoId, item => {
+      videoItem = item
+      if (done1) step2()
+      done1 = true
+    }, onError)
     return filDiv
   }
 
@@ -307,7 +308,9 @@
         !getPref('videoLinkChangeEnabled') &&
         !getPref('videoLinkClickChangeEnabled')) return
     global.yt2pMutationObserver = new window.MutationObserver(mutations => {
-      mutations.forEach(mutation => mutation.addedNodes.forEach(onAddedNode))
+      mutations.forEach(mutation => {
+        for (let node of mutation.addedNodes) onAddedNode(node)
+      })
     }).observe(document.body, {
       childList: true,
       subtree: true
@@ -334,6 +337,7 @@
 
   function onEmbeddedVideo (element) {
     if (!getPref('embeddedVideoChangeEnabled')) return
+    if (/yt2p-/.test(element.className)) return
     let videoUrl = element.src || element.getAttribute('data-src') || ($('embed', element) && $('embed', element).src) || element.data || ''
     let videoId
     if (!videoUrl || !isVideoUrl(videoUrl)) {
@@ -344,6 +348,10 @@
       videoId = getVideoIdFromUrl(videoUrl)
     }
     let parent = element.parentElement
+    while (parent.childNodes.length === 1 && parent.tagName !== 'CENTER') {
+      element = parent
+      parent = element.parentElement
+    }
     const changeType = getPref('embeddedVideoChangeType')
     if (changeType === 0 ||
         window.doneVideoIds.some(id => id === videoId)) {
@@ -351,7 +359,7 @@
       a.className = 'yt2p-link yt2p-stylize'
       a.href = getVideoUrlFromId(videoId)
       a.textContent = videoId
-      a.addEventListener('click', onVideoLinkClick)
+      a.onclick = onVideoLinkClick
       parent.replaceChild(a, element)
       return
     }
@@ -362,11 +370,6 @@
       return
     }
     if (changeType === 2) {
-      while (parent.childNodes.length === 1 &&
-          parent.tagName !== 'CENTER') {
-        element = parent
-        parent = element.parentElement
-      }
       parent.replaceChild(newFilElement(videoUrl), element)
       if (parent.classList) parent.classList.add('yt2p-video-parent')
       // parent.insertBefore(newFilElement(videoUrl), element)
@@ -395,7 +398,10 @@
       const videoId = getVideoIdFromUrl(filA.href)
       const a = document.createElement('a')
       a.href = getVideoUrlFromId(videoId)
+      a.classList.add('yt2p-link')
+      a.classList.add('yt2p-stylize')
       a.textContent = videoId
+      a.onclick = onVideoLinkClick
       parentElement.replaceChild(a, filElement)
     }
     return false
@@ -420,19 +426,21 @@
         const newA = a.cloneNode(true)
         a.parentElement.insertBefore(newA, a.nextElementSibling)
         a.classList.add('yt2p-replaced')
-        newA.classList.add('yt2p-link', 'yt2p-stylize')
+        newA.classList.add('yt2p-link')
+        newA.classList.add('yt2p-stylize')
         if (isVideoUrl(a.textContent)) {
           newA.textContent = getVideoIdFromUrl(a.href)
         }
-        newA.addEventListener('click', onVideoLinkClick)
+        newA.onclick = onVideoLinkClick
         return
       }
-      a.classList.add('yt2p-link', 'yt2p-stylize')
+      a.classList.add('yt2p-link')
+      a.classList.add('yt2p-stylize')
       if (isVideoUrl(a.textContent) &&
           !window.location.href.startsWith('view-source:')) {
         a.textContent = getVideoIdFromUrl(a.href)
       }
-      a.addEventListener('click', onVideoLinkClick)
+      a.onclick = onVideoLinkClick
       return
     }
     a.classList.add('yt2p-replaced')
@@ -479,14 +487,14 @@
   }
 
   function sendVideoUrlToPlayer (videoUrl) {
-    global.sendAsyncMessage('yt2p-sendToPlayer', { videoUrl })
+    global.sendAsyncMessage('yt2p-sendToPlayer', { videoUrl: videoUrl })
   }
 
   function updateFilDivFromChannelItem (filDiv, item) {
     const channelA = document.createElement('a')
     channelA.className = 'yt2p-channel-link'
-    channelA.href = `https://www.youtube.com/channel/${item.id}/videos`
-    channelA.title = `${item.snippet.title}\n 🎞 ${parseInt(item.statistics.videoCount).toLocaleString()}${item.statistics.hiddenSubscriberCount ? '' : `   👤  ${parseInt(item.statistics.subscriberCount).toLocaleString()}`} ${item.snippet.description ? `\n\n${item.snippet.description}` : ''}`
+    channelA.href = 'https://www.youtube.com/channel/' + item.id + '/videos'
+    channelA.title = item.snippet.title + '\n 🎞 ' + parseInt(item.statistics.videoCount).toLocaleString() + item.statistics.hiddenSubscriberCount ? '' : '   👤  ' + parseInt(item.statistics.subscriberCount).toLocaleString() + ' ' + item.snippet.description ? '\n\n' + item.snippet.description : ''
     const channelImg = document.createElement('img')
     channelImg.className = 'yt2p-channel-image'
     channelImg.src = item.snippet.thumbnails.default.url
@@ -516,12 +524,12 @@
     titleDiv.textContent = item.snippet.title
     videoA.appendChild(titleDiv)
     const viewCount = parseInt(item.statistics.viewCount).toLocaleString()
-    const viewsString = `${viewCount} 👁`
+    const viewsString = viewCount + ' 👁'
     const viewsDiv = document.createElement('div')
     viewsDiv.className = 'yt2p-text yt2p-views'
     viewsDiv.textContent = viewsString
     videoA.appendChild(viewsDiv)
-    const durationString = `⌚ ${getTimestampFromISO8601(item.contentDetails.duration)}`
+    const durationString = '⌚ ' + getTimestampFromISO8601(item.contentDetails.duration)
     const durationDiv = document.createElement('div')
     durationDiv.className = 'yt2p-text yt2p-duration'
     durationDiv.textContent = durationString
@@ -533,9 +541,9 @@
     const publishedAtDiv = document.createElement('div')
     publishedAtDiv.className = 'yt2p-text yt2p-published'
     publishedAtDiv.textContent = publishedAtDate.toLocaleDateString()
-    publishedAtDiv.style.left = `${20 + viewsWidth}px`
-    publishedAtDiv.style.width = `${publishedAtWidth}px`
-    publishedAtDiv.style.maxWidth = `${publishedAtWidth}px`
+    publishedAtDiv.style.left = (20 + viewsWidth) + 'px'
+    publishedAtDiv.style.width = publishedAtWidth + 'px'
+    publishedAtDiv.style.maxWidth = publishedAtWidth + 'px'
     videoA.appendChild(publishedAtDiv)
     const likeCount = parseInt(item.statistics.likeCount)
     const dislikeCount = parseInt(item.statistics.dislikeCount)
@@ -543,12 +551,12 @@
     if (likesWidth > 0) {
       const likesDiv = document.createElement('div')
       likesDiv.className = 'yt2p-votebar yt2p-likes'
-      likesDiv.style.width = `${likesWidth}px`
+      likesDiv.style.width = likesWidth + 'px'
       videoA.appendChild(likesDiv)
       if (likesWidth < 480) {
         const dislikesDiv = document.createElement('div')
         dislikesDiv.className = 'yt2p-votebar yt2p-dislikes'
-        dislikesDiv.style.width = `${480 - likesWidth}px`
+        dislikesDiv.style.width = (480 - likesWidth) + 'px'
         videoA.appendChild(dislikesDiv)
       }
     }

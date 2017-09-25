@@ -32,22 +32,22 @@
     get rowCount () {
       return this._rows.length
     },
-    _clearItemClickSenders (item) {
+    _clearItemClickSenders: function (item) {
       delete item.isClickSender
       if (!isArray(item.children)) return
       item.children.forEach(playerView._clearItemClickSenders)
     },
-    _countVisibleRowsForRow (rowIndex) {
+    _countVisibleRowsForRow: function (rowIndex) {
       const row = this._rows[rowIndex]
       for (let i = rowIndex + 1; i < this._rows.length; i++) {
         if (this._rows[i].level <= row.level) return i - rowIndex
       }
       return this._rows.length - rowIndex
     },
-    _newRowsFromItems (items, level = 0) {
+    _newRowsFromItems: function (items, level = 0) {
       if (!isArray(items)) return []
       return items.reduce((rows, item) => {
-        rows.push({ item, level })
+        rows.push({ item: item, level: level })
         if (item.isOpen) {
           const newRows = playerView._newRowsFromItems(item.children, level + 1)
           return rows.concat(newRows)
@@ -55,7 +55,7 @@
         return rows
       }, [])
     },
-    addItem (item) {
+    addItem: function (item) {
       const selectedRows = this.getSelectedRows()
       const currentRow = selectedRows.length
         ? selectedRows[selectedRows.length - 1]
@@ -66,12 +66,12 @@
       const visibleRowCount = this._countVisibleRowsForRow(currentRowIndex)
       const insertIndex = currentRowIndex + visibleRowCount
       const level = currentRow.level + 1
-      this._rows.splice(insertIndex, 0, { item, level })
+      this._rows.splice(insertIndex, 0, { item: item, level: level })
       this._tree.rowCountChanged(insertIndex, 1)
       this.selection.select(insertIndex)
       this.maybeSavePref()
     },
-    canDrop (rowIndex, orientation, dataTransfer) {
+    canDrop: function (rowIndex, orientation, dataTransfer) {
       if (rowIndex === 0) return
       if (orientation === Ci.nsITreeView.DROP_ON &&
           this._rows[rowIndex].item.isSeparator) return
@@ -87,7 +87,7 @@
         return rowIndex >= draggedRowIndex && rowIndex < lastIndex
       })
     },
-    contextMenuOpened (event) {
+    contextMenuOpened: function (event) {
       const popup = event.target
       const selectedItems = this.getSelectedItems()
       const item = selectedItems[0]
@@ -98,18 +98,18 @@
       const isEditable = isContainer && item !== this._items[0]
       $$('.require-editable', popup).forEach(mi => (mi.hidden = !isEditable))
     },
-    copyItems () {
+    copyItems: function () {
       const data = this.getSelectedItems()
       if (!data) return
       const json = JSON.stringify(data)
       setClipboardString(json)
     },
-    cutItems () {
+    cutItems: function () {
       this.copyItems()
       this.deleteItems()
     },
-    cycleHeader (column, elem) {},
-    deleteItems (force = false, rows = this.getSelectedRows()) {
+    cycleHeader: function (column, elem) {},
+    deleteItems: function (force = false, rows = this.getSelectedRows()) {
       if (!force && rows.some(row => !row.item.isSeparator) &&
           !Services.prompt.confirm(null, 'YT2P',
             $('#playerTree').getAttribute('_confirmDelete'))) return
@@ -135,14 +135,14 @@
       })
       this.maybeSavePref()
     },
-    doubleClicked (event) {
+    doubleClicked: function (event) {
       // const selData = this.getSelectedItems()
       // if (selData.length !== 1) return
       // const data = selData[0]
       // if (data.children && data.children.length) return
       // this.editItem()
     },
-    drop (rowIndex, orientation, dataTransfer) {
+    drop: function (rowIndex, orientation, dataTransfer) {
       const row = this._rows[rowIndex]
       const json = dataTransfer.getData('text/plain')
       if (!json) return
@@ -164,7 +164,9 @@
         const visibleRowCount = this._countVisibleRowsForRow(rowIndex)
         const insertIndex = rowIndex + visibleRowCount
         const newRows = this._newRowsFromItems(draggedItems, row.level + 1)
-        this._rows.splice(insertIndex, 0, ...newRows)
+        for (var i = newRows.length - 1; i >= 0; i--) {
+          this._rows.splice(insertIndex, 0, newRows[i])
+        }
         this._tree.rowCountChanged(insertIndex, newRows.length)
         const lastIndex = insertIndex + newRows.length - 1
         this.selection.rangedSelect(insertIndex, lastIndex, false)
@@ -179,19 +181,23 @@
         const itemInsertIndex = orientation === Ci.nsITreeView.DROP_BEFORE
           ? itemIndex
           : itemIndex + 1
-        parentRow.item.children.splice(itemInsertIndex, 0, ...draggedItems)
-        const insertIndex = orientation === Ci.nsITreeView.DROP_BEFORE
+        for (i = draggedItems.length - 1; i >= 0; i--) {
+          parentRow.item.children.splice(itemInsertIndex, 0, draggedItems[i])
+        }
+        const insIndex = orientation === Ci.nsITreeView.DROP_BEFORE
           ? rowIndex
           : rowIndex + this._countVisibleRowsForRow(rowIndex)
-        const newRows = this._newRowsFromItems(draggedItems, row.level)
-        this._rows.splice(insertIndex, 0, ...newRows)
-        this._tree.rowCountChanged(insertIndex, newRows.length)
-        const lastIndex = insertIndex + newRows.length - 1
-        this.selection.rangedSelect(insertIndex, lastIndex, false)
+        const nwRows = this._newRowsFromItems(draggedItems, row.level)
+        for (i = nwRows.length - 1; i >= 0; i--) {
+          this._rows.splice(insIndex, 0, nwRows[i])
+        }
+        this._tree.rowCountChanged(insIndex, nwRows.length)
+        const lstIndex = insIndex + nwRows.length - 1
+        this.selection.rangedSelect(insIndex, lstIndex, false)
       }
       this.maybeSavePref()
     },
-    editItem () {
+    editItem: function () {
       const selectedItems = this.getSelectedItems()
       if (!selectedItems.length) return
       const item = selectedItems[selectedItems.length - 1]
@@ -199,10 +205,10 @@
       if (item.isSeparator) return
       $('prefwindow').openSubDialog(EDIT_XUL, '', item).focus()
     },
-    endDrag (event) {
+    endDrag: function (event) {
       delete this._draggedRows
     },
-    getCellProperties (rowIndex, column, properties) {
+    getCellProperties: function (rowIndex, column, properties) {
       if (rowIndex === 0) return
       const item = this._rows[rowIndex].item
       if (item.isSeparator) return 'isSeparator'
@@ -211,31 +217,31 @@
           !this.isContainerEmpty(rowIndex)) return 'isPopup'
       return column.id
     },
-    getCellText (rowIndex, column) {
+    getCellText: function (rowIndex, column) {
       return this._rows[rowIndex].item[column.id]
     },
-    getCellValue (rowIndex, column) {
+    getCellValue: function (rowIndex, column) {
       return this._rows[rowIndex].item[column.id]
     },
-    getColumnProperties (colid, column, props) {},
-    getImageSrc (rowIndex, column) {
+    getColumnProperties: function (colid, column, props) {},
+    getImageSrc: function (rowIndex, column) {
       if (column.id !== 'name') return
       const item = this._rows[rowIndex].item
       if (!item.icon) return
       return item.icon
     },
-    getLevel (rowIndex) {
+    getLevel: function (rowIndex) {
       return this._rows[rowIndex].level
     },
-    getParentIndex (rowIndex) {
+    getParentIndex: function (rowIndex) {
       const row = this._rows[rowIndex]
       for (let i = rowIndex - 1; i >= 0; --i) {
         if (this._rows[i].level < row.level) return i
       }
       return -1
     },
-    getRowProperties (rowIndex) {},
-    getSelectedItems () {
+    getRowProperties: function (rowIndex) {},
+    getSelectedItems: function () {
       const items = []
       const start = {}
       const end = {}
@@ -251,7 +257,7 @@
       }
       return items
     },
-    getSelectedRows () {
+    getSelectedRows: function () {
       const rows = []
       const start = {}
       const end = {}
@@ -263,29 +269,29 @@
       }
       return rows
     },
-    isContainer (rowIndex) {
+    isContainer: function (rowIndex) {
       return true
     },
-    isContainerEmpty (rowIndex) {
+    isContainerEmpty: function (rowIndex) {
       const children = this._rows[rowIndex].item.children
       return !isArray(children) || !children.length
     },
-    isContainerOpen (rowIndex) {
+    isContainerOpen: function (rowIndex) {
       return this._rows[rowIndex].item.isOpen
     },
-    isEditable (rowIndex, column) {
+    isEditable: function (rowIndex, column) {
       return column.editable
     },
-    isSeparator (rowIndex) {
+    isSeparator: function (rowIndex) {
       return this._rows[rowIndex].item.isSeparator
     },
-    isSorted () {},
-    maybeSavePref (force = false) {
+    isSorted: function () {},
+    maybeSavePref: function (force = false) {
       if (!force && !$('prefwindow').instantApply) return
       const items = this._items[0].children
       setPref(this._prefName, JSON.stringify(items))
     },
-    pasteItems () {
+    pasteItems: function () {
       const copyItems = JSON.parse(getClipboardString())
       if (!copyItems) return
       copyItems.forEach(this._clearItemClickSenders)
@@ -295,20 +301,22 @@
         : this._rows[0]
       const currentRowIndex = this._rows.indexOf(currentRow)
       currentRow.item.children = currentRow.item.children || []
-      currentRow.item.children.push(...copyItems)
+      copyItems.map(item => currentRow.item.children.push(item))
       const newRows = this._newRowsFromItems(copyItems, currentRow.level + 1)
       const visibleRowCount = this._countVisibleRowsForRow(currentRowIndex)
       const insertIndex = currentRowIndex + visibleRowCount
-      this._rows.splice(insertIndex, 0, ...newRows)
+      for (var i = newRows.length - 1; i >= 0; i--) {
+        this._rows.splice(insertIndex, 0, newRows[i])
+      }
       this._tree.rowCountChanged(insertIndex, newRows.length)
       this.selection.rangedSelect(insertIndex, insertIndex + newRows.length - 1, false)
       this.maybeSavePref()
     },
-    performAction (action) {
+    performAction: function (action) {
       // if (action === 'delete') {}
     },
-    selectionChanged (event) {},
-    setCellValue (rowIndex, column, value) {
+    selectionChanged: function (event) {},
+    setCellValue: function (rowIndex, column, value) {
       if (rowIndex === 0) return
       const item = this._rows[rowIndex].item
       if (item.isSeparator) return
@@ -326,37 +334,41 @@
       $('#playerTree').view = this
       this.maybeSavePref()
     },
-    setItems (items) {
+    setItems: function (items) {
       this._items = items
       this._rows = this._newRowsFromItems(items)
       $('#playerTree').view = playerView
     },
-    setRowItem (rowIndex, item) {
+    setRowItem: function (rowIndex, item) {
       const rowItem = this._rows[rowIndex].item
       Object.keys(rowItem).forEach(key => {
         if (key !== 'children') delete rowItem[key]
       })
-      Object.assign(rowItem, item)
+      Object.keys(item).forEach(key => {
+        rowItem[key] = item[key]
+      })
       this._tree.invalidateRow(rowIndex)
       this.maybeSavePref()
     },
-    setTree (tree) {
+    setTree: function (tree) {
       this._tree = tree
     },
-    startDrag (event) {
+    startDrag: function (event) {
       this._draggedRows = this.getSelectedRows()
       const json = JSON.stringify(this.getSelectedItems())
       event.dataTransfer.setData('text/plain', json)
       event.dataTransfer.effectAllowed = 'copyMove'
       event.stopPropagation()
     },
-    toggleOpenState (rowIndex) {
+    toggleOpenState: function (rowIndex) {
       const row = this._rows[rowIndex]
       const item = row.item
       item.isOpen = !item.isOpen
       if (item.isOpen) {
         const newRows = this._newRowsFromItems(row.item.children, row.level + 1)
-        this._rows.splice(rowIndex + 1, 0, ...newRows)
+        for (var i = newRows.length - 1; i >= 0; i--) {
+          this._rows.splice(rowIndex + 1, 0, newRows[i])
+        }
         this._tree.rowCountChanged(rowIndex + 1, newRows.length)
       } else {
         let deleteCount = 0
@@ -374,25 +386,20 @@
     }
   }
 
-  Object.assign(global, {
-    playerView,
-    $,
-    $$,
-    init,
-    accept,
-    importPrefs,
-    exportPrefs,
-    resetPrefs,
-    onSubPrefsHeadClick,
-    onSubPrefsHeadSelect,
-    addPlayer,
-    addSeparator
-  })
-
-  Object.assign(window, {
-    setCurrentPlayerData,
-    addPlayerFromData
-  })
+  global.playerView = playerView
+  global.$ = $
+  global.$$ = $$
+  global.init = init
+  global.accept = accept
+  global.importPrefs = importPrefs
+  global.exportPrefs = exportPrefs
+  global.resetPrefs = resetPrefs
+  global.onSubPrefsHeadClick = onSubPrefsHeadClick
+  global.onSubPrefsHeadSelect = onSubPrefsHeadSelect
+  global.addPlayer = addPlayer
+  global.addSeparator = addSeparator
+  window.setCurrentPlayerData = setCurrentPlayerData
+  window.addPlayerFromData = addPlayerFromData
 
   function $ (selector, element = document) {
     return element.querySelector(selector)
@@ -424,7 +431,7 @@
   function exportPrefs () {
     const fp = IFilePicker(window, 'YT2P', Ci.nsIFilePicker.modeSave)
     fp.defaultExtension = 'ini'
-    fp.defaultString = `YT2P-${(new Date()).toLocaleFormat('%Y-%m-%d-%H%M%S')}.ini`
+    fp.defaultString = 'YT2P-' + (new Date()).toLocaleFormat('%Y-%m-%d-%H%M%S') + '.ini'
     fp.appendFilters(Ci.nsIFilePicker.filterAll)
     if (fp.show() === Ci.nsIFilePicker.returnCancel) return
     if (fp.file.exists()) fp.file.remove(true)
@@ -433,8 +440,8 @@
     const converter = IScriptableUnicodeConverter()
     converter.charset = 'UTF-8'
     const names = prefBranch.getChildList('').sort()
-    const lines = names.map(name => `${name}=${getPref(name)}`)
-    const iniString = `[YT2P]\n${lines.join('\n')}\n`
+    const lines = names.map(name => name + '=' + getPref(name))
+    const iniString = '[YT2P]\n' + lines.join('\n') + '\n'
     const iniText = converter.ConvertFromUnicode(iniString)
     stream.write(iniText, iniText.length)
     stream.close()
@@ -443,7 +450,7 @@
   function getClipboardString () {
     const trans = Cc['@mozilla.org/widget/transferable;1']
       .createInstance(Ci.nsITransferable)
-    trans.init()
+    trans.init(null)
     trans.addDataFlavor('text/unicode')
     Services.clipboard.getData(trans, Services.clipboard.kGlobalClipboard)
     let string = {}

@@ -12,6 +12,7 @@
   const {Constructor: CC, classes: Cc, interfaces: Ci, utils: Cu} = global.Components
   const {Services} = Cu.import('resource://gre/modules/Services.jsm', {})
   Services.ss = Cc['@mozilla.org/content/style-sheet-service;1'].getService(Ci.nsIStyleSheetService)
+  Services.mm = Services.mm || Cc['@mozilla.org/globalmessagemanager;1'].getService(Ci.nsIMessageListenerManager)
   const IFile = CC('@mozilla.org/file/local;1', 'nsIFile', 'initWithPath')
   const IProcess = CC('@mozilla.org/process/util;1', 'nsIProcess', 'init')
 
@@ -19,15 +20,15 @@
   const THUNDERBIRD = Services.appinfo.name === 'Thunderbird'
   const TOOLS_MENUPOPUP = THUNDERBIRD ? '#taskPopup' : '#menu_ToolsPopup'
   const CONTEXT_MENUPOPUP = THUNDERBIRD ? '#mailContext' : '#contentAreaContextMenu'
-  const INSERT_BEFORE_CONTEXT_MENUITEM = THUNDERBIRD ? '#mailContext-openLinkInBrowser' : '#context-navigation'
+  const INSERT_BEFORE_CONTEXT_MENUITEM = THUNDERBIRD ? '#mailContext-openLinkInBrowser' : '#context-openlinkintab'
   const PLACES_MENUPOPUP = '#placesContext'
   const INSERT_BEFORE_PLACES_MENUITEM = '#placesContext_recentlyBookmarkedSeparator'
   const LOGO_16 = 'chrome://yt2p/skin/16/yt2p.png'
   const PLAYER_16 = 'chrome://yt2p/skin/16/player.png'
   const PREF_BRANCH = 'extensions.yt2p.'
-  // const STRING_BUNDLE = `chrome://yt2p/locale/yt2p.properties?${SESSION_TIME}`
-  const FRAME_JS = `chrome://yt2p/content/yt2pFrameScript.js?${SESSION_TIME}`
-  const YT2P_CSS = `chrome://yt2p/skin/yt2p.css?${SESSION_TIME}`
+  // const STRING_BUNDLE = 'chrome://yt2p/locale/yt2p.properties?' + SESSION_TIME
+  const FRAME_JS = 'chrome://yt2p/content/yt2pFrameScript.js?' + SESSION_TIME
+  const YT2P_CSS = 'chrome://yt2p/skin/yt2p.css?' + SESSION_TIME
   const YT2P_CSS_URI = Services.io.newURI(YT2P_CSS, null, null)
 
   const prefBranch = Services.prefs.getBranch(PREF_BRANCH)
@@ -117,7 +118,7 @@
   }
 
   function getStandardisedVideoUrl (videoUrl) {
-    return `https://www.youtube.com/watch?v=${getVideoIdFromUrl(videoUrl)}`
+    return 'https://www.youtube.com/watch?v=' + getVideoIdFromUrl(videoUrl)
   }
 
   function getString (name, nameMatched) {
@@ -125,11 +126,11 @@
     try {
       // should probably not create a new string bundle on every string
       return Services.strings
-        .createBundle(`chrome://yt2p/locale/yt2p.properties?${Date.now()}`)
+        .createBundle('chrome://yt2p/locale/yt2p.properties?' + Date.now())
         .GetStringFromName(name)
       // return stringBundle.GetStringFromName(name)
     } catch (e) { Cu.reportError(e) }
-    return `__${name}__`
+    return '__' + name + '__'
   }
 
   function getStringFromPattern (pattern, videoUrl) {
@@ -147,7 +148,7 @@
   function install (data, reason) {}
 
   function isVideoUrl (url) {
-    return /^(?:(?:(?:view-source?:)?https?:)?\/\/)?(?:(?:www\.|m\.)?(?:youtube|youtube-nocookie)\.com\/(?:watch\?|embed\/|v\/|attribution_link\?a)|youtu\.be\/|\/watch\?)/.test(url)
+    return /^(?:(?:(?:view-source:)?https?:)?\/\/)?(?:(?:www\.|m\.)?(?:youtube|youtube-nocookie)\.com\/(?:watch\?|embed\/|v\/|attribution_link\?a)|youtu\.be\/|\/watch\?|.+%2Fwatch%3Fv%3D)/.test(url)
   }
 
   function loadContextMenuItemsIntoWindow (window) {
@@ -248,7 +249,7 @@
     function onLoad (event) {
       window.removeEventListener('load', onLoad)
       const html = window.document.documentElement
-      if (!windowTypes.includes(html.getAttribute('windowtype'))) return
+      if (windowTypes.indexOf(html.getAttribute('windowtype')) === -1) return
       loadIntoWindow(window)
     }
   }
@@ -273,7 +274,7 @@
     menuitem.setAttribute('label', getString('toolsMenuItemLabel'))
     menuitem.setAttribute('image', LOGO_16)
     menuitem.addEventListener('command', openOptions)
-    const separators = $$(`${TOOLS_MENUPOPUP} > menuseparator`, document)
+    const separators = $$(TOOLS_MENUPOPUP + ' > menuseparator', document)
     popup.insertBefore(menuitem, separators[1])
   }
 
@@ -289,9 +290,9 @@
     if (data.isIconRow && !isIcon) {
       const group = document.createElement('menugroup')
       group.className = 'yt2p-menugroup'
-      const players = flatten(data.children)
-      const items = players.map(data => newPlayerMenuItem(window, data, true))
-      items.forEach(item => group.appendChild(item))
+      flatten(data.children)
+        .map(data => newPlayerMenuItem(window, data, true))
+        .map(item => group.appendChild(item))
       return group
     }
     const isMenu = data.children && data.children.length && !isIcon
@@ -310,8 +311,9 @@
     if (isMenu) {
       const popup = document.createElement('menupopup')
       popup.className = 'yt2p-menupopup'
-      const items = data.children.map(data => newPlayerMenuItem(window, data))
-      items.forEach(item => popup.appendChild(item))
+      data.children
+        .map(data => newPlayerMenuItem(window, data))
+        .map(item => popup.appendChild(item))
       item.appendChild(popup)
     }
     return item
@@ -550,14 +552,14 @@
     try {
       if (prefHasUserValue('playerExeDir')) {
         let command = getPref('playerExeDir')
-        if (command.includes(' ')) command = `"${command}"`
+        if (command.indexOf(' ') >= 0) command = '"' + command + '"'
         command += ' $VIDEOURL$'
         if (prefHasUserValue('keepPlaylistsInURLs')) command += '&list=$PLAYLISTID$'
         setPref('players', JSON.stringify([
           {
             name: getString('sendToPlayer'),
             icon: LOGO_16,
-            command,
+            command: command,
             isClickSender: true
           },
           {

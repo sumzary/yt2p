@@ -136,7 +136,7 @@
   }
 
   function getVideoIdFromUrl (videoUrl) {
-    const temp = videoUrl.replace(/v=|v%3D|youtu.be\/|\/v\/|\/embed\/|img.youtube.com\/vi\/|attribution_link=/ig, '$IDSTART$')
+    const temp = videoUrl.replace(/v=|v%3[Dd]|youtu.be\/|\/v\/|\/embed\/|img.youtube.com\/vi\/|attribution_link=/ig, '$IDSTART$')
     return temp.substr(temp.indexOf('$IDSTART$') + 9, 11)
   }
 
@@ -148,7 +148,7 @@
   }
 
   function isVideoUrl (url) {
-    return /^(?:(?:(?:view-source:)?https?:)?\/\/)?(?:(?:www\.|m\.)?(?:youtube|youtube-nocookie)\.com\/(?:watch\?|embed\/|v\/|attribution_link\?a)|youtu\.be\/|\/watch\?|.+%2Fwatch%3Fv%3D)/.test(url)
+    return /^(?:(?:(?:view-source:)?https?:)?\/\/)?(?:(?:www\.|m\.)?(?:youtube|youtube-nocookie)\.com\/(?:watch\?|embed\/|v\/|attribution_link\?a)|youtu\.be\/|\/watch\?|.+%2[Ff]watch%3[Ff][Vv]%3[Dd])/.test(url)
   }
 
   function makeYouTubeVideoPageTitleClickable () {
@@ -412,6 +412,7 @@
     if (!isVideoUrl(a.href)) return
     if (/yt2p-|ytp-button|iv-promo-txt/.test(a.className)) return
     if (/comment-renderer-time|submessage/.test(a.parentElement.className)) return
+    if (/YT-FORMATTED-STRING/.test(a.parentElement.tagName)) return
     // if (videoLinkType === 0/* || !isElementTextOnly(a) */) {
     //   makeAnchorClickSend(a)
     //   return

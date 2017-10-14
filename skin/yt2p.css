@@ -59,12 +59,19 @@
 .yt2p-stylize.content-link > .title,
 .yt2p-stylize.related-playlist > .title {
   text-shadow: 1px 1px 3px #E52D27 !important;
+  text-decoration: none;
 }
 .yt2p-stylize:not(.ytp-title-link),
 .yt2p-stylize.content-link > .title,
 .yt2p-stylize.related-playlist > .title {
   color: black !important;
 }
+.yt-simple-endpoint,
+ytd-video-meta-block,
+.ytd-badge-supported-renderer {
+  text-shadow: none;
+}
+
 
 .yt2p-clearall,
 .yt2p-video,

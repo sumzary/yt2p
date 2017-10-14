@@ -36,6 +36,7 @@
 <!ENTITY embeddedVideoChangeType.intoFil.label "into Fancy Image Links">
 
 <!ENTITY videoLinkChangeEnabled.label "Change regular video links">
+<!ENTITY videoLinkChangeType.stylizeWithRedUnderline.label "with a red underline">
 <!ENTITY videoLinkChangeType.stylizeWithRedGlow.label "with a red glow">
 <!ENTITY videoLinkChangeType.intoEmbedded.label "into embedded videos">
 <!ENTITY videoLinkChangeType.intoFil.label "into Fancy Image Links">

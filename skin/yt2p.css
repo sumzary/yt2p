@@ -55,23 +55,34 @@
   clear: both !important;
   display: block !important;
 }
-.yt2p-stylize:not(.content-link):not(.related-playlist),
-.yt2p-stylize.content-link > .title,
-.yt2p-stylize.related-playlist > .title {
-  text-shadow: 1px 1px 3px #E52D27 !important;
+
+.yt2p-underline:not(.content-link):not(.related-playlist),
+.yt2p-underline.content-link > .title,
+.yt2p-underline.related-playlist > .title {
+  text-decoration: underline dotted red !important;
+}
+.yt2p-glow:not(.content-link):not(.related-playlist),
+.yt2p-glow.content-link > .title,
+.yt2p-glow.related-playlist > .title {
+  text-shadow: 1px 1px 3px red !important;
   text-decoration: none;
 }
-.yt2p-stylize:not(.ytp-title-link),
-.yt2p-stylize.content-link > .title,
-.yt2p-stylize.related-playlist > .title {
+.yt2p-underline:not(.content-link):not(.related-playlist):hover,
+.yt2p-underline.content-link:hover > .title,
+.yt2p-underline.related-playlist:hover > .title {
+  text-decoration-style: solid !important;
+}
+*:not([class^="c-detail"]) > .yt2p-glow:not(.ytp-title-link),
+.yt2p-glow.content-link > .title,
+.yt2p-glow.related-playlist > .title {
   color: black !important;
 }
 .yt-simple-endpoint,
 ytd-video-meta-block,
 .ytd-badge-supported-renderer {
-  text-shadow: none;
+  text-decoration-line: none !important;
+  text-decoration: none !important;
 }
-
 
 .yt2p-clearall,
 .yt2p-video,

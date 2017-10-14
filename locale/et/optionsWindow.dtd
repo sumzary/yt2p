@@ -36,6 +36,7 @@
 <!ENTITY embeddedVideoChangeType.intoFil.label "Piltlinkideks">
 
 <!ENTITY videoLinkChangeEnabled.label "Muuda klippide lingid">
+<!ENTITY videoLinkChangeType.stylizeWithRedUnderline.label "punase alljoonega">
 <!ENTITY videoLinkChangeType.stylizeWithRedGlow.label "punase helgiga">
 <!ENTITY videoLinkChangeType.intoEmbedded.label "embed videoteks">
 <!ENTITY videoLinkChangeType.intoFil.label "Piltlinkideks">

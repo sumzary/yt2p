@@ -164,7 +164,12 @@
     function exec (node) {
       if (!node) return false
       const a = document.createElement('a')
-      a.className = 'yt2p-send-override yt2p-stylize'
+      a.className = 'yt2p-send-override'
+      if (getPref('videoLinkChangeType') === 0) {
+        a.classList.add('yt2p-glow')
+      } else {
+        a.classList.add('yt2p-underline')
+      }
       a.href = window.location.href
       a.onclick = onVideoLinkClick
       a.appendChild(node.cloneNode(true))
@@ -356,7 +361,12 @@
     if (changeType === 0 ||
         window.doneVideoIds.some(id => id === videoId)) {
       const a = document.createElement('a')
-      a.className = 'yt2p-link yt2p-stylize'
+      a.className = 'yt2p-link'
+      if (getPref('videoLinkChangeType') === 0) {
+        a.classList.add('yt2p-glow')
+      } else {
+        a.classList.add('yt2p-underline')
+      }
       a.href = getVideoUrlFromId(videoId)
       a.textContent = videoId
       a.onclick = onVideoLinkClick
@@ -399,7 +409,7 @@
       const a = document.createElement('a')
       a.href = getVideoUrlFromId(videoId)
       a.classList.add('yt2p-link')
-      a.classList.add('yt2p-stylize')
+      a.classList.add('yt2p-glow')
       a.textContent = videoId
       a.onclick = onVideoLinkClick
       parentElement.replaceChild(a, filElement)
@@ -419,7 +429,7 @@
     // }
     const videoId = getVideoIdFromUrl(a.href)
     const changeType = getPref('videoLinkChangeType')
-    if (changeType === 0 ||
+    if (changeType === 0 || changeType === 3 ||
         /ytp-|yt-uix-|yt-simple-/.test(a.className) ||
         /c-detail__title/.test(a.parentElement.className) ||
         window.doneVideoIds.some(id => id === videoId)) {
@@ -428,7 +438,7 @@
         a.parentElement.insertBefore(newA, a.nextElementSibling)
         a.classList.add('yt2p-replaced')
         newA.classList.add('yt2p-link')
-        newA.classList.add('yt2p-stylize')
+        newA.classList.add(changeType === 0 ? 'yt2p-glow' : 'yt2p-underline')
         if (isVideoUrl(a.textContent)) {
           newA.textContent = getVideoIdFromUrl(a.href)
         }
@@ -436,7 +446,7 @@
         return
       }
       a.classList.add('yt2p-link')
-      a.classList.add('yt2p-stylize')
+      a.classList.add(changeType === 0 ? 'yt2p-glow' : 'yt2p-underline')
       if (isVideoUrl(a.textContent) &&
           !window.location.href.startsWith('view-source:')) {
         a.textContent = getVideoIdFromUrl(a.href)

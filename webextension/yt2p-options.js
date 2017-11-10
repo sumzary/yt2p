@@ -491,7 +491,7 @@ function $$ (selector, element = document) {
 
 function onDownloadNativeClick (event) {
   browser.tabs.create({
-    url: 'https://github.com/Sumzary/yt2p-native/releases/latest',
+    url: 'https://github.com/Sumzary/yt2p/releases/latest',
     active: true
   })
   return false

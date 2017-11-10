@@ -1,4 +1,5 @@
 *.xpi
 *.zip
 *.sublime-workspace
+*.eslintrc
 *rc.json

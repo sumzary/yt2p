@@ -1,0 +1,9 @@
+#!/bin/sh
+[ "$PROCESSOR_ARCHITECTURE" = "AMD64" -o "$PROCESSOR_ARCHITEW6432" = "AMD64" ] && p=mingw64 || {
+	[ "$OSTYPE" = "msys" ] && p=mingw32 || {
+		[ "$(uname -m)" = x86_64 ] && a=64 || a=32
+		[ "${OSTYPE#darwin}" != "$OSTYPE" ] && p=osx$a || p=linux$a
+	}
+}
+n=${0##*/} d=${0%$n}
+$d/$p/luajit "$@"

@@ -1,0 +1,157 @@
+body {
+  margin: 0 auto !important;
+  padding: 2em;
+  height: 100%;
+  width: 100%;
+  min-width: 35em;
+  max-width: 70em;
+  box-sizing: border-box;
+  /*overflow: hidden;*/
+  font-family: Ubuntu, Arial, Helvetica, sans-serif;
+}
+.vbox {
+  margin: 3px;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+}
+.hbox {
+  margin: 3px;
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+}
+.nomargin {
+  margin: 0;
+}
+.flex {
+  flex: 1;
+}
+.flex2 {
+  flex: 2;
+}
+.flex3 {
+  flex: 3;
+}
+.flex4 {
+  flex: 4;
+}
+.stretch {
+  align-self: stretch;
+}
+.main-start {
+  justify-content: flex-start;
+}
+.cross-start {
+  align-items: flex-start;
+  align-content: flex-start;
+}
+.main-center {
+  justify-content: center;
+}
+.cross-center {
+  align-items: center;
+  align-content: center;
+}
+.main-end {
+  justify-content: flex-end;
+}
+.cross-end {
+  align-items: flex-end;
+  align-content: flex-end;
+}
+.cross-stretch {
+  align-items: stretch;
+  align-content: stretch;
+}
+.wrap {
+  flex-wrap: wrap;
+}
+.none {
+  display: none;
+}
+
+input[type="text"] {
+  min-width: 2em;
+}
+
+#groups, #players {
+  width: 100%;
+  /*padding: 2px;*/
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  /*overflow-y: scroll;*/
+  /*height: 180px;*/
+  /*background-color: white;*/
+  /*border: 2.5px inset;*/
+}
+.option {
+  height: 18px;
+  align-content: center;
+  padding-left: 20px;
+}
+#image {
+  width: 16px;
+  height: 16px;
+  margin: 4px;
+}
+a.button {
+  color: black;
+  font-size: 2em;
+  text-decoration: none;
+  cursor: pointer;
+  /*margin: 2px;*/
+}
+
+#command, #clipboard, #clickCommand {
+  font-family: Ubuntu Mono, Lucida Console, Courier, monospace;
+  cursor: help;
+}
+
+.header ~ * {
+  margin-left: 36px;
+}
+
+.icon32 {
+  width: 32px;
+  height: 32px;
+  margin-right: 4px;
+}
+.icon64 {
+  width: 64px;
+  height: 64px;
+  margin: 18px;
+}
+
+#icmis, #icmp {
+  width: 5em;
+}
+.left-label {
+  margin-right: 4px;
+}
+.right-label {
+  margin-left: 4px;
+}
+
+.awesomplete {
+  flex: 1;
+}
+.awesomplete input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.subprefs {
+  margin-top: 0;
+  margin-left: 70px;
+}
+
+#nativeWarning {
+  background-color: darkorange;
+  border-radius: 8px;
+}
+
+.title-hint label {
+  border-bottom: 1px dotted black;
+  cursor: help;
+}

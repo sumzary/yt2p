@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+  <head>
+    <title>__MSG_options__</title>
+    <meta charset="utf-8">
+    <link rel="icon" href="icons/16/yt2p.png">
+    <link rel="stylesheet" href="yt2p-options.css">
+    <link rel="stylesheet" href="awesomplete.css">
+    <script src="browser-polyfill.min.js"></script>
+    <script src="awesomplete.min.js"></script>
+    <script src="playeroptions.js"></script>
+  </head>
+  <body class="vbox">
+    <div class="hbox cross-center nomargin none" id="nativeWarning">
+      <img class="icon64" src="icons/64/warning.png">
+      <div class="vbox">
+        <p>Add-ons can no longer run executables directly.</p>
+        <p>Please download, extract and install the native client from <a id="downloadNative" href="">here</a>.</p>
+      </div>
+    </div>
+    <div class="hbox nomargin">
+      <div class="vbox flex3 stretch cross-stretch">
+        <div class="hbox cross-center">
+          <img class="icon32" src="icons/32/playerGroups.png">
+          <h2>__MSG_groups__</h2>
+        </div>
+        <!-- <div id="groups"></div> -->
+        <select id="groups" size="11" multiple="true"></select>
+      </div>
+      <div class="vbox">
+        <div class="hbox cross-center" style="visibility: hidden;">
+          <img class="icon32" src="" alt="">
+          <h2>_</h2>
+        </div>
+        <input type="button" id="new" class="flex" value="__MSG_new__">
+        <input type="button" id="newSeparator" class="flex" value="__MSG_newSeparator__">
+        <input type="button" id="moveUp" class="flex" value="__MSG_moveUp__">
+        <input type="button" id="moveDown" class="flex" value="__MSG_moveDown__">
+        <input type="button" id="delete" class="flex" value="__MSG_delete__">
+      </div>
+      <div class="vbox flex4 stretch cross-stretch">
+        <div class="hbox cross-center">
+          <img class="icon32" src="icons/32/players.png">
+          <h2>__MSG_players__</h2>
+        </div>
+        <select id="players" size="11" multiple="true"></select>
+      </div>
+    </div>
+    <div class="hbox cross-center nomargin">
+      <div id="datainputs" class="vbox flex nomargin">
+        <div class="hbox cross-center">
+          <input type="text" id="name" name="name"  class="flex" placeholder="__MSG_name__">
+          <input type="image" id="image" name="image" src="icons/16/yt2p.png" alt="">
+          <input type="text" id="icon" name="icon"  class="flex2" size="10" placeholder="__MSG_icon__">
+          <input type="file" id="iconFile" name="icon" class="none" accept="image/*">
+          <input type="button" id="iconBrowse" name="icon" value="__MSG_browse__...">
+          <!-- <input type="image" id="toggleClipboard" name="clipboard" src="icons/16/show.png" alt=""> -->
+          <!-- <input type="button" name="icon" onclick="$('iconBrowse').click()" value="Browse..."> -->
+        </div>
+        <div class="hbox none" id="clipboardBox">
+          <input type="text" id="clipboard" name="clipboard" class="flex" placeholder="__MSG_clipboard__">
+        </div>
+        <div class="hbox">
+          <input type="text" id="command" name="command" class="flex"
+            placeholder="__MSG_command__" title="__MSG_commandTooltip__">
+          <!-- <datalist id="commandList"></datalist> list="commandList"-->
+          <input type="button" id="commandBrowse" name="command" class="none" value="__MSG_browse__...">
+        </div>
+      </div>
+      <a id="toggleClipboard" class="button" title="__MSG_extras__">↓</a>
+    </div>
+    <div class="vbox">
+      <div class="hbox cross-center header">
+        <img class="icon32" src="icons/32/menus.png">
+        <h2>__MSG_menus__</h2>
+      </div>
+      <div class="hbox cross-center">
+        <input id="cmie" class="pref" name="contextMenuItemsEnabled" type="checkbox">
+        <label for="cmie">__MSG_contextMenuItemsEnabled__</label>
+      </div>
+      <div class="hbox cross-center title-hint" title="__MSG_iconContextMenuEnabledTooltip__">
+        <input id="icme" class="pref" name="iconContextMenuEnabled" type="checkbox">
+        <label for="icme">__MSG_iconContextMenuEnabled__</label>
+      </div>
+      <div class="vbox subprefs">
+        <div class="hbox cross-center">
+          <select class="pref" id="icmt" name="iconContextMenuTheme">
+            <option value="default">__MSG_default__</option>
+            <option value="light">__MSG_light__</option>
+            <option value="dark">__MSG_dark__</option>
+          </select>
+          <label class="right-label">__MSG_theme__</label>
+        </div>
+        <div class="hbox cross-center">
+          <input class="pref" id="icmis" name="iconContextMenuIconSize" type="number" min="0" max="256">
+          <label class="right-label">__MSG_iconSize__</label>
+        </div>
+        <div class="hbox cross-center">
+          <input class="pref" id="icmp" name="iconContextMenuPadding" type="number" min="0" max="99">
+          <label class="right-label">__MSG_padding__</label>
+        </div>
+      </div>
+    </div>
+    <div class="vbox">
+      <div class="hbox cross-center header">
+        <img class="icon32" src="icons/32/videoLinks.png">
+        <h2>__MSG_videoLinks__</h2>
+      </div>
+      <div class="hbox cross-center">
+        <input id="vlc" name="videoLinkChangeEnabled" class="pref" type="checkbox">
+        <label for="vlc">__MSG_videoLinkChangeEnabled__</label>
+      </div>
+      <div class="vbox subprefs">
+        <div class="hbox cross-center">
+          <input id="vlcU" class="pref" name="videoLinkChangeType" value="underline" type="radio">
+          <label for="vlcU">__MSG_videoLinkChangeUnderline__</label>
+        </div>
+        <div class="hbox cross-center">
+          <input id="vlcG" class="pref" name="videoLinkChangeType" value="glow" type="radio">
+          <label for="vlcG">__MSG_videoLinkChangeGlow__</label>
+        </div>
+        <div class="hbox cross-center">
+          <input id="vlcE" class="pref" name="videoLinkChangeType" value="embed" type="radio">
+          <label for="vlcE">__MSG_videoLinkChangeEmbed__</label>
+        </div>
+        <div class="hbox cross-center">
+          <input id="vlcF" class="pref" name="videoLinkChangeType" value="fil" type="radio">
+          <label for="vlcF">__MSG_videoLinkChangeFil__</label>
+        </div>
+      </div>
+      <div class="hbox cross-center">
+        <input id="vlcc" name="videoLinkClickChangeEnabled" class="pref" type="checkbox">
+        <label for="vlcc">__MSG_videoLinkClickChangeEnabled__</label>
+      </div>
+      <div class="vbox subprefs">
+        <div class="hbox cross-center">
+          <input id="vlccS" class="pref" name="videoLinkClickChangeType" value="send" type="radio">
+          <input id="clickCommand" name="videoLinkClickPlayerCommand" class="pref flex command-select"
+            placeholder="__MSG_command__" title="__MSG_commandTooltip__" type="text">
+          <input type="button" id="clickCommandBrowse" name="clickCommand" class="none" value="__MSG_browse__...">
+          <select id="clickPlayers" name="clickCommand"></select>
+        </div>
+        <div class="hbox cross-center">
+          <input id="vlccM" class="pref" name="videoLinkClickChangeType" value="menu" type="radio">
+          <label for="vlccM">__MSG_videoLinkClickChangeMenu__</label>
+        </div>
+        <div class="hbox cross-center">
+          <input id="vlccE" class="pref" name="videoLinkClickChangeType" value="embed" type="radio">
+          <label for="vlccE">__MSG_videoLinkClickChangeEmbed__</label>
+        </div>
+        <div class="hbox cross-center">
+          <input id="vlccF" class="pref" name="videoLinkClickChangeType" value="fil" type="radio">
+          <label for="vlccF">__MSG_videoLinkClickChangeFil__</label>
+        </div>
+      </div>
+    </div>
+    <div class="vbox">
+      <div class="hbox cross-center header">
+        <img class="icon32" src="icons/32/embeddedVideos.png">
+        <h2>__MSG_embeddedVideos__</h2>
+      </div>
+      <div class="hbox cross-center">
+        <input id="evc" name="embeddedVideoChangeEnabled" class="pref" type="checkbox">
+        <label for="evc">__MSG_embeddedVideoChangeEnabled__</label>
+      </div>
+      <div class="vbox subprefs">
+        <div class="hbox cross-center">
+          <input id="evcL" class="pref" name="embeddedVideoChangeType" value="link" type="radio">
+          <label for="evcL">__MSG_embeddedVideoChangeLink__</label>
+        </div>
+        <div class="hbox cross-center">
+          <input id="evcE" class="pref" name="embeddedVideoChangeType" value="embed" type="radio">
+          <label for="evcE">__MSG_embeddedVideoChangeEmbed__</label>
+        </div>
+        <div class="hbox cross-center">
+          <input id="evcF" class="pref" name="embeddedVideoChangeType" value="fil" type="radio">
+          <label for="evcF">__MSG_embeddedVideoChangeFil__</label>
+        </div>
+      </div>
+    </div>
+    <div class="vbox">
+      <div class="hbox cross-center header">
+        <img class="icon32" src="icons/32/fancyImageLinks.png">
+        <h2>__MSG_fancyImageLinks__</h2>
+      </div>
+      <div class="hbox cross-center">
+        <input id="fcc" name="filClickChangeEnabled" class="pref" type="checkbox">
+        <label for="fcc">__MSG_filClickChangeEnabled__</label>
+      </div>
+      <div class="vbox subprefs">
+        <div class="hbox cross-center">
+          <input id="fccL" class="pref" name="filClickChangeType" value="link" type="radio">
+          <label for="fccL">__MSG_filClickChangeLink__</label>
+        </div>
+        <div class="hbox cross-center">
+          <input id="fccE" class="pref" name="filClickChangeType" value="embed" type="radio">
+          <label for="fccE">__MSG_filClickChangeEmbed__</label>
+        </div>
+      </div>
+    </div>
+    <script src="yt2p-options.js"></script>
+  </body>
+</html>

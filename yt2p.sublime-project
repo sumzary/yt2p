@@ -2,15 +2,35 @@
     "build_systems":
     [
         {
-            "name": "XPI",
-            "shell_cmd": "rm -f yt2p.xpi && zip -r yt2p.xpi . -x *.svg *.xpi *rc.json *.sublime-project *.sublime-workspace *.git* *.jshintrc",
+            "name": "Release",
+            "shell_cmd": "rm -f yt2p-addon.zip yt2p-native.zip  && zip -r yt2p-addon.zip . -x native/\\* *.svg *.zip *rc.json *.sublime-project *.sublime-workspace *.git* *.jshintrc && cd native && zip -r ../yt2p-native.zip install* data/",
             "working_dir": "$folder",
             "variants":
             [
                 {
                     "name": "Run",
-                    "shell_cmd": "rm -f yt2p.xpi && zip -r yt2p.xpi . -x *.svg *.xpi *rc.json *.sublime-project *.sublime-workspace *.git* *.jshintrc && wget --post-file=yt2p.xpi http://127.0.0.1:8888/",
+                    "shell_cmd": "web-ext run",
+                    "working_dir": "$folder/webextension"
+                },
+                {
+                    "name": "Run /opt/firefox",
+                    "shell_cmd": "web-ext run --firefox=/opt/firefox/firefox",
+                    "working_dir": "$folder/webextension"
+                },
+                {
+                    "name": "Send",
+                    "shell_cmd": "rm -f yt2p-addon.zip && zip -r yt2p-addon.zip . -x native/\\* *.svg *.zip *rc.json *.sublime-project *.sublime-workspace *.git* *.jshintrc && wget --post-file=yt2p-addon.zip http://127.0.0.1:8888/",
                     "working_dir": "$folder"
+                },
+                {
+                    "name": "Install",
+                    "shell_cmd": "native/install.sh",
+                    "working_dir": "$folder/native"
+                },
+                {
+                    "name": "Uninstall",
+                    "shell_cmd": "native/uninstall.sh",
+                    "working_dir": "$folder/native"
                 }
             ]
         }

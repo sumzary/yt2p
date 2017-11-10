@@ -1,0 +1,57 @@
+{
+  "manifest_version": 2,
+  "default_locale": "en",
+  "version": "3.0",
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "permissions": [
+    "<all_urls>",
+    "notifications",
+    "contextMenus",
+    "storage",
+    "nativeMessaging"
+  ],
+  "web_accessible_resources": [
+    "icons/*"
+  ],
+  "applications": {
+    "gecko": {
+      "id": "YT2Player@Rasmus.Riiner",
+      "strict_min_version": "52.0a1"
+    }
+  },
+  "icons": {
+    "16": "icons/16/yt2p.png",
+    "24": "icons/24/yt2p.png",
+    "32": "icons/32/yt2p.png",
+    "48": "icons/48/yt2p.png",
+    "64": "icons/64/yt2p.png",
+    "96": "icons/96/yt2p.png"
+  },
+  "background": {
+    "scripts": [
+      "browser-polyfill.min.js",
+      "yt2p-background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "browser-polyfill.min.js",
+        "yt2p-content.js"
+      ],
+      "css": [
+        "yt2p-content.css"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "options_ui": {
+    "browser_style": true,
+    "page": "yt2p-options.html"
+  }
+}

@@ -58,8 +58,12 @@ function importStorageFromPrefs (message, sender, sendReply) {
       return {
         name: player.name || '',
         icon: player.icon || '',
-        command: player.command || '',
-        clipboard: player.clipboard || ''
+        command: (player.command || '')
+          .replace('$VIDEOURL$', 'VIDEOURL')
+          .replace('$VIDEOID$', 'VIDEOID'),
+        clipboard: (player.clipboard || '')
+          .replace('$VIDEOURL$', 'VIDEOURL')
+          .replace('$VIDEOID$', 'VIDEOID')
       }
     })
   }]

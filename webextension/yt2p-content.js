@@ -10,27 +10,16 @@
 
 'use strict'
 
-// ;(function (global) {
-//   'use strict'
-// })(this)
-
 const GOOGLE_KEY = 'AIzaSyDCV-JwiIQL4sBjMJlaP5bMZfGL-W_YMDA'
 
 let prefs = {}
 
 browser.storage.local.get().then(storage => {
   prefs = Object.create(storage)
-  // window.yt2pStorage = Object.create(storage)
   browser.storage.onChanged.addListener(onStorageChanged)
   browser.runtime.onMessage.addListener(onMessage)
   onContentLoad()
 })
-
-// browser.runtime.onSuspend.addListener(onContentUnload)
-
-// function getValue (key) {
-//   return window.yt2pStorage[key]
-// }
 
 function $ (selector, element = document) {
   return element.querySelector(selector)

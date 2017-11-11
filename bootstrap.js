@@ -76,7 +76,7 @@ function importStorageFromPrefs (message, sender, sendReply) {
         case 64: return branch.getIntPref(key)
         case 128: return branch.getBoolPref(key)
       }
-    } catch (e) {}
+    } catch (e) { return undefined }
   }
 
   function flatten (children) {

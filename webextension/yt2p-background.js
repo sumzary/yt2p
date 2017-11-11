@@ -10,8 +10,6 @@
 
 'use strict'
 
-// browser.storage.local.clear()
-
 browser.storage.local.get({
   playerGroups: [{
     name: browser.i18n.getMessage('mainGroup'),
@@ -62,20 +60,6 @@ function onInstalled (details) {
       (details.reason === 'update' && details.previousVersion.startsWith('2'))) {
     browser.runtime.openOptionsPage()
   }
-  // browser.tabs.query({}).then(tabs => {
-  //   for (const tab of tabs) {
-  //     browser.tabs.insertCSS(tab.id, {
-  //       file: '/yt2p-content.css',
-  //       runAt: 'document_start',
-  //       allFrames: true
-  //     })
-  //     browser.tabs.executeScript(tab.id, {
-  //       file: '/yt2p-content.js',
-  //       runAt: 'document_end',
-  //       allFrames: true
-  //     })
-  //   }
-  // })
 }
 
 async function closeAllContextMenus () {
@@ -91,8 +75,6 @@ function onMessage (message, sender, sendResponse) {
   if (message === 'ping') return
   if (message === 'closeallcontextmenus') {
     return closeAllContextMenus()
-    // closeAllContextMenus().then(sendResponse)
-    // return true
   } else {
     if (!message.commandPattern) {
       createNotification(browser.i18n.getMessage('commandNotSet'))
@@ -203,21 +185,3 @@ function installContextMenuItems (playerGroups) {
     installPlayerGroupContextMenuItems(group, playerGroups.length === 1)
   }
 }
-
-// function onNativeMessageResponse (response) {
-//   if (browser.runtime.lastError && browser.runtime.lastError.message.indexOf('not found') >= 0) {
-//     browser.tabs.create({ url: browser.runtime.getURL('/getnative.html') })
-//     return
-//   }
-//   if (response === 'success') return
-//   browser.notifications.create(null, {
-//     type: 'basic',
-//     title: browser.i18n.getMessage('extensionName'),
-//     iconUrl: browser.extension.getURL('icons/64/yt2p.png'),
-//     message: response
-//   })
-// }
-
-// function onNativeMessageError () {
-//   browser.tabs.create({ url: browser.runtime.getURL('/getnative.html') })
-// }

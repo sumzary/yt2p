@@ -1,6 +1,8 @@
 {
 	"extensionName": { "message": "YouTube 2 Mängija" },
 	"extensionDescription": { "message": "Vaada videoklippe välises mängijas." },
+	"import": { "message": "Impordi" },
+	"export": { "message": "Ekspordi" },
 	"toolsMenuItem": { "message": "YT2Players" },
 	"mainGroup": { "message": "Peamised mängijad" },
 	"importedGroup": { "message": "Vanad mängijad" },

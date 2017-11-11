@@ -75,6 +75,10 @@ input[type="text"] {
   min-width: 2em;
 }
 
+#import, #export {
+  margin-left: .5em;
+}
+
 #groups, #players {
   width: 100%;
   /*padding: 2px;*/

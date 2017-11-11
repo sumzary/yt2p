@@ -25,11 +25,14 @@ let canBrowseNatively = false
 window.setInterval(pingNativeClient, 500)
 
 initElements()
-loadPrefs()
+loadFromStorage()
 setData({})
 
 function initElements () {
   $('#downloadNative').onclick = onDownloadNativeClick
+  $('#importFile').onchange = importStorage
+  $('#import').onclick = () => $('#importFile').click()
+  $('#export').onclick = exportStorage
   $groups.onkeydown = onPlayerGroupsSelectKeyDown
   $players.onkeydown = onPlayerGroupsSelectKeyDown
   $groups.onchange = onGroupsSelectChange
@@ -83,6 +86,35 @@ function initElements () {
     data: commandAwesompleteData
   })
   $('#clickCommand').yt2pAwesomplete.yt2pInput = $('#clickCommand')
+}
+
+function importStorage (event) {
+  const reader = new window.FileReader()
+  reader.onload = event => {
+    const storage = JSON.parse(event.target.result)
+    if (typeof storage !== 'object') return
+    browser.storage.local.set(storage)
+    loadFromStorage()
+  }
+  reader.readAsText(event.target.files[0])
+}
+
+async function exportStorage () {
+  const storage = await browser.storage.local.get(null)
+  const json = JSON.stringify(storage, null, 2)
+  const byteArray = new Uint8Array(json.length)
+  for (let i = 0; i < json.length; i++) {
+    byteArray[i] = json.charCodeAt(i)
+  }
+  const now = new Date()
+  const y = ('0000' + now.getFullYear()).slice(-4)
+  const m = ('00' + (now.getMonth() + 1)).slice(-2)
+  const d = ('00' + now.getDate()).slice(-2)
+  browser.downloads.download({
+    url: window.URL.createObjectURL(new window.Blob([byteArray.buffer])),
+    filename: `yt2p-${y}-${m}-${d}.json`,
+    saveAs: true
+  })
 }
 
 function commandAwesompleteData (item, input) {
@@ -192,48 +224,48 @@ function onClickCommandInput (event) {
   $('#clickPlayers').selectedIndex = 0
 }
 
-function loadPrefs () {
-  browser.storage.local.get().then(storage => {
-    for (const group of storage.playerGroups) {
-      $groups.appendChild(newOption(group))
-    }
-    for (const element of $$('.pref')) {
-      const value = storage[element.name]
-      if (element.type === 'checkbox') {
-        element.checked = value
-        const subprefs = element.parentElement.nextElementSibling
-        if (subprefs.classList.contains('subprefs')) {
-          for (const e of $$('.pref', subprefs)) e.disabled = !value
-        }
-      } else if (element.type === 'radio') {
-        element.checked = value === element.value
-      } else {
-        element.value = value
+async function loadFromStorage (storage) {
+  storage = storage || await browser.storage.local.get()
+  while ($groups.firstChild) $groups.removeChild($groups.firstChild)
+  for (const group of storage.playerGroups) {
+    $groups.appendChild(newOption(group))
+  }
+  for (const element of $$('.pref')) {
+    const value = storage[element.name]
+    if (element.type === 'checkbox') {
+      element.checked = value
+      const subprefs = element.parentElement.nextElementSibling
+      if (subprefs.classList.contains('subprefs')) {
+        for (const e of $$('.pref', subprefs)) e.disabled = !value
       }
-      element.addEventListener('change', onPrefInputChange)
+    } else if (element.type === 'radio') {
+      element.checked = value === element.value
+    } else {
+      element.value = value
     }
-    const customOption = document.createElement('option')
-    customOption.text = browser.i18n.getMessage('custom')
-    // customOption.style.display = 'none'
-    $('#clickPlayers').appendChild(customOption)
-    for (const group of storage.playerGroups) {
-      const optgroup = document.createElement('optgroup')
-      optgroup.disabled = group.isSeparator
-      optgroup.label = group.name || (group.isSeparator
+    element.addEventListener('change', onPrefInputChange)
+  }
+  const customOption = document.createElement('option')
+  customOption.text = browser.i18n.getMessage('custom')
+  // customOption.style.display = 'none'
+  $('#clickPlayers').appendChild(customOption)
+  for (const group of storage.playerGroups) {
+    const optgroup = document.createElement('optgroup')
+    optgroup.disabled = group.isSeparator
+    optgroup.label = group.name || (group.isSeparator
+      ? '————————'
+      : browser.i18n.getMessage('unnamedOption'))
+    for (const player of group.players || []) {
+      const option = document.createElement('option')
+      option.disabled = player.isSeparator
+      option.yt2pCommand = player.command
+      option.text = player.name || (player.isSeparator
         ? '————————'
         : browser.i18n.getMessage('unnamedOption'))
-      for (const player of group.players || []) {
-        const option = document.createElement('option')
-        option.disabled = player.isSeparator
-        option.yt2pCommand = player.command
-        option.text = player.name || (player.isSeparator
-          ? '————————'
-          : browser.i18n.getMessage('unnamedOption'))
-        optgroup.appendChild(option)
-      }
-      $('#clickPlayers').appendChild(optgroup)
+      optgroup.appendChild(option)
     }
-  })
+    $('#clickPlayers').appendChild(optgroup)
+  }
 }
 
 function savePrefs () {

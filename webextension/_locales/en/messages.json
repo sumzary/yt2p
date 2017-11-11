@@ -1,6 +1,8 @@
 {
 	"extensionName": { "message": "YouTube 2 Player" },
 	"extensionDescription": { "message": "Watch videos in an external player." },
+	"import": { "message": "Import" },
+	"export": { "message": "Export" },
 	"toolsMenuItem": { "message": "YT2Mängijad" },
 	"mainGroup": { "message": "Main players" },
 	"importedGroup": { "message": "Imported players" },

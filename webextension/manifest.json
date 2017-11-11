@@ -9,7 +9,8 @@
     "notifications",
     "contextMenus",
     "storage",
-    "nativeMessaging"
+    "nativeMessaging",
+    "downloads"
   ],
   "web_accessible_resources": [
     "icons/*"

@@ -10,7 +10,7 @@
 
 'use strict'
 
-browser.storage.local.get({
+const defaults = {
   playerGroups: [{
     name: browser.i18n.getMessage('mainGroup'),
     icon: browser.extension.getURL('icons/16/yt2p.png'),
@@ -36,45 +36,41 @@ browser.storage.local.get({
   embeddedVideoChangeType: 'fil', // link, embed, fil
   filClickChangeEnabled: false,
   filClickChangeType: 'embed' // link, embed
-}).then((storage) => {
-  browser.storage.local.set(storage)
-  installContextMenuItems(storage.playerGroups)
-  browser.storage.onChanged.addListener(onStorageChanged)
-  browser.runtime.sendMessage({
-    type: 'import-legacy-data',
-    name: browser.i18n.getMessage('importedGroup'),
-    icon: browser.extension.getURL('icons/16/yt2p.png')
-  }).then(reply => {
-    if (!reply) return
-    installContextMenuItems(storage.playerGroups)
-    browser.storage.local.set(reply)
-  })
+}
+
+initStorage()
+
+browser.storage.onChanged.addListener(async changes => {
+  if (changes.playerGroups) {
+    await browser.contextMenus.removeAll()
+    if (changes.playerGroups.newValue) {
+      installContextMenuItems(changes.playerGroups.newValue)
+    } else {
+      browser.contextMenus.removeAll()
+    }
+  }
+  if (changes.contextMenuItemsEnabled) {
+    if (changes.contextMenuItemsEnabled.newValue) {
+      const storage = await browser.storage.local.get('playerGroups')
+      installContextMenuItems(storage.playerGroups)
+    } else {
+      browser.contextMenus.removeAll()
+    }
+  }
 })
 
-browser.runtime.onInstalled.addListener(onInstalled)
-browser.runtime.onMessage.addListener(onMessage)
-browser.tabs.onActivated.addListener(closeAllContextMenus)
-
-function onInstalled (details) {
+browser.runtime.onInstalled.addListener(details => {
   if (details.reason === 'install' ||
-      (details.reason === 'update' && details.previousVersion.startsWith('2'))) {
+      (details.reason === 'update' && /^1|2\./.test(details.previousVersion))) {
     browser.runtime.openOptionsPage()
   }
-}
+})
 
-async function closeAllContextMenus () {
-  const tabs = await browser.tabs.query({})
-  return Promise.all(tabs.map(async (tab) => {
-    try {
-      await browser.tabs.sendMessage(tab.id, 'closecontextmenus')
-    } catch (e) {}
-  }))
-}
-
-function onMessage (message, sender, sendResponse) {
-  if (message === 'ping') return
+browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message === 'closeallcontextmenus') {
     return closeAllContextMenus()
+  } else if (message === 'resetstorage') {
+    return resetStorage()
   } else {
     if (!message.commandPattern) {
       createNotification(browser.i18n.getMessage('commandNotSet'))
@@ -91,6 +87,39 @@ function onMessage (message, sender, sendResponse) {
       createNotification(error.message)
     })
   }
+})
+
+browser.tabs.onActivated.addListener(closeAllContextMenus)
+
+async function closeAllContextMenus () {
+  const tabs = await browser.tabs.query({})
+  return Promise.all(tabs.map(async (tab) => {
+    try {
+      await browser.tabs.sendMessage(tab.id, 'closecontextmenus')
+    } catch (e) {}
+  }))
+}
+
+async function initStorage () {
+  const imported = browser.runtime.sendMessage({
+    type: 'import-legacy-data',
+    name: browser.i18n.getMessage('importedGroup'),
+    icon: browser.extension.getURL('icons/16/yt2p.png')
+  })
+  let storage = await browser.storage.local.get(defaults)
+  await browser.storage.local.set(storage)
+  if (await imported) {
+    await browser.storage.local.set(imported)
+    storage = await browser.storage.local.get('playerGroups')
+  }
+  installContextMenuItems(storage.playerGroups)
+}
+
+async function resetStorage () {
+  await browser.storage.local.clear()
+  await browser.storage.local.set(defaults)
+  await browser.contextMenus.removeAll()
+  installContextMenuItems(defaults.playerGroups)
 }
 
 function createNotification (message) {
@@ -100,23 +129,6 @@ function createNotification (message) {
     iconUrl: browser.extension.getURL('icons/64/yt2p.png'),
     message: message
   })
-}
-
-function onStorageChanged (changes) {
-  if (changes.playerGroups) {
-    browser.contextMenus.removeAll().then(() => {
-      installContextMenuItems(changes.playerGroups.newValue)
-    })
-  }
-  if (changes.contextMenuItemsEnabled) {
-    if (changes.contextMenuItemsEnabled.newValue) {
-      browser.storage.local.get('playerGroups', storage => {
-        installContextMenuItems(storage.playerGroups)
-      })
-    } else {
-      browser.contextMenus.removeAll()
-    }
-  }
 }
 
 function getVideoIdFromUrl (videoUrl) {
@@ -180,7 +192,7 @@ function installPlayerGroupContextMenuItems (group, isOnlyChild) {
   }
 }
 
-function installContextMenuItems (playerGroups) {
+async function installContextMenuItems (playerGroups) {
   for (const group of playerGroups) {
     installPlayerGroupContextMenuItems(group, playerGroups.length === 1)
   }

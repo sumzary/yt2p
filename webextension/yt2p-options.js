@@ -22,7 +22,30 @@ let aI // active <input>
 let acPort = null
 let canBrowseNatively = false
 
-window.setInterval(pingNativeClient, 500)
+window.setInterval(() => {
+  browser.runtime.sendNativeMessage('ee.sumzary.yt2p', {
+    type: 'ping'
+  }).then(response => {
+    if (acPort) return
+    acPort = browser.runtime.connectNative('ee.sumzary.yt2p')
+    acPort.onMessage.addListener(onAutoCompleteMessage)
+    browser.runtime.sendNativeMessage('ee.sumzary.yt2p', {
+      type: 'canbrowse'
+    }).then(bool => {
+      if (!bool) return
+      $('#commandBrowse').classList.remove('none')
+      $('#clickCommandBrowse').classList.remove('none')
+      canBrowseNatively = true
+    })
+    $('#nativeWarning').classList.add('none')
+  }).catch(() => {
+    $('#nativeWarning').classList.remove('none')
+    $('#commandBrowse').classList.add('none')
+    $('#clickCommandBrowse').classList.add('none')
+    canBrowseNatively = false
+    acPort = null
+  })
+}, 500)
 
 initElements()
 loadFromStorage()
@@ -30,9 +53,10 @@ setData({})
 
 function initElements () {
   $('#downloadNative').onclick = onDownloadNativeClick
-  $('#importFile').onchange = importStorage
-  $('#import').onclick = () => $('#importFile').click()
   $('#export').onclick = exportStorage
+  $('#import').onclick = () => $('#importFile').click()
+  $('#importFile').onchange = importStorage
+  $('#defaults').onclick = resetStorage
   $groups.onkeydown = onPlayerGroupsSelectKeyDown
   $players.onkeydown = onPlayerGroupsSelectKeyDown
   $groups.onchange = onGroupsSelectChange
@@ -115,6 +139,11 @@ async function exportStorage () {
     filename: `yt2p-${y}-${m}-${d}.json`,
     saveAs: true
   })
+}
+
+async function resetStorage () {
+  await browser.runtime.sendMessage('resetstorage')
+  loadFromStorage()
 }
 
 function commandAwesompleteData (item, input) {
@@ -557,29 +586,4 @@ function updatePrefsDisabledState () {
 function localize (element = document.documentElement) {
   element.innerHTML = element.innerHTML.toString()
     .replace(/__MSG_(\w+)__/g, (_, m) => browser.i18n.getMessage(m))
-}
-
-function pingNativeClient () {
-  browser.runtime.sendNativeMessage('ee.sumzary.yt2p', {
-    type: 'ping'
-  }).then(response => {
-    if (acPort) return
-    acPort = browser.runtime.connectNative('ee.sumzary.yt2p')
-    acPort.onMessage.addListener(onAutoCompleteMessage)
-    browser.runtime.sendNativeMessage('ee.sumzary.yt2p', {
-      type: 'canbrowse'
-    }).then(bool => {
-      if (!bool) return
-      $('#commandBrowse').classList.remove('none')
-      $('#clickCommandBrowse').classList.remove('none')
-      canBrowseNatively = true
-    })
-    $('#nativeWarning').classList.add('none')
-  }).catch(() => {
-    $('#nativeWarning').classList.remove('none')
-    $('#commandBrowse').classList.add('none')
-    $('#clickCommandBrowse').classList.add('none')
-    canBrowseNatively = false
-    acPort = null
-  })
 }

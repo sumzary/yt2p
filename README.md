@@ -1,10 +1,10 @@
 # YouTube 2 Player
 A Firefox add-on to let you watch YouTube videos in an external player.
 
-### Install Native Host
+### Install Native Application
 Run `native/install.bat` on Windows, `native/install.sh` on Linux/OSX.
 
-### Uninstall Native Host
+### Uninstall Native Application
 Run `native/uninstall.bat` on Windows, `native/uninstall.sh` on Linux/OSX.
 
 ### Legacy Version

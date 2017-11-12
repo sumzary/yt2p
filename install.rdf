@@ -9,7 +9,7 @@
     <em:id>YT2Player@Rasmus.Riiner</em:id>
     <em:name>YouTube 2 Player</em:name>
     <em:version>3.0.2</em:version>
-    <em:description>Watch YouTube videos in an external player.</em:description>
+    <em:description>Watch videos in an external player.</em:description>
     <em:homepageURL>https://github.com/sumzary/yt2p</em:homepageURL>
     <em:creator>Rasmus Riiner</em:creator>
     <!-- eesti keel -->
@@ -17,7 +17,7 @@
       <Description>
         <em:locale>et</em:locale>
         <em:name>YouTube 2 Mängijasse</em:name>
-        <em:description>Vaata YouTube-i klippe välises mängijas.</em:description>
+        <em:description>Vaata klippe välises mängijas.</em:description>
         <em:translator>Rasmus Riiner</em:translator>
       </Description>
     </em:localized>

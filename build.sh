@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # this file creates:
-#   build/yt2p-extension.xpi
-#   build/yt2p-nativeapp.zip
-#   build/yt2p-sources.zip
+#  build/yt2p-extension.xpi
+#  build/yt2p-nativeapp.zip
+#  build/yt2p-sources.zip
 
 rm -fR build
 mkdir -p build

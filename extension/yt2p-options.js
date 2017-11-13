@@ -583,7 +583,10 @@ function updatePrefsDisabledState () {
   }
 }
 
-function localize (element = document.documentElement) {
-  element.innerHTML = element.innerHTML.toString()
-    .replace(/__MSG_(\w+)__/g, (_, m) => browser.i18n.getMessage(m))
+function localize () {
+  for (let e of document.getElementsByTagName('html')) {
+    const o = e.innerHTML.toString()
+    const n = o.replace(/__MSG_(\w+)__/g, (_, k) => browser.i18n.getMessage(k))
+    if (o !== n) e.innerHTML = n
+  }
 }

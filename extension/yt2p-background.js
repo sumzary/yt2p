@@ -29,7 +29,7 @@ const defaults = {
   contextMenuItemsEnabled: true,
   videoLinkChangeEnabled: true,
   videoLinkChangeType: 'underline', // underline, glow, embed, fil
-  videoLinkClickChangeEnabled: true,
+  videoLinkClickChangeEnabled: false,
   videoLinkClickChangeType: 'send', // send, menu, embed, fil
   videoLinkClickPlayerCommand: '',
   embeddedVideoChangeEnabled: true,
@@ -45,16 +45,13 @@ browser.storage.onChanged.addListener(async changes => {
     await browser.contextMenus.removeAll()
     if (changes.playerGroups.newValue) {
       installContextMenuItems(changes.playerGroups.newValue)
-    } else {
-      browser.contextMenus.removeAll()
     }
   }
   if (changes.contextMenuItemsEnabled) {
+    await browser.contextMenus.removeAll()
     if (changes.contextMenuItemsEnabled.newValue) {
       const storage = await browser.storage.local.get('playerGroups')
       installContextMenuItems(storage.playerGroups)
-    } else {
-      browser.contextMenus.removeAll()
     }
   }
 })
@@ -101,17 +98,8 @@ async function closeAllContextMenus () {
 }
 
 async function initStorage () {
-  const imported = browser.runtime.sendMessage({
-    type: 'import-legacy-data',
-    name: browser.i18n.getMessage('importedGroup'),
-    icon: browser.extension.getURL('icons/16/yt2p.png')
-  })
   let storage = await browser.storage.local.get(defaults)
   await browser.storage.local.set(storage)
-  if (await imported) {
-    await browser.storage.local.set(imported)
-    storage = await browser.storage.local.get('playerGroups')
-  }
   installContextMenuItems(storage.playerGroups)
 }
 

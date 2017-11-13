@@ -1,45 +1,39 @@
 {
-    "build_systems":
-    [
-        {
-            "name": "Release",
-            "shell_cmd": "rm -f yt2p-addon.zip yt2p-native.zip  && zip -r yt2p-addon.zip . -x native/\\* *.svg *.zip *rc.json *.sublime-project *.sublime-workspace *.git* *.jshintrc && cd native && zip -r ../yt2p-native.zip install* data/",
-            "working_dir": "$folder",
-            "variants":
-            [
-                {
-                    "name": "Run",
-                    "shell_cmd": "web-ext run",
-                    "working_dir": "$folder/webextension"
-                },
-                {
-                    "name": "Run /opt/firefox",
-                    "shell_cmd": "web-ext run --firefox=/opt/firefox/firefox",
-                    "working_dir": "$folder/webextension"
-                },
-                {
-                    "name": "Send",
-                    "shell_cmd": "rm -f yt2p-addon.zip && zip -r yt2p-addon.zip . -x native/\\* *.svg *.zip *rc.json *.sublime-project *.sublime-workspace *.git* *.jshintrc && wget --post-file=yt2p-addon.zip http://127.0.0.1:8888/",
-                    "working_dir": "$folder"
-                },
-                {
-                    "name": "Install",
-                    "shell_cmd": "native/install.sh",
-                    "working_dir": "$folder/native"
-                },
-                {
-                    "name": "Uninstall",
-                    "shell_cmd": "native/uninstall.sh",
-                    "working_dir": "$folder/native"
-                }
-            ]
-        }
-    ],
-    "folders":
-    [
-        {
-            "path": ".",
-            "file_exclude_patterns": ["*.zip"]
-        }
-    ]
+	"build_systems":
+	[
+		{
+			"name": "Build",
+			"shell_cmd": "./build.sh",
+			"working_dir": "$folder",
+			"variants":
+			[
+				{
+					"name": "Run",
+					"shell_cmd": "web-ext run",
+					"working_dir": "$folder/extension"
+				},
+				{
+					"name": "Run /opt/firefox",
+					"shell_cmd": "web-ext run --firefox=/opt/firefox/firefox",
+					"working_dir": "$folder/extension"
+				},
+				{
+					"name": "Install",
+					"shell_cmd": "nativeapp/install.sh",
+					"working_dir": "$folder/nativeapp"
+				},
+				{
+					"name": "Uninstall",
+					"shell_cmd": "nativeapp/uninstall.sh",
+					"working_dir": "$folder/nativeapp"
+				}
+			]
+		}
+	],
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	]
 }

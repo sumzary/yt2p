@@ -11,16 +11,23 @@
     <script src="playeroptions.js"></script>
   </head>
   <body class="vbox">
-    <div class="hbox cross-center nomargin none" id="nativeWarning">
+    <div class="hbox cross-center nomargin none" id="nativeMissing">
       <img class="icon64" src="icons/64/warning.png">
       <div class="vbox">
-        <p>Add-ons can no longer run executables directly.</p>
-        <p>Please download, extract and install the native client from <a id="downloadNative" href="">here</a>.</p>
+        <p>Add-ons need a native application to run executables directly.</p>
+        <p>Please download, extract and install it from <a class="download-nativeapp" href="">here</a>.</p>
+      </div>
+    </div>
+    <div class="hbox cross-center nomargin none" id="nativeUpgrade">
+      <img class="icon64" src="icons/64/warning.png">
+      <div class="vbox">
+        <p>Newer native application version available, some features might not work as expected.</p>
+        <p>Please download, extract and install it from <a class="download-nativeapp" href="">here</a>.</p>
       </div>
     </div>
     <div id="optionbuttons" class="hbox cross-center main-center">
       <input type="button" id="export" value="__MSG_export__...">
-      <input type="file" id="importFile" class="none" accept=".json">
+      <input type="file" id="importFile" class="none" accept=".json,.ini">
       <input type="button" id="import" value="__MSG_import__...">
       <input type="button" id="defaults" value="__MSG_defaults__">
     </div>
@@ -30,8 +37,7 @@
           <img class="icon32" src="icons/32/playerGroups.png">
           <h2>__MSG_groups__</h2>
         </div>
-        <!-- <div id="groups"></div> -->
-        <select id="groups" size="11" multiple="true"></select>
+        <select id="groups" size="12" multiple="true"></select>
       </div>
       <div class="vbox">
         <div class="hbox cross-center" style="visibility: hidden;">
@@ -43,13 +49,18 @@
         <input type="button" id="moveUp" class="flex" value="__MSG_moveUp__">
         <input type="button" id="moveDown" class="flex" value="__MSG_moveDown__">
         <input type="button" id="delete" class="flex" value="__MSG_delete__">
+        <div class="hbox nomargin">
+          <input type="button" id="cut" class="flex" value="X" title="__MSG_cut__">
+          <input type="button" id="copy" class="flex" value="C" title="__MSG_copy__">
+          <input type="button" id="paste" class="flex" value="V" title="__MSG_paste__">
+        </div>
       </div>
       <div class="vbox flex4 stretch cross-stretch">
         <div class="hbox cross-center">
           <img class="icon32" src="icons/32/players.png">
           <h2>__MSG_players__</h2>
         </div>
-        <select id="players" size="11" multiple="true"></select>
+        <select id="players" size="12" multiple="true"></select>
       </div>
     </div>
     <div class="hbox cross-center nomargin">
@@ -60,8 +71,6 @@
           <input type="text" id="icon" name="icon"  class="flex2" size="10" placeholder="__MSG_icon__">
           <input type="file" id="iconFile" name="icon" class="none" accept="image/*">
           <input type="button" id="iconBrowse" name="icon" value="__MSG_browse__...">
-          <!-- <input type="image" id="toggleClipboard" name="clipboard" src="icons/16/show.png" alt=""> -->
-          <!-- <input type="button" name="icon" onclick="$('iconBrowse').click()" value="Browse..."> -->
         </div>
         <div class="hbox none" id="clipboardBox">
           <input type="text" id="clipboard" name="clipboard" class="flex" placeholder="__MSG_clipboard__">
@@ -69,7 +78,6 @@
         <div class="hbox">
           <input type="text" id="command" name="command" class="flex"
             placeholder="__MSG_command__" title="__MSG_commandTooltip__">
-          <!-- <datalist id="commandList"></datalist> list="commandList"-->
           <input type="button" id="commandBrowse" name="command" class="none" value="__MSG_browse__...">
         </div>
       </div>

@@ -25,7 +25,7 @@ let canBrowseNatively = false
 window.setInterval(() => {
   browser.runtime.sendNativeMessage('ee.sumzary.yt2p', {
     type: 'ping'
-  }).then(response => {
+  }).then(version => {
     if (acPort) return
     acPort = browser.runtime.connectNative('ee.sumzary.yt2p')
     acPort.onMessage.addListener(onAutoCompleteMessage)
@@ -37,22 +37,25 @@ window.setInterval(() => {
       $('#clickCommandBrowse').classList.remove('none')
       canBrowseNatively = true
     })
-    $('#nativeWarning').classList.add('none')
+    $('#nativeMissing').classList.add('none')
+    if (version === true || version < 2) { // current nativeapp version
+      $('#nativeUpgrade').classList.remove('none')
+    }
   }).catch(() => {
-    $('#nativeWarning').classList.remove('none')
+    $('#nativeMissing').classList.remove('none')
+    $('#nativeUpgrade').classList.add('none')
     $('#commandBrowse').classList.add('none')
     $('#clickCommandBrowse').classList.add('none')
     canBrowseNatively = false
     acPort = null
   })
-}, 500)
+}, 1000)
 
 initElements()
 loadFromStorage()
-setData({})
 
 function initElements () {
-  $('#downloadNative').onclick = onDownloadNativeClick
+  $$('.download-nativeapp').forEach(e => (e.onclick = onDownloadNativeAppClick))
   $('#export').onclick = exportStorage
   $('#import').onclick = () => $('#importFile').click()
   $('#importFile').onchange = importStorage
@@ -68,13 +71,15 @@ function initElements () {
   $('#moveUp').onclick = doMoveUp
   $('#moveDown').onclick = doMoveDown
   $('#delete').onclick = doDelete
+  $('#cut').onclick = doCut
+  $('#copy').onclick = doCopy
+  $('#paste').onclick = doPaste
   $('#name').onchange = onNameChange
   $('#icon').onchange = onIconChange
   $('#iconFile').onchange = onIconFileChange
   $('#iconBrowse').onclick = onIconBrowseClick
   $('#toggleClipboard').onclick = onToggleClipboardClick
   $('#clipboard').onchange = onClipboardChange
-  // $('#command').onclick = onCommandInput
   $('#command').onfocus = onCommandFocus
   $('#command').oninput = onCommandInput
   $('#command').addEventListener(
@@ -112,13 +117,154 @@ function initElements () {
   $('#clickCommand').yt2pAwesomplete.yt2pInput = $('#clickCommand')
 }
 
+async function importStorageFromIniData (iniData) {
+  const values = {}
+  iniData.split(/[\n\r]+/)
+    .map(line => line.match(/^([^=]+)=(.+)$/))
+    .filter(matches => matches && matches.length === 3)
+    .forEach(matches => (values[matches[1]] = matches[2]))
+  const storage = {}
+  const players = JSON.parse(values['players'] || '[]')
+  const command = formatPattern(getClickSenderCommand(players))
+  if (command) {
+    storage.videoLinkClickPlayerCommand = command
+  }
+  const padding =
+    parseInt(values['contextMenuIconRowVerticalMargin']) ||
+    parseInt(values['contextMenuIconRowHorizontalMargin'])
+  if (padding) {
+    storage.videoLinkClickPlayerCommand = padding
+  }
+  switch (values['toolsMenuItemsEnabled']) {
+    case 'true': storage.toolsMenuItemsEnabled = true; break
+    case 'false': storage.toolsMenuItemsEnabled = false; break
+  }
+  switch (values['contextMenuItemsEnabled']) {
+    case 'true': storage.iconContextMenuEnabled = true; break
+    case 'false': storage.iconContextMenuEnabled = false; break
+  }
+  switch (values['videoLinkChangeEnabled']) {
+    case 'true': storage.videoLinkChangeEnabled = true; break
+    case 'false': storage.videoLinkChangeEnabled = false; break
+  }
+  switch (values['videoLinkChangeType']) {
+    case '0': storage.videoLinkChangeType = 'glow'; break
+    case '1': storage.videoLinkChangeType = 'embed'; break
+    case '2': storage.videoLinkChangeType = 'fil'; break
+    default: storage.videoLinkChangeType = 'underline'
+  }
+  switch (values['videoLinkClickChangeEnabled']) {
+    case 'true': storage.videoLinkClickChangeEnabled = true; break
+    case 'false': storage.videoLinkClickChangeEnabled = false; break
+  }
+  switch (values['videoLinkClickChangeType']) {
+    case '1': storage.videoLinkClickChangeType = 'embed'; break
+    case '2': storage.videoLinkClickChangeType = 'fil'; break
+    default: storage.videoLinkClickChangeType = 'send'
+  }
+  switch (values['embeddedVideoChangeEnabled']) {
+    case 'true': storage.embeddedVideoChangeEnabled = true; break
+    case 'false': storage.embeddedVideoChangeEnabled = false; break
+  }
+  switch (values['embeddedVideoChangeType']) {
+    case '0': storage.embeddedVideoChangeType = 'link'; break
+    case '1': storage.embeddedVideoChangeType = 'embed'; break
+    default: storage.embeddedVideoChangeType = 'fil'
+  }
+  switch (values['filClickChangeEnabled']) {
+    case 'true': storage.filClickChangeEnabled = true; break
+    case 'false': storage.filClickChangeEnabled = false; break
+  }
+  switch (values['filClickChangeType']) {
+    case '2': storage.filClickChangeType = 'link'; break
+    default: storage.filClickChangeType = 'embed'; break
+  }
+  const playerGroups = []
+  for (const group of players) {
+    if (group.isSeparator) {
+      playerGroups.push({ isSeparator: true })
+      continue
+    }
+    const newGroup = {
+      name: group.name || '',
+      icon: await iconFromOld(group.icon),
+      players: []
+    }
+    for (const player of flattenPlayers(group.children)) {
+      if (player.isSeparator) {
+        newGroup.push({ isSeparator: true })
+        continue
+      }
+      const newPlayer = {
+        name: player.name || '',
+        icon: await iconFromOld(player.icon || ''),
+        command: formatPattern(player.command || ''),
+        clipboard: formatPattern(player.clipboard || '')
+      }
+      newGroup.players.push(newPlayer)
+    }
+    playerGroups.push(newGroup)
+  }
+  if (playerGroups[playerGroups.length - 1].isSeparator) {
+    playerGroups.pop()
+  }
+  storage.playerGroups = playerGroups
+  browser.storage.local.set(storage).then(loadFromStorage)
+
+  async function iconFromOld (icon = '') {
+    let matches = icon.match(/file:\/\/\/([^?#]+)/)
+    if (matches) {
+      let path = decodeURI(matches[1])
+      path = /^\w:./.test(path) ? path : '/' + path
+      const response = await browser.runtime.sendNativeMessage('ee.sumzary.yt2p', {
+        type: 'pathicon', path, large: $('#icmis').value > 16
+      })
+      if (typeof response === 'string') return response
+      return ''
+    } else if (icon === 'chrome://yt2p/skin/16/yt2p.png') {
+      return browser.extension.getURL('icons/16/yt2p.png')
+    } else if (icon === 'chrome://yt2p/skin/16/player.png') {
+      return browser.extension.getURL('icons/16/player.png')
+    }
+    return icon
+  }
+
+  function formatPattern (pattern) {
+    return pattern
+      .replace('$VIDEOURL$', 'VIDEOURL')
+      .replace('$VIDEOID$', 'VIDEOID')
+  }
+
+  function flattenPlayers (children) {
+    if (!Array.isArray(children)) return []
+    return children.reduce((array, child) => {
+      if (child.isSeparator) return array
+      array.push(child)
+      if (!child.children) return array
+      return array.concat(flattenPlayers(child.children))
+    }, [])
+  }
+
+  function getClickSenderCommand (children = []) {
+    for (let data of children) {
+      if (data.isClickSender) return data.command
+      if (!data.children) continue
+      const command = getClickSenderCommand(data.children)
+      if (command) return command
+    }
+    return ''
+  }
+}
+
 function importStorage (event) {
   const reader = new window.FileReader()
   reader.onload = event => {
-    const storage = JSON.parse(event.target.result)
-    if (typeof storage !== 'object') return
-    browser.storage.local.set(storage)
-    loadFromStorage()
+    try {
+      const storage = JSON.parse(reader.result)
+      browser.storage.local.set(storage).then(loadFromStorage)
+    } catch (e) {
+      importStorageFromIniData(reader.result)
+    }
   }
   reader.readAsText(event.target.files[0])
 }
@@ -167,7 +313,17 @@ function commandAwesompleteFilter (text, input) {
 }
 
 function onPlayerGroupsSelectKeyDown (event) {
-  if (event.keyCode === 46) doDelete()
+  switch (event.key) {
+    case 'Delete': doDelete(); break
+  }
+  if (!event.ctrlKey && !event.metaKey) return
+  switch (event.key) {
+    case 'x': doCut(); break
+    case 'c': doCopy(); break
+    case 'v': doPaste(); break
+    case 'ArrowUp': doMoveUp(); break
+    case 'ArrowDown': doMoveDown(); break
+  }
 }
 
 function doNew () {
@@ -232,6 +388,42 @@ function doDelete () {
   savePrefs()
 }
 
+let copyData = []
+let copyDataIsGroups = false
+
+function doCut () {
+  doCopy()
+  doDelete()
+  savePrefs()
+}
+
+function doCopy () {
+  copyData = [...aS.selectedOptions].map(o => o.data)
+  copyDataIsGroups = (aS === $groups)
+  savePrefs()
+}
+
+function doPaste () {
+  const after = aS.options[aS.selectedIndex]
+  const before = after ? after.nextElementSibling : null
+  aS.selectedIndex = -1
+  if ((copyDataIsGroups && aS === $groups) ||
+      (!copyDataIsGroups && aS === $players)) {
+    for (const option of copyData.map(newOption).reverse()) {
+      aS.insertBefore(option, before)
+      option.selected = true
+    }
+  } else if (copyDataIsGroups && aS === $players) {
+    for (const group of copyData) {
+      for (const option of (group.players || []).map(newOption)) {
+        aS.insertBefore(option, before)
+        option.selected = true
+      }
+    }
+  }
+  savePrefs()
+}
+
 function newOption (data) {
   const option = document.createElement('option')
   option.text = data.name || (data.isSeparator
@@ -256,6 +448,8 @@ function onClickCommandInput (event) {
 async function loadFromStorage (storage) {
   storage = storage || await browser.storage.local.get()
   while ($groups.firstChild) $groups.removeChild($groups.firstChild)
+  while ($players.firstChild) $players.removeChild($players.firstChild)
+  setData({})
   for (const group of storage.playerGroups) {
     $groups.appendChild(newOption(group))
   }
@@ -276,7 +470,6 @@ async function loadFromStorage (storage) {
   }
   const customOption = document.createElement('option')
   customOption.text = browser.i18n.getMessage('custom')
-  // customOption.style.display = 'none'
   $('#clickPlayers').appendChild(customOption)
   for (const group of storage.playerGroups) {
     const optgroup = document.createElement('optgroup')
@@ -311,7 +504,11 @@ function savePrefs () {
 }
 
 function setData (data) {
-  $players.disabled = aS === $groups && data.isSeparator
+  $$('#moveUp, #moveDown, #delete, #cut, #copy, #paste').forEach(element => {
+    element.disabled = $groups.selectedOptions.length === 0
+  })
+  $players.disabled = $groups.selectedOptions.length !== 1 ||
+      (aS === $groups && data.isSeparator)
   for (const input of $$('#datainputs input')) {
     input.disabled = false
   }
@@ -363,7 +560,7 @@ function onCommandBrowseClick (event) {
   }).then(response => {
     if (typeof response !== 'string') return
     if (response.includes(' ')) response = `"${response}"`
-    textInput.value = response// + ' LINKURL'
+    textInput.value = response + ' VIDEOURL'
     savePrefs()
   })
 }
@@ -470,7 +667,6 @@ function onCommandInput (event) {
 }
 
 function onCommandChange (event) {
-  // if (this.value.indexOf('$') < 0) this.value += ' LINKURL'
   aO.data.command = this.value
 }
 
@@ -515,9 +711,6 @@ function onCommandAwesompleteSelect (event) {
 
 function onGroupsSelectChange (event) {
   while ($players.firstChild) $players.removeChild($players.firstChild)
-  $('#moveUp').disabled = this.selectedOptions.length === 0
-  $('#moveDown').disabled = this.selectedOptions.length === 0
-  $('#delete').disabled = this.selectedOptions.length === 0
   if (this.selectedOptions.length !== 1) return setData({})
   aO = this.options[this.selectedIndex]
   if (aO.data.players) {
@@ -550,7 +743,7 @@ function $$ (selector, element = document) {
   return [...element.querySelectorAll(selector)]
 }
 
-function onDownloadNativeClick (event) {
+function onDownloadNativeAppClick (event) {
   browser.tabs.create({
     url: 'https://github.com/Sumzary/yt2p/releases/latest',
     active: true

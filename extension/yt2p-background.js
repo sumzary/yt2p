@@ -17,7 +17,7 @@ const defaults = {
     players: [{
       name: browser.i18n.getMessage('sendToPlayer'),
       icon: browser.extension.getURL('icons/16/player.png'),
-      command: 'mpv VIDEOURL',
+      command: '',
       clipboard: ''
     }]
   }],
@@ -69,20 +69,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   } else if (message === 'resetstorage') {
     return resetStorage()
   } else {
-    if (!message.commandPattern) {
-      createNotification(browser.i18n.getMessage('commandNotSet'))
-      return
-    }
-    browser.runtime.sendNativeMessage('ee.sumzary.yt2p', {
-      type: 'execute',
-      command: formatCommand(message.commandPattern, message.linkUrl)
-    }).then(response => {
-      if (response === true) return
-      createNotification(response.message)
-    }).catch(error => {
-      console.log(error)
-      createNotification(error.message)
-    })
+    doExecute(message)
   }
 })
 
@@ -119,69 +106,83 @@ function createNotification (message) {
   })
 }
 
-function getVideoIdFromUrl (videoUrl) {
-  const re = /v=|v%3[Dd]|youtu.be\/|\/v\/|\/embed\/|img.youtube.com\/vi\/|attribution_link=/ig
-  const temp = videoUrl.replace(re, '$IDSTART$')
-  return temp.substr(temp.indexOf('$IDSTART$') + 9, 11)
-}
-
-function getPlaylistIdFromUrl (videoUrl) {
-  if (!videoUrl.includes('list=')) return ''
-  const temp = videoUrl.replace('list=', '$PLAYLISTID$')
-  return temp.substr(temp.indexOf('$PLAYLISTID$') + 11, 11)
-}
-
-function getStandardisedVideoUrl (videoUrl) {
-  const result = `https://www.youtube.com/watch?v=${getVideoIdFromUrl(videoUrl)}`
-  const playlistId = getPlaylistIdFromUrl(videoUrl)
-  if (playlistId) return result + `&list=${playlistId}`
-  return result
-}
-
-function formatCommand (pattern, linkUrl) {
-  return pattern
-    .replace('LINKURL', linkUrl)
-    .replace('VIDEOURL', getStandardisedVideoUrl(linkUrl))
-    .replace('VIDEOID', getVideoIdFromUrl(linkUrl))
-    .replace('PLAYLISTID', getPlaylistIdFromUrl(linkUrl))
-}
-
-function installPlayerContextMenuItems (player, parentId) {
-  if (player.isSeparator) {
-    browser.contextMenus.create({ type: 'separator', parentId })
+function doExecute ({command, clipboard, url}) {
+  if (!command && !clipboard) {
+    createNotification(browser.i18n.getMessage('commandNotSet'))
     return
   }
-  const commandPattern = player.command
-  browser.contextMenus.create({
-    title: player.name,
-    icons: { '16': player.icon },
-    parentId,
-    onclick: (info) => {
-      const url = info.linkUrl || info.srcUrl || info.frameUrl || info.pageUrl
-      browser.runtime.sendNativeMessage('ee.sumzary.yt2p', {
-        type: 'execute',
-        command: formatCommand(commandPattern, url)
-      })
-    }
+  const message = { type: 'execute' }
+  if (command) message.command = formatPattern(command, url)
+  if (clipboard) message.clipboard = formatPattern(clipboard, url)
+  browser.runtime.sendNativeMessage('ee.sumzary.yt2p', message).then(response => {
+    if (response === true) return
+    console.log(response.message)
+    createNotification(response.message)
+  }).catch(error => {
+    console.log(error)
+    createNotification(error)
   })
-}
 
-function installPlayerGroupContextMenuItems (group, isOnlyChild) {
-  if (group.isSeparator) {
-    browser.contextMenus.create({ type: 'separator' })
-    return
+  function formatPattern (pattern, linkUrl) {
+    return pattern
+      .replace('LINKURL', linkUrl)
+      .replace('VIDEOURL', getStandardisedVideoUrl(linkUrl))
+      .replace('VIDEOID', getVideoIdFromUrl(linkUrl))
+      .replace('PLAYLISTID', getPlaylistIdFromUrl(linkUrl))
   }
-  const itemId = isOnlyChild ? undefined : browser.contextMenus.create({
-    title: group.name,
-    icons: { '16': group.icon }
-  })
-  for (const player of group.players) {
-    installPlayerContextMenuItems(player, itemId)
+
+  function getVideoIdFromUrl (videoUrl) {
+    const re = /v=|v%3[Dd]|youtu.be\/|\/v\/|\/embed\/|img.youtube.com\/vi\/|attribution_link=/ig
+    const temp = videoUrl.replace(re, '$IDSTART$')
+    return temp.substr(temp.indexOf('$IDSTART$') + 9, 11)
+  }
+
+  function getPlaylistIdFromUrl (videoUrl) {
+    if (!videoUrl.includes('list=')) return ''
+    const temp = videoUrl.replace('list=', '$PLAYLISTID$')
+    return temp.substr(temp.indexOf('$PLAYLISTID$') + 11, 11)
+  }
+
+  function getStandardisedVideoUrl (videoUrl) {
+    const result = `https://www.youtube.com/watch?v=${getVideoIdFromUrl(videoUrl)}`
+    const playlistId = getPlaylistIdFromUrl(videoUrl)
+    if (playlistId) return result + `&list=${playlistId}`
+    return result
   }
 }
 
 async function installContextMenuItems (playerGroups) {
   for (const group of playerGroups) {
     installPlayerGroupContextMenuItems(group, playerGroups.length === 1)
+  }
+
+  function installPlayerGroupContextMenuItems (group, isOnlyChild) {
+    if (group.isSeparator) {
+      browser.contextMenus.create({ type: 'separator' })
+      return
+    }
+    const itemId = isOnlyChild ? undefined : browser.contextMenus.create({
+      title: group.name,
+      icons: { '16': group.icon }
+    })
+    for (const player of group.players) {
+      installPlayerContextMenuItems(player, itemId)
+    }
+  }
+
+  function installPlayerContextMenuItems (player, parentId) {
+    if (player.isSeparator) {
+      browser.contextMenus.create({ type: 'separator', parentId })
+      return
+    }
+    browser.contextMenus.create({
+      title: player.name,
+      icons: { '16': player.icon },
+      parentId,
+      onclick: info => {
+        player.url = info.linkUrl || info.srcUrl || info.frameUrl || info.pageUrl
+        doExecute(player)
+      }
+    })
   }
 }

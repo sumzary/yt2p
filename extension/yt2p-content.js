@@ -192,8 +192,9 @@ function newEmbeddedVideoObject (videoId) {
 
 function onPlayerButtonClick (event) {
   browser.runtime.sendMessage({
-    commandPattern: event.target.yt2pCommand,
-    linkUrl: $('#yt2pIconContextMenu').yt2pLinkUrl
+    command: event.target.yt2pPlayer.command,
+    clipboard: event.target.yt2pPlayer.clipboard,
+    url: $('#yt2pIconContextMenu').yt2pLinkUrl
   })
   $('#yt2pIconContextMenu').style.display = 'none'
 }
@@ -210,7 +211,7 @@ function newPlayerButtonElementFromPlayer (player) {
   input.className = 'yt2p-playerbutton'
   input.title = player.name
   input.src = player.icon || browser.extension.getURL('icons/16/player.png')
-  input.yt2pCommand = player.command
+  input.yt2pPlayer = player
   input.onmousedown = onPlayerButtonClick
   input.onmouseup = onPlayerButtonClick
   input.onclick = onPlayerButtonClick
@@ -479,7 +480,8 @@ function makeVideoLink (a = document.createElement('a')) {
 
 function onEmbeddedVideo (element) {
   if (!prefs.embeddedVideoChangeEnabled) return
-  let videoUrl = element.src || element.getAttribute('data-src') || ($('embed', element) && $('embed', element).src) || element.data || ''
+  let videoUrl = element.src || element.getAttribute('data-src') ||
+      ($('embed', element) && $('embed', element).src) || element.data || ''
   let videoId
   if (!videoUrl || !isVideoUrl(videoUrl)) {
     videoId = element.getAttribute('data-chomp-id')
@@ -515,9 +517,6 @@ function onEmbeddedVideo (element) {
     // parent.insertBefore(newFilElement(videoUrl), element)
     // element.classList.add('yt2p-replaced')
   }
-}
-
-function onFilVideoLinkClick (event) {
 }
 
 function onVideoLink (a) {
@@ -591,8 +590,8 @@ function onVideoLinkClick (event) {
   switch (changeType) {
     case 'send':
       browser.runtime.sendMessage({
-        commandPattern: prefs.videoLinkClickPlayerCommand,
-        linkUrl: a.href
+        command: prefs.videoLinkClickPlayerCommand,
+        url: a.href
       })
       break
     case 'menu':
@@ -606,7 +605,12 @@ function onVideoLinkClick (event) {
       a.parentElement.parentElement.replaceChild(newA, a.parentElement)
       break
     case 'embed':
-      a.parentElement.replaceChild(newEmbeddedVideoElement(a.href), a)
+      if (a.parentElement.className.includes('yt2p')) {
+        const parent = a.parentElement
+        parent.parentElement.replaceChild(newEmbeddedVideoElement(a.href), parent)
+      } else {
+        a.parentElement.replaceChild(newEmbeddedVideoElement(a.href), a)
+      }
       break
     case 'fil':
       a.parentElement.replaceChild(newFilElement(a.href), a)
@@ -628,18 +632,14 @@ function updateFilDivFromChannelItem (filDiv, item) {
   channelImg.alt = ''
   channelA.appendChild(channelImg)
   filDiv.appendChild(channelA)
-  // const videoA = $('.yt2p-video-link', filDiv)
-  // videoA.removeChild($('.yt2p-yt-logo', videoA))
 }
 
 function updateFilDivFromVideoItem (filDiv, item) {
   const videoA = $('.yt2p-video-link', filDiv)
-  videoA.title = item.snippet.description
-  // const ytlogoImg = document.createElement('img')
-  // ytlogoImg.className = 'yt2p-yt-logo'
-  // ytlogoImg.alt = ''
-  // ytlogoImg.src = 'chrome://yt2p/skin/yt-logo.png'
-  // videoA.appendChild(ytlogoImg)
+  videoA.title = item.snippet.title
+  if (item.snippet.description.replace(/\s/g, '').length) {
+    videoA.title += '\n▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n' + item.snippet.description
+  }
   const upperBlackDiv = document.createElement('div')
   upperBlackDiv.className = 'yt2p-blackbox yt2p-upper'
   videoA.appendChild(upperBlackDiv)

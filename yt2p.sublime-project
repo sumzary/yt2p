@@ -2,29 +2,29 @@
 	"build_systems":
 	[
 		{
-			"name": "Build",
+			"name": "YT2P",
 			"shell_cmd": "./build.sh",
 			"working_dir": "$folder",
 			"variants":
 			[
 				{
 					"name": "Run",
-					"shell_cmd": "web-ext run",
+					"shell_cmd": "web-ext run --bc -p default",
 					"working_dir": "$folder/extension"
 				},
 				{
 					"name": "Run /opt/firefox",
-					"shell_cmd": "web-ext run --firefox=/opt/firefox/firefox",
+					"shell_cmd": "web-ext run -f /opt/firefox/firefox",
 					"working_dir": "$folder/extension"
 				},
 				{
 					"name": "Install",
-					"shell_cmd": "nativeapp/install.sh",
+					"shell_cmd": "./install.sh",
 					"working_dir": "$folder/nativeapp"
 				},
 				{
 					"name": "Uninstall",
-					"shell_cmd": "nativeapp/uninstall.sh",
+					"shell_cmd": "./uninstall.sh",
 					"working_dir": "$folder/nativeapp"
 				}
 			]

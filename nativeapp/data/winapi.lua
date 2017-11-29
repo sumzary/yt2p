@@ -409,6 +409,51 @@ function winapi.mbs(ws)
 	return ffi.string(buf, sz - 1)
 end
 
+ffi.cdef[[
+// winbase.h
+enum {
+	GMEM_MOVEABLE = 0x0002,
+	GMEM_ZEROINIT = 0x0040,
+	GMEM_SHARE = 0x2000,
+	GMEM_DDESHARE = 0x2000,
+};
+LPVOID GlobalLock(HGLOBAL);
+BOOL GlobalUnlock(HGLOBAL);
+size_t GlobalSize(HGLOBAL);
+HGLOBAL GlobalAlloc(UINT, size_t);
+HGLOBAL GlobalFree(HGLOBAL);
+// winuser.rh
+enum {
+	CF_TEXT = 1,
+	CF_UNICODETEXT = 13,
+};
+// winuser.h
+BOOL OpenClipboard(HWND);
+BOOL CloseClipboard();
+BOOL EmptyClipboard();
+HANDLE GetClipboardData(UINT);
+HANDLE SetClipboardData(UINT, HANDLE);
+]]
+function winapi.getclipboard()
+	U.OpenClipboard(nil)
+	local mem = U.GetClipboardData(C.CF_UNICODETEXT)
+	local res = winapi.mbs(ffi.cast('WCHAR*', K.GlobalLock(mem)))
+	K.GlobalUnlock(mem)
+	U.CloseClipboard()
+	return res
+end
+function winapi.setclipboard(str)
+	local buf = winapi.wcs(str)
+	local sz = ffi.sizeof(buf)
+	local mem = winapi.chkh(K.GlobalAlloc(
+		bit.bor(C.GMEM_MOVEABLE, C.GMEM_ZEROINIT, C.GMEM_SHARE), sz))
+	ffi.copy(K.GlobalLock(mem), buf, sz)
+	K.GlobalUnlock(mem)
+	U.OpenClipboard(nil)
+	U.EmptyClipboard()
+	winapi.chkh(U.SetClipboardData(C.CF_UNICODETEXT, mem))
+	U.CloseClipboard()
+end
 
 ffi.cdef[[
 typedef struct {

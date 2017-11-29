@@ -2,7 +2,6 @@ local host = {}
 
 local ffi = require'ffi'
 local json = require'json'
-local base64 = require'base64'
 
 local format = string.format
 
@@ -10,18 +9,20 @@ local WIN = jit.os == 'Windows'
 local SEP = WIN and '\\' or '/'
 
 function host.ping()
-	return true
+	return 2 -- nativeapp version
 end
 
 function host.execute(msg)
 	if not msg.command then return nil, 'command is nil' end
 	if msg.command == "" then return nil, 'command is empty' end
+	if WIN and msg.clipboard then require'winapi'.setclipboard(msg.clipboard) end
 	local tmppath = os.tmpname()
 	if WIN then tmppath = os.getenv'TMP':gsub('[\\/]+$', SEP)..tmppath end
 	local f = io.open(tmppath, 'w+')
 	f:write(format('os.execute[[%s]]', msg.command))
 	f:close()
-	f = io.popen(format('%s %q 2>&1', WIN and 'luajit' or './luajit', tmppath))
+	local fmt = WIN and 'start "" /b /d . luajit %q 2>&1' or './luajit %q 2>&1'
+	f = io.popen(format(fmt, tmppath))
 	local s = f:read()
 	f:close()
 	os.remove(tmppath)
@@ -50,6 +51,15 @@ function host.browseexe(msg)
 end
 
 function host.browseicon(msg)
+	msg.path = require'dialog'.open{
+		dir = '<icons>',
+		title = msg.title,
+		filters = {'<all>', '<icon>'}
+	}
+	return host.pathicon(msg)
+end
+
+function host.pathicon(msg)
 	local extmimetypes = {
 		bmp = 'image/bmp',
 		gif = 'image/gif',
@@ -60,11 +70,7 @@ function host.browseicon(msg)
 		ico = 'image/x-icon',
 		svg = 'image/svg+xml',
 	}
-	local path = require'dialog'.open{
-		dir = '<icons>',
-		title = msg.title,
-		filters = { '<all>', '<icon>' }
-	}
+	local path = msg.path
 	if path == false then return false end
 	if not path then return end
 	local ext = path:match'([^%.]+)$'
@@ -83,13 +89,12 @@ function host.browseicon(msg)
 	local data = fp:read'*a'
 	if remove then os.remove(path) end
 	if not data then return end
-	local b64 = base64.encode(data)
+	local b64 = require'base64'.encode(data)
 	return string.format('data:%s;base64,%s', mime, b64)
 end
 
 local function contains(t, v)
-	for i=1, #t do if t[i]==v then return true end end
-	return false
+	for i=1, #t do if t[i]==v then return true end end; return false
 end
 function host.exeautocomplete(msg)
 	local fs = require'fs'
@@ -154,39 +159,37 @@ if ... == 'test' then
 		io.write'Press enter to continue...'
 		io.read()
 	end
+	test{ type='ping' }
+	test{ type='execute' }
+	test{ type='execute', command='' }
 	if WIN then
-		test{ type='execute' }
-		test{ type='execute', command='' }
 		test{ type='execute', command='C:\\' }
 		test{ type='execute', command='H:/black-shades.exe' }
 		test{ type='execute', command='"C:\\Program Files/Internet Explorer\\iexplore.exe"' }
-		test{ type='browseexe' }
-		test{ type='browseicon' }
 		test{ type='exeautocomplete' }
 		test{ type='exeautocomplete', path='' }
 		test{ type='exeautocomplete', path='C:/' }
 		test{ type='exeautocomplete', path='C:\\Windows' }
 		test{ type='exeautocomplete', path='C:/Program Files\\' }
 	else
-		test{ type='execute' }
-		test{ type='execute', command='' }
 		test{ type='execute', command='/' }
 		test{ type='execute', command='gnome-terminal' }
 		test{ type='execute', command='/usr!"£$_)+(^&*£$(&+_}}~¨' }
-		test{ type='browseexe' }
-		test{ type='browseicon' }
 		test{ type='exeautocomplete' }
 		test{ type='exeautocomplete', path='' }
 		test{ type='exeautocomplete', path='/' }
 		test{ type='exeautocomplete', path='/usr/' }
 		test{ type='exeautocomplete', path='/usr/bin' }
 	end
+	test{ type='browseexe' }
+	test{ type='browseicon' }
 	return
 end
 
 local function readsz()
 	while true do
 		local str = io.stdin:read(4)
+		if not str then return end
 		local szp = ffi.cast('uint32_t*', ffi.cast('const char*', str))
 		if szp[0] < 4096 then return szp[0] end
 		io.stdin:read()
@@ -194,7 +197,9 @@ local function readsz()
 end
 local function readmsg()
 	while true do
-		local data = json.parse(io.read(readsz()))
+		local sz = readsz()
+		if not sz then return end
+		local data = json.parse(io.read(sz))
 		if type(data) == 'table' then return data end
 	end
 end
@@ -208,6 +213,7 @@ end
 
 repeat
 	local msg = readmsg()
+	if not msg then return end
 	local fun = host[msg.type]
 	if fun then
 		local ok, res, err = pcall(fun, msg)

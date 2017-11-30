@@ -11,4 +11,4 @@ Run `nativeapp/uninstall.bat` on Windows, `nativeapp/uninstall.sh` on Linux/OSX.
 Check the `legacy` branch.
 This works with Thunderbird, Pale Moon, etc.
 
-![](https://addons.cdn.mozilla.net/user-media/previews/full/185/185166.png "A Fancy Image Link")
+![](https://addons.cdn.mozilla.net/user-media/previews/full/191/191705.png "A Fancy Image Link")

@@ -97,15 +97,6 @@ async function resetStorage () {
   installContextMenuItems(defaults.playerGroups)
 }
 
-function createNotification (message) {
-  return browser.notifications.create(null, {
-    type: 'basic',
-    title: browser.i18n.getMessage('extensionName'),
-    iconUrl: browser.extension.getURL('icons/64/yt2p.png'),
-    message: message
-  })
-}
-
 function doExecute ({command, clipboard, url}) {
   if (!command && !clipboard) {
     createNotification(browser.i18n.getMessage('commandNotSet'))
@@ -158,10 +149,9 @@ async function installContextMenuItems (playerGroups) {
 
   function installPlayerGroupContextMenuItems (group, isOnlyChild) {
     if (group.isSeparator) {
-      browser.contextMenus.create({ type: 'separator' })
-      return
+      return createContextMenuItem({ type: 'separator' })
     }
-    const itemId = isOnlyChild ? undefined : browser.contextMenus.create({
+    const itemId = isOnlyChild ? undefined : createContextMenuItem({
       title: group.name,
       icons: { '16': group.icon }
     })
@@ -172,10 +162,9 @@ async function installContextMenuItems (playerGroups) {
 
   function installPlayerContextMenuItems (player, parentId) {
     if (player.isSeparator) {
-      browser.contextMenus.create({ type: 'separator', parentId })
-      return
+      return createContextMenuItem({ type: 'separator', parentId })
     }
-    browser.contextMenus.create({
+    createContextMenuItem({
       title: player.name,
       icons: { '16': player.icon },
       parentId,
@@ -185,4 +174,21 @@ async function installContextMenuItems (playerGroups) {
       }
     })
   }
+}
+
+function createNotification (message) {
+  return browser.notifications.create(null, {
+    type: 'basic',
+    title: browser.i18n.getMessage('extensionName'),
+    iconUrl: browser.extension.getURL('icons/64/yt2p.png'),
+    message: message
+  })
+}
+
+function createContextMenuItem (options) {
+  try {
+    return browser.contextMenus.create(options)
+  } catch (e) {}
+  delete options.icons
+  return browser.contextMenus.create(options)
 }

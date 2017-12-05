@@ -8,6 +8,11 @@
 			"variants":
 			[
 				{
+					"name": "Zip Extension",
+					"shell_cmd": "zip -r ../build/yt2p-extension.xpi .",
+					"working_dir": "$folder/extension"
+				},
+				{
 					"name": "Run",
 					"shell_cmd": "web-ext run --bc -p default",
 					"working_dir": "$folder/extension"

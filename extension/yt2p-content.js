@@ -656,7 +656,7 @@ function updateFilDivFromVideoItem (filDiv, item) {
   viewsDiv.className = 'yt2p-text yt2p-views'
   viewsDiv.textContent = viewsString
   videoA.appendChild(viewsDiv)
-  const durationString = `⌚ ${getTimestampFromISO8601(item.contentDetails.duration)}`
+  const durationString = `⏱ ${getTimestampFromISO8601(item.contentDetails.duration)}`
   const durationDiv = document.createElement('div')
   durationDiv.className = 'yt2p-text yt2p-duration'
   durationDiv.textContent = durationString

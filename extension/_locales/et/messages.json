@@ -26,8 +26,8 @@
 	"extras": { "message": "Lisad" },
 	"name": { "message": "Nimi" },
 	"icon": { "message": "Ikoon" },
-	"command": { "message": "Käsk" },
-	"commandTooltip": { "message": "LINKURL:  Toores lingi URL\nVIDEOID:  Klipi ID\nVIDEOURL:  Standardiseeritud klipi URL\nVIDEOURLWITHPLAYLIST:  VIDEOURL esitusloendi ID-ga" },
+	"command": { "message": "Käsk (veel infot hiirt hõljutades)" },
+	"commandTooltip": { "message": "Tühikutega failinimi peab olema jutumärkides!\n\nÄra unusta lisada vähemalt ühte järgmistest:\n\nLINKURL:  Toores lingi URL\nVIDEOID:  Klipi ID\nVIDEOURL:  Standardiseeritud klipi URL\nVIDEOURLWITHPLAYLIST:  VIDEOURL esitusloendi ID-ga" },
 	"clipboard": { "message": "Kopeerimine" },
 	"menus": { "message": "Menüüd" },
 	"iconContextMenuEnabled": { "message": "Ikoon-kontekstmenüü" },
@@ -60,5 +60,7 @@
 	"filClickChangeEmbed": { "message": "teeb sellest manustatud klipi" },
 	"embeddedVideos": { "message": "Manustatud Klipid" },
 	"fancyImageLinks": { "message": "Piltlingid" },
-	"commandNotSet": { "message": "Mängija käsk pole seatud.\nVaata sätinguid!" }
+	"videoNotFound": { "message": "Klippi ei leitud" },
+	"commandNotSet": { "message": "Mängija käsk pole seatud.\nKontrolli sätteid!" },
+	"nativeAppMissing": { "message": "Kohalik programm on paigaldamata.\nKontrolli sätteid!" }
 }

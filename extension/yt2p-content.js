@@ -6,7 +6,7 @@
  * Distributed under the MIT/X11 License. See LICENSE.md for more details.
  */
 
-/* global browser */
+/* global browser, dump */
 
 'use strict'
 
@@ -42,6 +42,8 @@ function fetchChannelItem (channelId) {
   })
 }
 
+const wrongJpeg = 'data:image/jpeg;base64,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'
+
 function fetchVideoImage (videoId) {
   return new Promise((resolve, reject) => {
     const img = new window.Image()
@@ -51,10 +53,13 @@ function fetchVideoImage (videoId) {
     img.onerror = event => reject(new Error())
     img.onload = event => {
       if (img.naturalWidth > 120) return resolve(img)
-      if (!/sddefault\.jpg$/.test(img.src)) return reject(new Error())
-      img.src = `https://i.ytimg.com/vi/${videoId}/0.jpg`
+      const canvas = document.createElement('canvas')
+      canvas.width = 120; canvas.height = 90
+      canvas.getContext('2d').drawImage(img, 0, 0)
+      if (canvas.toDataURL('image/jpeg') === wrongJpeg) return reject(new Error())
+      return resolve(img)
     }
-    img.src = `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`
+    img.src = `https://i.ytimg.com/vi/${videoId}/0.jpg`
   })
 }
 
@@ -134,7 +139,6 @@ function isVideoUrl (url) {
 }
 
 function makeYouTubeVideoPageTitleClickable () {
-  if (!prefs.videoLinkChangeEnabled) return
   if (exec($('#eow-title'))) return
   if (exec($('#container > h1.title'))) return
   new window.MutationObserver((mutations, obs) => {
@@ -283,7 +287,7 @@ function newFilElement (videoUrl) {
       })
     })
   }).catch(error => {
-    this.dump(error)
+    dump(error)
     updateFilDivWithErrorMessage(filDiv)
   })
   return filDiv
@@ -307,12 +311,10 @@ function onAddedNode (node) {
       $$('iframe, object, embed', node).forEach(onEmbeddedVideo)
     }
   }
-  if (prefs.videoLinkChangeEnabled) {
-    if (node.tagName === 'A') {
-      onVideoLink(node)
-    } else {
-      $$('a', node).forEach(onVideoLink)
-    }
+  if (node.tagName === 'A') {
+    onVideoLink(node)
+  } else {
+    $$('a', node).forEach(onVideoLink)
   }
 }
 
@@ -336,12 +338,11 @@ function onContentLoad () {
   if (prefs.embeddedVideoChangeEnabled) {
     $$('iframe, object, :not(object) > embed').forEach(onEmbeddedVideo)
   }
-  if (prefs.videoLinkChangeEnabled) {
-    $$('a').forEach(onVideoLink)
-  }
-  if (!prefs.embeddedVideoChangeEnabled &&
+  if (!prefs.iconContextMenuEnabled &&
+      !prefs.embeddedVideoChangeEnabled &&
       !prefs.videoLinkChangeEnabled &&
       !prefs.videoLinkClickChangeEnabled) return
+  $$('a').forEach(onVideoLink)
   window.yt2pMutationObserver = new window.MutationObserver(mutations => {
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) onAddedNode(node)
@@ -354,23 +355,6 @@ function onContentLoad () {
   div.id = 'yt2pLoaded'
   div.style.display = 'none'
   document.body.appendChild(div)
-}
-
-function onContentUnload () {
-  if (window.yt2pMutationObserver) {
-    window.yt2pMutationObserver.disconnect()
-    delete window.yt2pMutationObserver
-  }
-  if (window.yt2pDoneVideoIds) {
-    delete window.yt2pDoneVideoIds
-  }
-  for (const element of $$('.yt2p-replaced')) {
-    element.classList.remove('yt2p-replaced')
-    const replacement = element.previousElementSibling
-    if (!replacement) continue
-    if (!replacement.className.startsWith('yt2p')) continue
-    replacement.parentElement.removeChild(replacement)
-  }
 }
 
 function mouseX (event) {
@@ -394,6 +378,9 @@ function mouseY (event) {
 }
 
 function onVideoLinkContextMenu (event) {
+  if (event.type === 'contextmenu' &&
+      prefs.videoLinkClickChangeEnabled &&
+      prefs.videoLinkClickChangeType === 'menu') return
   const menu = $('#yt2pIconContextMenu')
   if (!menu) return
   window.yt2pOpenedMenu = menu
@@ -408,22 +395,6 @@ function onVideoLinkContextMenu (event) {
   event.stopPropagation()
   event.preventDefault()
   return false
-}
-
-function onVideoLinkMouseDown (event) {
-  // if (event.button !== 2) return
-  // const menu = $('#yt2pIconContextMenu')
-  // if (!menu) return
-  // const a = event.currentTarget
-  // closeAllContextMenus().then(() => {
-  //   console.log('SHOWING')
-  //   menu.yt2pLinkUrl = a.href // getStandardisedVideoUrl()
-  //   menu.style.left = (mouseX(event) + 2) + 'px'
-  //   menu.style.top = (mouseY(event) + 2) + 'px'
-  //   menu.style.display = ''
-  // })
-  // event.stopPropagation()
-  // return false
 }
 
 function onStorageChanged (changes) {
@@ -469,12 +440,19 @@ function onStorageChanged (changes) {
 }
 
 function makeVideoLink (a = document.createElement('a')) {
-  a.classList.add('yt2p-link', prefs.videoLinkChangeType === 'glow'
-    ? 'yt2p-glow'
-    : 'yt2p-underline')
-  a.oncontextmenu = onVideoLinkContextMenu
-  a.onmousedown = onVideoLinkMouseDown
-  a.onclick = onVideoLinkClick
+  if (prefs.iconContextMenuEnabled) {
+    a.oncontextmenu = onVideoLinkContextMenu
+  }
+  if (prefs.videoLinkChangeEnabled) {
+    a.classList.add('yt2p-link', prefs.videoLinkChangeType === 'glow'
+      ? 'yt2p-glow' : 'yt2p-underline')
+    if (isVideoUrl(a.textContent)) {
+      a.textContent = getVideoIdFromUrl(a.href)
+    }
+  }
+  if (prefs.videoLinkClickChangeEnabled) {
+    a.onclick = onVideoLinkClick
+  }
   return a
 }
 
@@ -507,7 +485,7 @@ function onEmbeddedVideo (element) {
     return
   }
   if (changeType === 'fil') {
-    while (parent.childNodes.length === 1 &&
+    while (parent.children.length === 1 &&
         parent.tagName !== 'CENTER') {
       element = parent
       parent = element.parentElement
@@ -520,39 +498,22 @@ function onEmbeddedVideo (element) {
 }
 
 function onVideoLink (a) {
-  if (!prefs.videoLinkChangeEnabled) return
   if (!isVideoUrl(a.href)) return
   if (/yt2p-|ytp-button|iv-promo-txt/.test(a.className)) return
   if (/comment-renderer-time|submessage/.test(a.parentElement.className)) return
-  if (/YT-FORMATTED-STRING/.test(a.parentElement.tagName)) return
-  // if (videoLinkType === 0/* || !isElementTextOnly(a) */) {
-  //   makeAnchorClickSend(a)
-  //   return
-  // }
+  if (a.parentElement.id === 'published-time-text') return
   const videoId = getVideoIdFromUrl(a.href)
   const changeType = prefs.videoLinkChangeType
-  if (changeType === 'underline' || changeType === 'glow' ||
+  if (!prefs.videoLinkChangeEnabled ||
+      changeType === 'underline' || changeType === 'glow' ||
       /ytp-|yt-uix-|yt-simple-/.test(a.className) ||
       /c-detail__title/.test(a.parentElement.className) ||
       window.yt2pDoneVideoIds.some(id => id === videoId)) {
-    // if (/ytp-/.test(a.className)) {
     makeVideoLink(a)
     // const newA = makeVideoLink(a.cloneNode(true))
-    if (isVideoUrl(a.textContent)) {
-      a.textContent = getVideoIdFromUrl(a.href)
-    }
     // a.parentElement.insertBefore(newA, a.nextElementSibling)
     // a.classList.add('yt2p-replaced')
     return
-    // }
-    // a.classList.add('yt2p-link', `yt2p-${changeType}`)
-    // if (isVideoUrl(a.textContent) &&
-    //     !window.location.href.startsWith('view-source:')) {
-    //   a.textContent = getVideoIdFromUrl(a.href)
-    // }
-    // a.oncontextmenu = onVideoLinkContextMenu
-    // a.onclick = onVideoLinkClick
-    // return
   }
   if (changeType === 'embed') {
     window.yt2pDoneVideoIds.push(videoId)
@@ -694,6 +655,6 @@ function updateFilDivWithErrorMessage (filDiv) {
   const videoA = $('.yt2p-video-link', filDiv)
   const textDiv = document.createElement('div')
   textDiv.className = 'yt2p-text yt2p-title'
-  textDiv.textContent = '⚠ ' + browser.i18n.getMessage('videoNotFoundAlert')
+  textDiv.textContent = '⚠ ' + browser.i18n.getMessage('videoNotFound')
   videoA.appendChild(textDiv)
 }

@@ -38,7 +38,7 @@ window.setInterval(() => {
       canBrowseNatively = true
     })
     $('#nativeMissing').classList.add('none')
-    if (version === true || version < 2) { // current nativeapp version
+    if (version === true || version < 3 /* nativeapp version */) {
       $('#nativeUpgrade').classList.remove('none')
     }
   }).catch(() => {

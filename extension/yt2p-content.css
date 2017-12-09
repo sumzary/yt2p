@@ -34,6 +34,9 @@ ytd-video-meta-block,
   text-decoration-line: none !important;
   text-decoration: none !important;
 }
+.yt2p-send-override {
+  text-decoration: none;
+}
 
 .yt2p-clearall,
 .yt2p-video,
@@ -58,6 +61,7 @@ ytd-video-meta-block,
 .yt2p-video {
   display: inline-block !important;
   position: relative !important;
+  /*float: left !important;*/
   width: 480px !important;
   max-width: 480px !important;
   margin: 2px 0 !important;

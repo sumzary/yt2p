@@ -130,5 +130,7 @@ end
 
 dolaunchers('uninstall')
 
-io.write'Done! Press enter to close...'
-io.read()
+if ... ~= '-y' then
+	io.write'Done! Press enter to close...'
+	io.read()
+end

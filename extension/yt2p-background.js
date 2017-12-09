@@ -100,18 +100,22 @@ async function resetStorage () {
 function doExecute ({command, clipboard, url}) {
   if (!command && !clipboard) {
     createNotification(browser.i18n.getMessage('commandNotSet'))
+    browser.runtime.openOptionsPage()
     return
   }
   const message = { type: 'execute' }
   if (command) message.command = formatPattern(command, url)
   if (clipboard) message.clipboard = formatPattern(clipboard, url)
+  const startTime = Date.now()
   browser.runtime.sendNativeMessage('ee.sumzary.yt2p', message).then(response => {
     if (response === true) return
+    if (Date.now() - startTime > 7500) return
     console.log(response.message)
     createNotification(response.message)
   }).catch(error => {
     console.log(error)
-    createNotification(error)
+    createNotification(browser.i18n.getMessage('nativeAppMissing'))
+    browser.runtime.openOptionsPage()
   })
 
   function formatPattern (pattern, linkUrl) {

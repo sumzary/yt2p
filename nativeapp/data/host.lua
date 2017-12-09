@@ -9,7 +9,7 @@ local WIN = jit.os == 'Windows'
 local SEP = WIN and '\\' or '/'
 
 function host.ping()
-	return 2 -- nativeapp version
+	return 3 -- nativeapp version
 end
 
 function host.execute(msg)
@@ -23,19 +23,11 @@ function host.execute(msg)
 	f:close()
 	local fmt = WIN and 'start "" /b /d . luajit %q 2>&1' or './luajit %q 2>&1'
 	f = io.popen(format(fmt, tmppath))
-	local s = f:read()
+	local s = f:read'*a'
 	f:close()
 	os.remove(tmppath)
-	if not s then return true end
-	s = s:gsub('^%s+', ''):gsub('%s+$', '')
-	if s:find'^sh: %d+: ' or
-		s:find'No such file or directory$' or
-		s:find'^Can\'t [Rr]ecognize ' or
-		s:find'^Application could not be started' or
-		s:find'^Start a program' then
-		return nil, format('Failed to run %s: %s', msg.command, s)
-	end
-	return true
+	if not s then return end
+	return { type='output', message=s:gsub('^%s+', ''):gsub('%s+$', '') }
 end
 
 function host.canbrowse(_)
@@ -226,13 +218,3 @@ repeat
 until not msg.port
 
 return host
-
--- if WIN then
--- 	-- local dir, exe, prm =
--- msg.command:match'^["\']?([^"\']*)[\\/]+([^"\'%s]+)["\']?(.*)$'
--- 	-- cmd = format('start "" /d "%s" /b "%s"%s', dir, exe, prm or '')
--- 	-- cmd = format('start "" /b %s & echo.', cmd)
--- 	-- cmd = cmd..' & echo.'
--- else
--- 	-- cmd = cmd..'; echo'
--- end

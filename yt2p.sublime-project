@@ -18,18 +18,13 @@
 					"working_dir": "$folder/extension"
 				},
 				{
-					"name": "Run /opt/firefox",
-					"shell_cmd": "web-ext run -f /opt/firefox/firefox",
-					"working_dir": "$folder/extension"
-				},
-				{
 					"name": "Install",
-					"shell_cmd": "./install.sh",
+					"shell_cmd": "./install.sh -y",
 					"working_dir": "$folder/nativeapp"
 				},
 				{
 					"name": "Uninstall",
-					"shell_cmd": "./uninstall.sh",
+					"shell_cmd": "./uninstall.sh -y",
 					"working_dir": "$folder/nativeapp"
 				}
 			]

@@ -3,7 +3,7 @@
     [
         {
             "name": "XPI",
-            "shell_cmd": "rm -f yt2p.xpi && zip -r yt2p.xpi . -x *.svg *.xpi *rc.json *.sublime-project *.sublime-workspace *.git* *.jshintrc",
+            "shell_cmd": "rm -f yt2p.xpi && zip -r yt2p.xpi . -x 'build/*' *.svg *.xpi *rc.json *.sublime-project *.sublime-workspace *.git* *.jshintrc",
             "working_dir": "$folder",
             "variants":
             [

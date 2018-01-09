@@ -83,6 +83,9 @@ ytd-video-meta-block,
   text-decoration-line: none !important;
   text-decoration: none !important;
 }
+.yt2p-send-override {
+  text-decoration: none;
+}
 
 .yt2p-clearall,
 .yt2p-video,
@@ -152,29 +155,6 @@ ytd-video-meta-block,
   height: 45px !important;
   max-height: 45px !important;
 }
-/*.yt2p-yt-logo {
-  display: inline-block !important;
-  position: absolute !important;
-  width: 50px !important;
-  height: 25px !important;
-  max-width: 50px !important;
-  max-height: 25px !important;
-  background: none !important;
-  left: 415px !important;
-  top: 10px !important;
-}
-.yt2p-yt-error {
-  display: block !important;
-  border: 0px !important;
-  background: none !important;
-  padding: 0 0 0 0 !important;
-  margin: 0 0 0 0 !important;
-  position: absolute !important;
-  left: 420px !important;
-  top: 11px !important;
-  width: auto !important;
-  height: auto !important;
-}*/
 .yt2p-blackbox {
   display: inline-block !important;
   position: absolute !important;

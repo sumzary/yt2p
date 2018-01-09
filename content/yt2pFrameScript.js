@@ -9,7 +9,7 @@
 ;(function (global) {
   'use strict'
 
-  const {utils: Cu} = global.Components
+  const {utils: Cu, classes: Cc, interfaces: Ci} = global.Components
   const {Services} = Cu.import('resource://gre/modules/Services.jsm', {})
 
   const THUNDERBIRD = Services.appinfo.name === 'Thunderbird'
@@ -36,15 +36,18 @@
   }
 
   function fetchChannelItem (channelId, resolve, reject) {
-    const request = new window.XMLHttpRequest()
-    request.onerror = event => reject()
-    request.onload = event => {
-      if (request.status !== 200) reject()
+    const request = Cc['@mozilla.org/xmlextras/xmlhttprequest;1']
+      .createInstance(Ci.nsIXMLHttpRequest)
+    request.addEventListener('error', reject)
+    request.addEventListener('load', event => {
+      if (request.status !== 200) return reject()
       resolve(JSON.parse(request.response).items[0])
-    }
+    })
     request.open('GET', 'https://www.googleapis.com/youtube/v3/channels?key=' + GOOGLE_KEY + '&id=' + channelId + '&part=snippet,statistics,contentDetails&fields=items(id,snippet(title,description,thumbnails(default)),statistics(videoCount,subscriberCount,hiddenSubscriberCount))')
     request.send()
   }
+
+  const wrongJpeg = 'data:image/jpeg;base64,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'
 
   function fetchVideoImage (videoId, resolve, reject) {
     const img = new window.Image()
@@ -54,19 +57,23 @@
     img.onerror = event => reject()
     img.onload = event => {
       if (img.naturalWidth > 120) return resolve(img)
-      if (!/sddefault\.jpg$/.test(img.src)) return reject()
-      img.src = 'https://i.ytimg.com/vi/' + videoId + '/0.jpg'
+      const canvas = document.createElement('canvas')
+      canvas.width = 120; canvas.height = 90
+      canvas.getContext('2d').drawImage(img, 0, 0)
+      if (canvas.toDataURL('image/jpeg') === wrongJpeg) return reject()
+      return resolve(img)
     }
-    img.src = 'https://i.ytimg.com/vi/' + 'videoId' + '/sddefault.jpg'
+    img.src = 'https://i.ytimg.com/vi/' + videoId + '/0.jpg'
   }
 
   function fetchVideoItem (videoId, resolve, reject) {
-    const request = new window.XMLHttpRequest()
-    request.onerror = () => reject()
-    request.onload = event => {
+    const request = Cc['@mozilla.org/xmlextras/xmlhttprequest;1']
+      .createInstance(Ci.nsIXMLHttpRequest)
+    request.addEventListener('error', reject)
+    request.addEventListener('load', event => {
       if (request.status !== 200) return reject()
       resolve(JSON.parse(request.response).items[0])
-    }
+    })
     request.open('GET', 'https://www.googleapis.com/youtube/v3/videos?key=' + GOOGLE_KEY + '&id=' + videoId + '&part=snippet,statistics,contentDetails&fields=items(snippet(publishedAt,channelId,title,description),contentDetails(duration),statistics(viewCount,likeCount,dislikeCount))')
     request.send()
   }
@@ -223,26 +230,17 @@
     videoA.onclick = onFilVideoLinkClick
     filDiv.appendChild(videoA)
     const videoId = getVideoIdFromUrl(videoUrl)
-    let done1 = false
-    let videoItem
     function onError () {
       updateFilDivWithErrorMessage(filDiv)
     }
-    function step2 () {
-      updateFilDivFromVideoItem(filDiv, videoItem)
-      fetchChannelItem(videoItem.snippet.channelId, item => {
-        updateFilDivFromChannelItem(filDiv, item)
-      }, onError)
-    }
     fetchVideoImage(videoId, image => {
       videoA.appendChild(image)
-      if (done1) step2()
-      done1 = true
-    }, onError)
-    fetchVideoItem(videoId, item => {
-      videoItem = item
-      if (done1) step2()
-      done1 = true
+      fetchVideoItem(videoId, videoItem => {
+        updateFilDivFromVideoItem(filDiv, videoItem)
+        fetchChannelItem(videoItem.snippet.channelId, channelItem => {
+          updateFilDivFromChannelItem(filDiv, channelItem)
+        })
+      }, onError)
     }, onError)
     return filDiv
   }
@@ -505,7 +503,7 @@
     const channelA = document.createElement('a')
     channelA.className = 'yt2p-channel-link'
     channelA.href = 'https://www.youtube.com/channel/' + item.id + '/videos'
-    channelA.title = item.snippet.title + '\n 🎞 ' + parseInt(item.statistics.videoCount).toLocaleString() + item.statistics.hiddenSubscriberCount ? '' : '   👤  ' + parseInt(item.statistics.subscriberCount).toLocaleString() + ' ' + item.snippet.description ? '\n\n' + item.snippet.description : ''
+    channelA.title = item.snippet.title + ('\n 🎞 ' + parseInt(item.statistics.videoCount).toLocaleString()) + (item.statistics.hiddenSubscriberCount ? '' : '   👤  ' + parseInt(item.statistics.subscriberCount).toLocaleString() + ' ') + (item.snippet.description ? '\n\n' + item.snippet.description : '')
     const channelImg = document.createElement('img')
     channelImg.className = 'yt2p-channel-image'
     channelImg.src = item.snippet.thumbnails.default.url
@@ -518,7 +516,10 @@
 
   function updateFilDivFromVideoItem (filDiv, item) {
     const videoA = $('.yt2p-video-link', filDiv)
-    videoA.title = item.snippet.description
+    videoA.title = item.snippet.title
+    if (item.snippet.description.replace(/\s/g, '').length) {
+      videoA.title += '\n▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n' + item.snippet.description
+    }
     // const ytlogoImg = document.createElement('img')
     // ytlogoImg.className = 'yt2p-yt-logo'
     // ytlogoImg.alt = ''

@@ -139,7 +139,6 @@ function isVideoUrl (url) {
 }
 
 function makeYouTubeVideoPageTitleClickable () {
-  if (exec($('#eow-title'))) return
   if (exec($('#container > h1.title'))) return
   new window.MutationObserver((mutations, obs) => {
     if (exec($('#container > h1.title'))) obs.disconnect()
@@ -151,10 +150,10 @@ function makeYouTubeVideoPageTitleClickable () {
     if (!node) return false
     const a = makeVideoLink()
     a.classList.add('yt2p-send-override')
+    a.classList.add('yt2p-page-title')
     a.href = window.location.href
-    a.appendChild(node.cloneNode(true))
-    node.parentElement.insertBefore(a, node)
-    node.classList.add('yt2p-replaced')
+    node.parentElement.replaceChild(a, node)
+    a.appendChild(node)
     return true
   }
 }
@@ -468,6 +467,7 @@ function onEmbeddedVideo (element) {
   } else {
     videoId = getVideoIdFromUrl(videoUrl)
   }
+  if (videoUrl.includes('googleads.g.doubleclick.net')) return
   let parent = element.parentElement
   const changeType = prefs.embeddedVideoChangeType
   if (changeType === 'link' ||

@@ -37,6 +37,10 @@ ytd-video-meta-block,
 .yt2p-send-override {
   text-decoration: none;
 }
+.yt2p-page-title {
+  font-size: 1.8rem;
+  display: block;
+}
 
 .yt2p-clearall,
 .yt2p-video,

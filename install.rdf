@@ -10,7 +10,7 @@
     <em:icon64URL>chrome://yt2p/skin/64/yt2p.png</em:icon64URL>
     <em:id>YT2Player@Rasmus.Riiner</em:id>
     <em:name>YouTube 2 Player</em:name>
-    <em:version>2.2</em:version>
+    <em:version>2.3</em:version>
     <em:description>Watch YouTube videos in an external player.</em:description>
     <em:homepageURL>https://github.com/sumzary/yt2p</em:homepageURL>
     <em:creator>Rasmus Riiner</em:creator>

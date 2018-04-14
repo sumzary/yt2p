@@ -171,7 +171,7 @@
     function exec (node) {
       if (!node) return false
       const a = document.createElement('a')
-      a.className = 'yt2p-send-override'
+      a.className = 'yt2p-send-override yt2p-page-title'
       if (getPref('videoLinkChangeType') === 0) {
         a.classList.add('yt2p-glow')
       } else {
@@ -179,9 +179,8 @@
       }
       a.href = window.location.href
       a.onclick = onVideoLinkClick
-      a.appendChild(node.cloneNode(true))
-      node.parentElement.insertBefore(a, node)
-      node.classList.add('yt2p-replaced')
+      node.parentElement.replaceChild(a, node)
+      a.appendChild(node)
       return true
     }
   }
